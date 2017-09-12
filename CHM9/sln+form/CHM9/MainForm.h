@@ -36,6 +36,7 @@ namespace CHM9 {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::TabControl^  tabControl;
 	private: System::Windows::Forms::TabPage^  testPage;
 	private: System::Windows::Forms::TabPage^  mainPage;
@@ -463,7 +464,7 @@ namespace CHM9 {
 
 		}
 private: System::Void main_buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-	TableForm^ tableForm = gcnew TableForm();
+	TableForm^ tableForm = gcnew TableForm(MainTask);
 	tableForm->Show();
 }
 };

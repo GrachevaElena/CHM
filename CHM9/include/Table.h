@@ -1,6 +1,8 @@
 #pragma once
 
 const int N = 100000;
+const int MainTask = 1;
+const int TestTask = 0;
 
 //Don't laugh, please, I know that names are stupid
 struct Row {

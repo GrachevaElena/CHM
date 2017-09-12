@@ -15,13 +15,13 @@ namespace CHM9 {
 	/// </summary>
 	public ref class TableForm : public System::Windows::Forms::Form
 	{
+
+		int Task;
 	public:
-		TableForm(/*Table& table*/)
+		TableForm(int _task)
 		{
+			Task = _task;
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
 		}
 
 	protected:
@@ -35,6 +35,7 @@ namespace CHM9 {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	protected:
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  i;
@@ -88,11 +89,18 @@ namespace CHM9 {
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(14) {
+			if (Task == TestTask) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(14) {
+					this->i, this->hi_1,
+						this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->total,
+						this->ui, this->abs_ui_vi
+				});
+			} else if (Task == MainTask){
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(12) {
 				this->i, this->hi_1,
-					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->total,
-					this->ui, this->abs_ui_vi
-			});
+					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->total
+				});
+			}
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
@@ -170,18 +178,21 @@ namespace CHM9 {
 			this->total->HeaderText = L"Ит.";
 			this->total->Name = L"total";
 			this->total->ReadOnly = true;
-			// 
-			// ui
-			// 
-			this->ui->HeaderText = L"U[i]";
-			this->ui->Name = L"ui";
-			this->ui->ReadOnly = true;
-			// 
-			// abs_ui_vi
-			// 
-			this->abs_ui_vi->HeaderText = L"|U[i]-V[i]|";
-			this->abs_ui_vi->Name = L"abs_ui_vi";
-			this->abs_ui_vi->ReadOnly = true;
+
+			if (Task == TestTask) {
+				// 
+				// ui
+				// 
+				this->ui->HeaderText = L"U[i]";
+				this->ui->Name = L"ui";
+				this->ui->ReadOnly = true;
+				// 
+				// abs_ui_vi
+				// 
+				this->abs_ui_vi->HeaderText = L"|U[i]-V[i]|";
+				this->abs_ui_vi->Name = L"abs_ui_vi";
+				this->abs_ui_vi->ReadOnly = true;
+			}
 			// 
 			// TableForm
 			// 
