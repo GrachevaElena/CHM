@@ -1,5 +1,6 @@
 #pragma once
 #include "Table.h"
+#include "TableForm.h"
 
 namespace CHM9 {
 
@@ -38,39 +39,38 @@ namespace CHM9 {
 	private: System::Windows::Forms::TabControl^  tabControl;
 	private: System::Windows::Forms::TabPage^  testPage;
 	private: System::Windows::Forms::TabPage^  mainPage;
-	private: System::Windows::Forms::PictureBox^  pictureBoxMainTask;
-	private: System::Windows::Forms::GroupBox^  groupBoxParametrs;
 
+	private: System::Windows::Forms::PictureBox^  main_pictureBoxTask;
+	private: System::Windows::Forms::GroupBox^  main_groupBoxParametrs;
+	private: System::Windows::Forms::Label^  main_labelM;
+	private: System::Windows::Forms::Label^  main_labelA2;
+	private: System::Windows::Forms::Label^  main_labelA1;
+	private: System::Windows::Forms::TextBox^ main_textBoxM;
+	private: System::Windows::Forms::TextBox^  main_textBoxA2;
+	private: System::Windows::Forms::TextBox^  main_textBoxA1;
+	private: System::Windows::Forms::Label^  main_labelU0;
+	private: System::Windows::Forms::TextBox^  main_textBoxU0;
+	private: System::Windows::Forms::Label^  main_labelX;
+	private: System::Windows::Forms::Label^  main_labelLength;
+	private: System::Windows::Forms::Label^  main_labelStep;
+	private: System::Windows::Forms::Label^  main_labelMaxNumSteps;
+	private: System::Windows::Forms::Label^  main_labelLocError;
+	private: System::Windows::Forms::Label^  main_labelH;
+	private: System::Windows::Forms::Label^  main_labelAccurBoard;
+	private: System::Windows::Forms::Label^  main_labelL;
+	private: System::Windows::Forms::TextBox^  main_textBoxStep;
+	private: System::Windows::Forms::TextBox^  main_textBoxMaxNumSteps;
+	private: System::Windows::Forms::TextBox^  main_textBoxLocError;
+	private: System::Windows::Forms::TextBox^  main_textBoxAccurBoard;
+	private: System::Windows::Forms::TextBox^  main_textBoxLenght;
+	private: System::Windows::Forms::PictureBox^  main_pictureBoxGraphic;
+	private: System::Windows::Forms::Button^  main_buttonSolve;
+	private: System::Windows::Forms::Button^  main_buttonTable;
+	private: System::Windows::Forms::Button^  main_buttonError;
+	private: System::Windows::Forms::Button^  main_buttonRef;
+	private: System::Windows::Forms::Label^  main_labelParameters;
+	private: System::Windows::Forms::Button^  main_buttonClear;
 
-	private: System::Windows::Forms::Label^  labelM;
-
-	private: System::Windows::Forms::Label^  labelA2;
-	private: System::Windows::Forms::Label^  labelA1;
-	private: System::Windows::Forms::TextBox^  textBoxM;
-	private: System::Windows::Forms::TextBox^  textBoxA2;
-	private: System::Windows::Forms::TextBox^  textBoxA1;
-	private: System::Windows::Forms::Label^  labelU0;
-	private: System::Windows::Forms::TextBox^  textBoxU0;
-	private: System::Windows::Forms::Label^  labelX;
-	private: System::Windows::Forms::Label^  labelLength;
-	private: System::Windows::Forms::Label^  labelStep;
-	private: System::Windows::Forms::Label^  labelMaxNumSteps;
-	private: System::Windows::Forms::Label^  labelLocError;
-	private: System::Windows::Forms::Label^  labelH;
-	private: System::Windows::Forms::Label^  labelAccurBoard;
-	private: System::Windows::Forms::Label^  labelL;
-	private: System::Windows::Forms::TextBox^  textBoxStep;
-	private: System::Windows::Forms::TextBox^  textBoxMaxNumSteps;
-	private: System::Windows::Forms::TextBox^  textBoxLocError;
-	private: System::Windows::Forms::TextBox^  textBoxAccurBoard;
-	private: System::Windows::Forms::TextBox^  textBoxLenght;
-	private: System::Windows::Forms::PictureBox^  pictureBoxGraphic;
-	private: System::Windows::Forms::Button^  buttonSolve;
-	private: System::Windows::Forms::Button^  buttonClear;
-	private: System::Windows::Forms::Button^  buttonTable;
-	private: System::Windows::Forms::Button^  buttonError;
-	private: System::Windows::Forms::Button^  buttonRef;
-	private: System::Windows::Forms::Label^  label2;
 
 
 
@@ -93,41 +93,41 @@ namespace CHM9 {
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->testPage = (gcnew System::Windows::Forms::TabPage());
 			this->mainPage = (gcnew System::Windows::Forms::TabPage());
-			this->buttonSolve = (gcnew System::Windows::Forms::Button());
-			this->buttonClear = (gcnew System::Windows::Forms::Button());
-			this->buttonTable = (gcnew System::Windows::Forms::Button());
-			this->buttonError = (gcnew System::Windows::Forms::Button());
-			this->buttonRef = (gcnew System::Windows::Forms::Button());
-			this->pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
-			this->groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
-			this->labelStep = (gcnew System::Windows::Forms::Label());
-			this->labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
-			this->labelLocError = (gcnew System::Windows::Forms::Label());
-			this->labelH = (gcnew System::Windows::Forms::Label());
-			this->labelAccurBoard = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->labelLength = (gcnew System::Windows::Forms::Label());
-			this->labelL = (gcnew System::Windows::Forms::Label());
-			this->labelX = (gcnew System::Windows::Forms::Label());
-			this->labelU0 = (gcnew System::Windows::Forms::Label());
-			this->labelM = (gcnew System::Windows::Forms::Label());
-			this->textBoxU0 = (gcnew System::Windows::Forms::TextBox());
-			this->labelA2 = (gcnew System::Windows::Forms::Label());
-			this->labelA1 = (gcnew System::Windows::Forms::Label());
-			this->textBoxStep = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxM = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxMaxNumSteps = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxLocError = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxAccurBoard = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxA2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxLenght = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxA1 = (gcnew System::Windows::Forms::TextBox());
-			this->pictureBoxMainTask = (gcnew System::Windows::Forms::PictureBox());
+			this->main_buttonSolve = (gcnew System::Windows::Forms::Button());
+			this->main_buttonClear = (gcnew System::Windows::Forms::Button());
+			this->main_buttonTable = (gcnew System::Windows::Forms::Button());
+			this->main_buttonError = (gcnew System::Windows::Forms::Button());
+			this->main_buttonRef = (gcnew System::Windows::Forms::Button());
+			this->main_pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
+			this->main_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
+			this->main_labelStep = (gcnew System::Windows::Forms::Label());
+			this->main_labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
+			this->main_labelLocError = (gcnew System::Windows::Forms::Label());
+			this->main_labelH = (gcnew System::Windows::Forms::Label());
+			this->main_labelAccurBoard = (gcnew System::Windows::Forms::Label());
+			this->main_labelParameters = (gcnew System::Windows::Forms::Label());
+			this->main_labelLength = (gcnew System::Windows::Forms::Label());
+			this->main_labelL = (gcnew System::Windows::Forms::Label());
+			this->main_labelX = (gcnew System::Windows::Forms::Label());
+			this->main_labelU0 = (gcnew System::Windows::Forms::Label());
+			this->main_labelM = (gcnew System::Windows::Forms::Label());
+			this->main_textBoxU0 = (gcnew System::Windows::Forms::TextBox());
+			this->main_labelA2 = (gcnew System::Windows::Forms::Label());
+			this->main_labelA1 = (gcnew System::Windows::Forms::Label());
+			this->main_textBoxStep = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxM = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxMaxNumSteps = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxLocError = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxAccurBoard = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxA2 = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
+			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
+			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
 			this->tabControl->SuspendLayout();
 			this->mainPage->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxGraphic))->BeginInit();
-			this->groupBoxParametrs->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxMainTask))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->BeginInit();
+			this->main_groupBoxParametrs->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxTask))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// tabControl
@@ -152,14 +152,14 @@ namespace CHM9 {
 			// 
 			// mainPage
 			// 
-			this->mainPage->Controls->Add(this->buttonSolve);
-			this->mainPage->Controls->Add(this->buttonClear);
-			this->mainPage->Controls->Add(this->buttonTable);
-			this->mainPage->Controls->Add(this->buttonError);
-			this->mainPage->Controls->Add(this->buttonRef);
-			this->mainPage->Controls->Add(this->pictureBoxGraphic);
-			this->mainPage->Controls->Add(this->groupBoxParametrs);
-			this->mainPage->Controls->Add(this->pictureBoxMainTask);
+			this->mainPage->Controls->Add(this->main_buttonSolve);
+			this->mainPage->Controls->Add(this->main_buttonClear);
+			this->mainPage->Controls->Add(this->main_buttonTable);
+			this->mainPage->Controls->Add(this->main_buttonError);
+			this->mainPage->Controls->Add(this->main_buttonRef);
+			this->mainPage->Controls->Add(this->main_pictureBoxGraphic);
+			this->mainPage->Controls->Add(this->main_groupBoxParametrs);
+			this->mainPage->Controls->Add(this->main_pictureBoxTask);
 			this->mainPage->Location = System::Drawing::Point(4, 22);
 			this->mainPage->Name = L"mainPage";
 			this->mainPage->Padding = System::Windows::Forms::Padding(3);
@@ -168,280 +168,282 @@ namespace CHM9 {
 			this->mainPage->Text = L"Основная задача";
 			this->mainPage->UseVisualStyleBackColor = true;
 			// 
-			// buttonSolve
+			// main_buttonSolve
 			// 
-			this->buttonSolve->Location = System::Drawing::Point(25, 209);
-			this->buttonSolve->Name = L"buttonSolve";
-			this->buttonSolve->Size = System::Drawing::Size(228, 47);
-			this->buttonSolve->TabIndex = 10;
-			this->buttonSolve->Text = L"Решить";
-			this->buttonSolve->UseVisualStyleBackColor = true;
+			this->main_buttonSolve->Location = System::Drawing::Point(25, 209);
+			this->main_buttonSolve->Name = L"main_buttonSolve";
+			this->main_buttonSolve->Size = System::Drawing::Size(228, 47);
+			this->main_buttonSolve->TabIndex = 10;
+			this->main_buttonSolve->Text = L"Решить";
+			this->main_buttonSolve->UseVisualStyleBackColor = true;
 			// 
-			// buttonClear
+			// main_buttonClear
 			// 
-			this->buttonClear->Location = System::Drawing::Point(25, 262);
-			this->buttonClear->Name = L"buttonClear";
-			this->buttonClear->Size = System::Drawing::Size(228, 47);
-			this->buttonClear->TabIndex = 10;
-			this->buttonClear->Text = L"Очистить область";
-			this->buttonClear->UseVisualStyleBackColor = true;
+			this->main_buttonClear->Location = System::Drawing::Point(25, 262);
+			this->main_buttonClear->Name = L"main_buttonClear";
+			this->main_buttonClear->Size = System::Drawing::Size(228, 47);
+			this->main_buttonClear->TabIndex = 10;
+			this->main_buttonClear->Text = L"Очистить область";
+			this->main_buttonClear->UseVisualStyleBackColor = true;
 			// 
-			// buttonTable
+			// main_buttonTable
 			// 
-			this->buttonTable->Location = System::Drawing::Point(25, 407);
-			this->buttonTable->Name = L"buttonTable";
-			this->buttonTable->Size = System::Drawing::Size(228, 47);
-			this->buttonTable->TabIndex = 10;
-			this->buttonTable->Text = L"Таблица";
-			this->buttonTable->UseVisualStyleBackColor = true;
+			this->main_buttonTable->Location = System::Drawing::Point(25, 407);
+			this->main_buttonTable->Name = L"main_buttonTable";
+			this->main_buttonTable->Size = System::Drawing::Size(228, 47);
+			this->main_buttonTable->TabIndex = 10;
+			this->main_buttonTable->Text = L"Таблица";
+			this->main_buttonTable->UseVisualStyleBackColor = true;
+			this->main_buttonTable->Click += gcnew System::EventHandler(this, &MainForm::main_buttonTable_Click);
 			// 
-			// buttonError
+			// main_buttonError
 			// 
-			this->buttonError->Location = System::Drawing::Point(25, 460);
-			this->buttonError->Name = L"buttonError";
-			this->buttonError->Size = System::Drawing::Size(228, 47);
-			this->buttonError->TabIndex = 10;
-			this->buttonError->Text = L"Лок. погрешность";
-			this->buttonError->UseVisualStyleBackColor = true;
+			this->main_buttonError->Location = System::Drawing::Point(25, 460);
+			this->main_buttonError->Name = L"main_buttonError";
+			this->main_buttonError->Size = System::Drawing::Size(228, 47);
+			this->main_buttonError->TabIndex = 10;
+			this->main_buttonError->Text = L"Лок. погрешность";
+			this->main_buttonError->UseVisualStyleBackColor = true;
 			// 
-			// buttonRef
+			// main_buttonRef
 			// 
-			this->buttonRef->Location = System::Drawing::Point(25, 354);
-			this->buttonRef->Name = L"buttonRef";
-			this->buttonRef->Size = System::Drawing::Size(228, 47);
-			this->buttonRef->TabIndex = 10;
-			this->buttonRef->Text = L"Справка";
-			this->buttonRef->UseVisualStyleBackColor = true;
+			this->main_buttonRef->Location = System::Drawing::Point(25, 354);
+			this->main_buttonRef->Name = L"main_buttonRef";
+			this->main_buttonRef->Size = System::Drawing::Size(228, 47);
+			this->main_buttonRef->TabIndex = 10;
+			this->main_buttonRef->Text = L"Справка";
+			this->main_buttonRef->UseVisualStyleBackColor = true;
 			// 
-			// pictureBoxGraphic
+			// main_pictureBoxGraphic
 			// 
-			this->pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
-			this->pictureBoxGraphic->Name = L"pictureBoxGraphic";
-			this->pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
-			this->pictureBoxGraphic->TabIndex = 9;
-			this->pictureBoxGraphic->TabStop = false;
+			this->main_pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->main_pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
+			this->main_pictureBoxGraphic->Name = L"main_pictureBoxGraphic";
+			this->main_pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
+			this->main_pictureBoxGraphic->TabIndex = 9;
+			this->main_pictureBoxGraphic->TabStop = false;
 			// 
-			// groupBoxParametrs
+			// main_groupBoxParametrs
 			// 
-			this->groupBoxParametrs->Controls->Add(this->labelStep);
-			this->groupBoxParametrs->Controls->Add(this->labelMaxNumSteps);
-			this->groupBoxParametrs->Controls->Add(this->labelLocError);
-			this->groupBoxParametrs->Controls->Add(this->labelH);
-			this->groupBoxParametrs->Controls->Add(this->labelAccurBoard);
-			this->groupBoxParametrs->Controls->Add(this->label2);
-			this->groupBoxParametrs->Controls->Add(this->labelLength);
-			this->groupBoxParametrs->Controls->Add(this->labelL);
-			this->groupBoxParametrs->Controls->Add(this->labelX);
-			this->groupBoxParametrs->Controls->Add(this->labelU0);
-			this->groupBoxParametrs->Controls->Add(this->labelM);
-			this->groupBoxParametrs->Controls->Add(this->textBoxU0);
-			this->groupBoxParametrs->Controls->Add(this->labelA2);
-			this->groupBoxParametrs->Controls->Add(this->labelA1);
-			this->groupBoxParametrs->Controls->Add(this->textBoxStep);
-			this->groupBoxParametrs->Controls->Add(this->textBoxM);
-			this->groupBoxParametrs->Controls->Add(this->textBoxMaxNumSteps);
-			this->groupBoxParametrs->Controls->Add(this->textBoxLocError);
-			this->groupBoxParametrs->Controls->Add(this->textBoxAccurBoard);
-			this->groupBoxParametrs->Controls->Add(this->textBoxA2);
-			this->groupBoxParametrs->Controls->Add(this->textBoxLenght);
-			this->groupBoxParametrs->Controls->Add(this->textBoxA1);
-			this->groupBoxParametrs->Location = System::Drawing::Point(285, 6);
-			this->groupBoxParametrs->Name = L"groupBoxParametrs";
-			this->groupBoxParametrs->Size = System::Drawing::Size(554, 156);
-			this->groupBoxParametrs->TabIndex = 8;
-			this->groupBoxParametrs->TabStop = false;
-			this->groupBoxParametrs->Text = L"Параметры задачи";
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelStep);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelMaxNumSteps);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelLocError);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelH);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelAccurBoard);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelParameters);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelLength);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelL);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelX);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelU0);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelM);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxU0);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelA2);
+			this->main_groupBoxParametrs->Controls->Add(this->main_labelA1);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxStep);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxM);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxMaxNumSteps);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxLocError);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxAccurBoard);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxA2);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxLenght);
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxA1);
+			this->main_groupBoxParametrs->Location = System::Drawing::Point(285, 6);
+			this->main_groupBoxParametrs->Name = L"main_groupBoxParametrs";
+			this->main_groupBoxParametrs->Size = System::Drawing::Size(554, 156);
+			this->main_groupBoxParametrs->TabIndex = 8;
+			this->main_groupBoxParametrs->TabStop = false;
+			this->main_groupBoxParametrs->Text = L"Параметры задачи";
 			// 
-			// labelStep
+			// main_labelStep
 			// 
-			this->labelStep->AutoSize = true;
-			this->labelStep->Location = System::Drawing::Point(207, 106);
-			this->labelStep->Name = L"labelStep";
-			this->labelStep->Size = System::Drawing::Size(112, 13);
-			this->labelStep->TabIndex = 8;
-			this->labelStep->Text = L"Шаг интегрирования";
+			this->main_labelStep->AutoSize = true;
+			this->main_labelStep->Location = System::Drawing::Point(207, 106);
+			this->main_labelStep->Name = L"main_labelStep";
+			this->main_labelStep->Size = System::Drawing::Size(112, 13);
+			this->main_labelStep->TabIndex = 8;
+			this->main_labelStep->Text = L"Шаг интегрирования";
 			// 
-			// labelMaxNumSteps
+			// main_labelMaxNumSteps
 			// 
-			this->labelMaxNumSteps->AutoSize = true;
-			this->labelMaxNumSteps->Location = System::Drawing::Point(371, 62);
-			this->labelMaxNumSteps->Name = L"labelMaxNumSteps";
-			this->labelMaxNumSteps->Size = System::Drawing::Size(150, 13);
-			this->labelMaxNumSteps->TabIndex = 8;
-			this->labelMaxNumSteps->Text = L"Максимальное число шагов";
+			this->main_labelMaxNumSteps->AutoSize = true;
+			this->main_labelMaxNumSteps->Location = System::Drawing::Point(371, 62);
+			this->main_labelMaxNumSteps->Name = L"main_labelMaxNumSteps";
+			this->main_labelMaxNumSteps->Size = System::Drawing::Size(150, 13);
+			this->main_labelMaxNumSteps->TabIndex = 8;
+			this->main_labelMaxNumSteps->Text = L"Максимальное число шагов";
 			// 
-			// labelLocError
+			// main_labelLocError
 			// 
-			this->labelLocError->AutoSize = true;
-			this->labelLocError->Location = System::Drawing::Point(207, 62);
-			this->labelLocError->Name = L"labelLocError";
-			this->labelLocError->Size = System::Drawing::Size(148, 13);
-			this->labelLocError->TabIndex = 8;
-			this->labelLocError->Text = L"Контроль лок. погрешности";
+			this->main_labelLocError->AutoSize = true;
+			this->main_labelLocError->Location = System::Drawing::Point(207, 62);
+			this->main_labelLocError->Name = L"main_labelLocError";
+			this->main_labelLocError->Size = System::Drawing::Size(148, 13);
+			this->main_labelLocError->TabIndex = 8;
+			this->main_labelLocError->Text = L"Контроль лок. погрешности";
 			// 
-			// labelH
+			// main_labelH
 			// 
-			this->labelH->AutoSize = true;
-			this->labelH->Location = System::Drawing::Point(207, 128);
-			this->labelH->Name = L"labelH";
-			this->labelH->Size = System::Drawing::Size(22, 13);
-			this->labelH->TabIndex = 5;
-			this->labelH->Text = L" h=";
+			this->main_labelH->AutoSize = true;
+			this->main_labelH->Location = System::Drawing::Point(207, 128);
+			this->main_labelH->Name = L"main_labelH";
+			this->main_labelH->Size = System::Drawing::Size(22, 13);
+			this->main_labelH->TabIndex = 5;
+			this->main_labelH->Text = L" h=";
 			// 
-			// labelAccurBoard
+			// main_labelAccurBoard
 			// 
-			this->labelAccurBoard->AutoSize = true;
-			this->labelAccurBoard->Location = System::Drawing::Point(371, 20);
-			this->labelAccurBoard->Name = L"labelAccurBoard";
-			this->labelAccurBoard->Size = System::Drawing::Size(152, 13);
-			this->labelAccurBoard->TabIndex = 8;
-			this->labelAccurBoard->Text = L"Точность выхода на границу";
+			this->main_labelAccurBoard->AutoSize = true;
+			this->main_labelAccurBoard->Location = System::Drawing::Point(371, 20);
+			this->main_labelAccurBoard->Name = L"main_labelAccurBoard";
+			this->main_labelAccurBoard->Size = System::Drawing::Size(152, 13);
+			this->main_labelAccurBoard->TabIndex = 8;
+			this->main_labelAccurBoard->Text = L"Точность выхода на границу";
 			// 
-			// label2
+			// main_labelParameters
 			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(39, 20);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(66, 13);
-			this->label2->TabIndex = 8;
-			this->label2->Text = L"Параметры";
+			this->main_labelParameters->AutoSize = true;
+			this->main_labelParameters->Location = System::Drawing::Point(39, 20);
+			this->main_labelParameters->Name = L"main_labelParameters";
+			this->main_labelParameters->Size = System::Drawing::Size(66, 13);
+			this->main_labelParameters->TabIndex = 8;
+			this->main_labelParameters->Text = L"Параметры";
 			// 
-			// labelLength
+			// main_labelLength
 			// 
-			this->labelLength->AutoSize = true;
-			this->labelLength->Location = System::Drawing::Point(207, 20);
-			this->labelLength->Name = L"labelLength";
-			this->labelLength->Size = System::Drawing::Size(96, 13);
-			this->labelLength->TabIndex = 8;
-			this->labelLength->Text = L"Длина интервала";
+			this->main_labelLength->AutoSize = true;
+			this->main_labelLength->Location = System::Drawing::Point(207, 20);
+			this->main_labelLength->Name = L"main_labelLength";
+			this->main_labelLength->Size = System::Drawing::Size(96, 13);
+			this->main_labelLength->TabIndex = 8;
+			this->main_labelLength->Text = L"Длина интервала";
 			// 
-			// labelL
+			// main_labelL
 			// 
-			this->labelL->AutoSize = true;
-			this->labelL->Location = System::Drawing::Point(207, 84);
-			this->labelL->Name = L"labelL";
-			this->labelL->Size = System::Drawing::Size(22, 13);
-			this->labelL->TabIndex = 5;
-			this->labelL->Text = L" L=";
+			this->main_labelL->AutoSize = true;
+			this->main_labelL->Location = System::Drawing::Point(207, 84);
+			this->main_labelL->Name = L"main_labelL";
+			this->main_labelL->Size = System::Drawing::Size(22, 13);
+			this->main_labelL->TabIndex = 5;
+			this->main_labelL->Text = L" L=";
 			// 
-			// labelX
+			// main_labelX
 			// 
-			this->labelX->AutoSize = true;
-			this->labelX->Location = System::Drawing::Point(207, 41);
-			this->labelX->Name = L"labelX";
-			this->labelX->Size = System::Drawing::Size(23, 13);
-			this->labelX->TabIndex = 5;
-			this->labelX->Text = L" X=";
+			this->main_labelX->AutoSize = true;
+			this->main_labelX->Location = System::Drawing::Point(207, 41);
+			this->main_labelX->Name = L"main_labelX";
+			this->main_labelX->Size = System::Drawing::Size(23, 13);
+			this->main_labelX->TabIndex = 5;
+			this->main_labelX->Text = L" X=";
 			// 
-			// labelU0
+			// main_labelU0
 			// 
-			this->labelU0->AutoSize = true;
-			this->labelU0->Location = System::Drawing::Point(39, 128);
-			this->labelU0->Name = L"labelU0";
-			this->labelU0->Size = System::Drawing::Size(25, 13);
-			this->labelU0->TabIndex = 5;
-			this->labelU0->Text = L"u0=";
+			this->main_labelU0->AutoSize = true;
+			this->main_labelU0->Location = System::Drawing::Point(39, 128);
+			this->main_labelU0->Name = L"main_labelU0";
+			this->main_labelU0->Size = System::Drawing::Size(25, 13);
+			this->main_labelU0->TabIndex = 5;
+			this->main_labelU0->Text = L"u0=";
 			// 
-			// labelM
+			// main_labelM
 			// 
-			this->labelM->AutoSize = true;
-			this->labelM->Location = System::Drawing::Point(39, 94);
-			this->labelM->Name = L"labelM";
-			this->labelM->Size = System::Drawing::Size(24, 13);
-			this->labelM->TabIndex = 7;
-			this->labelM->Text = L" m=";
+			this->main_labelM->AutoSize = true;
+			this->main_labelM->Location = System::Drawing::Point(39, 94);
+			this->main_labelM->Name = L"main_labelM";
+			this->main_labelM->Size = System::Drawing::Size(24, 13);
+			this->main_labelM->TabIndex = 7;
+			this->main_labelM->Text = L" m=";
 			// 
-			// textBoxU0
+			// main_textBoxU0
 			// 
-			this->textBoxU0->Location = System::Drawing::Point(67, 125);
-			this->textBoxU0->Name = L"textBoxU0";
-			this->textBoxU0->Size = System::Drawing::Size(106, 20);
-			this->textBoxU0->TabIndex = 4;
+			this->main_textBoxU0->Location = System::Drawing::Point(67, 125);
+			this->main_textBoxU0->Name = L"main_textBoxU0";
+			this->main_textBoxU0->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxU0->TabIndex = 4;
 			// 
-			// labelA2
+			// main_labelA2
 			// 
-			this->labelA2->AutoSize = true;
-			this->labelA2->Location = System::Drawing::Point(39, 67);
-			this->labelA2->Name = L"labelA2";
-			this->labelA2->Size = System::Drawing::Size(25, 13);
-			this->labelA2->TabIndex = 6;
-			this->labelA2->Text = L"a2=";
+			this->main_labelA2->AutoSize = true;
+			this->main_labelA2->Location = System::Drawing::Point(39, 67);
+			this->main_labelA2->Name = L"main_labelA2";
+			this->main_labelA2->Size = System::Drawing::Size(25, 13);
+			this->main_labelA2->TabIndex = 6;
+			this->main_labelA2->Text = L"a2=";
 			// 
-			// labelA1
+			// main_labelA1
 			// 
-			this->labelA1->AutoSize = true;
-			this->labelA1->Location = System::Drawing::Point(39, 41);
-			this->labelA1->Name = L"labelA1";
-			this->labelA1->Size = System::Drawing::Size(25, 13);
-			this->labelA1->TabIndex = 5;
-			this->labelA1->Text = L"a1=";
+			this->main_labelA1->AutoSize = true;
+			this->main_labelA1->Location = System::Drawing::Point(39, 41);
+			this->main_labelA1->Name = L"main_labelA1";
+			this->main_labelA1->Size = System::Drawing::Size(25, 13);
+			this->main_labelA1->TabIndex = 5;
+			this->main_labelA1->Text = L"a1=";
 			// 
-			// textBoxStep
+			// main_textBoxStep
 			// 
-			this->textBoxStep->Location = System::Drawing::Point(231, 125);
-			this->textBoxStep->Name = L"textBoxStep";
-			this->textBoxStep->Size = System::Drawing::Size(106, 20);
-			this->textBoxStep->TabIndex = 4;
+			this->main_textBoxStep->Location = System::Drawing::Point(231, 125);
+			this->main_textBoxStep->Name = L"main_textBoxStep";
+			this->main_textBoxStep->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxStep->TabIndex = 4;
 			// 
-			// textBoxM
+			// main_textBoxM
 			// 
-			this->textBoxM->Location = System::Drawing::Point(67, 89);
-			this->textBoxM->Name = L"textBoxM";
-			this->textBoxM->Size = System::Drawing::Size(106, 20);
-			this->textBoxM->TabIndex = 4;
+			this->main_textBoxM->Location = System::Drawing::Point(67, 89);
+			this->main_textBoxM->Name = L"main_textBoxM";
+			this->main_textBoxM->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxM->TabIndex = 4;
 			// 
-			// textBoxMaxNumSteps
+			// main_textBoxMaxNumSteps
 			// 
-			this->textBoxMaxNumSteps->Location = System::Drawing::Point(376, 81);
-			this->textBoxMaxNumSteps->Name = L"textBoxMaxNumSteps";
-			this->textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
-			this->textBoxMaxNumSteps->TabIndex = 4;
+			this->main_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 81);
+			this->main_textBoxMaxNumSteps->Name = L"main_textBoxMaxNumSteps";
+			this->main_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxMaxNumSteps->TabIndex = 4;
 			// 
-			// textBoxLocError
+			// main_textBoxLocError
 			// 
-			this->textBoxLocError->Location = System::Drawing::Point(231, 81);
-			this->textBoxLocError->Name = L"textBoxLocError";
-			this->textBoxLocError->Size = System::Drawing::Size(106, 20);
-			this->textBoxLocError->TabIndex = 4;
+			this->main_textBoxLocError->Location = System::Drawing::Point(231, 81);
+			this->main_textBoxLocError->Name = L"main_textBoxLocError";
+			this->main_textBoxLocError->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxLocError->TabIndex = 4;
 			// 
-			// textBoxAccurBoard
+			// main_textBoxAccurBoard
 			// 
-			this->textBoxAccurBoard->Location = System::Drawing::Point(376, 37);
-			this->textBoxAccurBoard->Name = L"textBoxAccurBoard";
-			this->textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
-			this->textBoxAccurBoard->TabIndex = 4;
+			this->main_textBoxAccurBoard->Location = System::Drawing::Point(376, 37);
+			this->main_textBoxAccurBoard->Name = L"main_textBoxAccurBoard";
+			this->main_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxAccurBoard->TabIndex = 4;
 			// 
-			// textBoxA2
+			// main_textBoxA2
 			// 
-			this->textBoxA2->Location = System::Drawing::Point(67, 63);
-			this->textBoxA2->Name = L"textBoxA2";
-			this->textBoxA2->Size = System::Drawing::Size(106, 20);
-			this->textBoxA2->TabIndex = 4;
+			this->main_textBoxA2->Location = System::Drawing::Point(67, 63);
+			this->main_textBoxA2->Name = L"main_textBoxA2";
+			this->main_textBoxA2->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxA2->TabIndex = 4;
 			// 
-			// textBoxLenght
+			// main_textBoxLenght
 			// 
-			this->textBoxLenght->Location = System::Drawing::Point(231, 37);
-			this->textBoxLenght->Name = L"textBoxLenght";
-			this->textBoxLenght->Size = System::Drawing::Size(106, 20);
-			this->textBoxLenght->TabIndex = 4;
+			this->main_textBoxLenght->Location = System::Drawing::Point(231, 37);
+			this->main_textBoxLenght->Name = L"main_textBoxLenght";
+			this->main_textBoxLenght->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxLenght->TabIndex = 4;
 			// 
-			// textBoxA1
+			// main_textBoxA1
 			// 
-			this->textBoxA1->Location = System::Drawing::Point(67, 37);
-			this->textBoxA1->Name = L"textBoxA1";
-			this->textBoxA1->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxA1->Location = System::Drawing::Point(67, 37);
+			this->main_textBoxA1->Name = L"main_textBoxA1";
+			this->main_textBoxA1->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxA1->TabIndex = 9;
 			// 
-			// pictureBoxMainTask
+			// main_pictureBoxTask
 			// 
-			this->pictureBoxMainTask->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBoxMainTask.BackgroundImage")));
-			this->pictureBoxMainTask->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pictureBoxMainTask->ErrorImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBoxMainTask.ErrorImage")));
-			this->pictureBoxMainTask->Location = System::Drawing::Point(25, 12);
-			this->pictureBoxMainTask->Name = L"pictureBoxMainTask";
-			this->pictureBoxMainTask->Size = System::Drawing::Size(228, 150);
-			this->pictureBoxMainTask->TabIndex = 2;
-			this->pictureBoxMainTask->TabStop = false;
+			this->main_pictureBoxTask->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"main_pictureBoxTask.BackgroundImage")));
+			this->main_pictureBoxTask->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->main_pictureBoxTask->ErrorImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"main_pictureBoxTask.ErrorImage")));
+			this->main_pictureBoxTask->Location = System::Drawing::Point(25, 12);
+			this->main_pictureBoxTask->Name = L"main_pictureBoxTask";
+			this->main_pictureBoxTask->Size = System::Drawing::Size(228, 150);
+			this->main_pictureBoxTask->TabIndex = 2;
+			this->main_pictureBoxTask->TabStop = false;
 			// 
 			// MainForm
 			// 
@@ -453,12 +455,16 @@ namespace CHM9 {
 			this->Text = L"Задача 9, вариант 3";
 			this->tabControl->ResumeLayout(false);
 			this->mainPage->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxGraphic))->EndInit();
-			this->groupBoxParametrs->ResumeLayout(false);
-			this->groupBoxParametrs->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxMainTask))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->EndInit();
+			this->main_groupBoxParametrs->ResumeLayout(false);
+			this->main_groupBoxParametrs->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxTask))->EndInit();
 			this->ResumeLayout(false);
 
 		}
+private: System::Void main_buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
+	TableForm^ tableForm = gcnew TableForm();
+	tableForm->Show();
+}
 };
 }

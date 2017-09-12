@@ -15,7 +15,7 @@ struct Row {
 	double viItog;
 	double stepInc;
 	double stepDec;
-	double Total;
+	double total;
 	double ui;
 	double abs_ui_vi;
 };
