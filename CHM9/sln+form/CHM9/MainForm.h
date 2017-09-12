@@ -45,31 +45,13 @@ namespace CHM9 {
 	private: System::Windows::Forms::Label^  labelM;
 
 	private: System::Windows::Forms::Label^  labelA2;
-
 	private: System::Windows::Forms::Label^  labelA1;
 	private: System::Windows::Forms::TextBox^  textBoxM;
-
-
 	private: System::Windows::Forms::TextBox^  textBoxA2;
-
 	private: System::Windows::Forms::TextBox^  textBoxA1;
-
-	private: System::Windows::Forms::Label^  label1;
-
 	private: System::Windows::Forms::Label^  labelU0;
 	private: System::Windows::Forms::TextBox^  textBoxU0;
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^  labelX;
-
 	private: System::Windows::Forms::Label^  labelLength;
 	private: System::Windows::Forms::Label^  labelStep;
 	private: System::Windows::Forms::Label^  labelMaxNumSteps;
@@ -82,12 +64,12 @@ namespace CHM9 {
 	private: System::Windows::Forms::TextBox^  textBoxLocError;
 	private: System::Windows::Forms::TextBox^  textBoxAccurBoard;
 	private: System::Windows::Forms::TextBox^  textBoxLenght;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
-	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::Button^  button3;
-	private: System::Windows::Forms::Button^  button5;
-	private: System::Windows::Forms::Button^  button4;
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::PictureBox^  pictureBoxGraphic;
+	private: System::Windows::Forms::Button^  buttonSolve;
+	private: System::Windows::Forms::Button^  buttonClear;
+	private: System::Windows::Forms::Button^  buttonTable;
+	private: System::Windows::Forms::Button^  buttonError;
+	private: System::Windows::Forms::Button^  buttonRef;
 	private: System::Windows::Forms::Label^  label2;
 
 
@@ -111,12 +93,12 @@ namespace CHM9 {
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->testPage = (gcnew System::Windows::Forms::TabPage());
 			this->mainPage = (gcnew System::Windows::Forms::TabPage());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button5 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->buttonSolve = (gcnew System::Windows::Forms::Button());
+			this->buttonClear = (gcnew System::Windows::Forms::Button());
+			this->buttonTable = (gcnew System::Windows::Forms::Button());
+			this->buttonError = (gcnew System::Windows::Forms::Button());
+			this->buttonRef = (gcnew System::Windows::Forms::Button());
+			this->pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
 			this->groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
 			this->labelStep = (gcnew System::Windows::Forms::Label());
 			this->labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
@@ -140,11 +122,10 @@ namespace CHM9 {
 			this->textBoxA2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxLenght = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxA1 = (gcnew System::Windows::Forms::TextBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBoxMainTask = (gcnew System::Windows::Forms::PictureBox());
 			this->tabControl->SuspendLayout();
 			this->mainPage->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxGraphic))->BeginInit();
 			this->groupBoxParametrs->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxMainTask))->BeginInit();
 			this->SuspendLayout();
@@ -171,12 +152,12 @@ namespace CHM9 {
 			// 
 			// mainPage
 			// 
-			this->mainPage->Controls->Add(this->button2);
-			this->mainPage->Controls->Add(this->button3);
-			this->mainPage->Controls->Add(this->button5);
-			this->mainPage->Controls->Add(this->button4);
-			this->mainPage->Controls->Add(this->button1);
-			this->mainPage->Controls->Add(this->pictureBox1);
+			this->mainPage->Controls->Add(this->buttonSolve);
+			this->mainPage->Controls->Add(this->buttonClear);
+			this->mainPage->Controls->Add(this->buttonTable);
+			this->mainPage->Controls->Add(this->buttonError);
+			this->mainPage->Controls->Add(this->buttonRef);
+			this->mainPage->Controls->Add(this->pictureBoxGraphic);
 			this->mainPage->Controls->Add(this->groupBoxParametrs);
 			this->mainPage->Controls->Add(this->pictureBoxMainTask);
 			this->mainPage->Location = System::Drawing::Point(4, 22);
@@ -187,59 +168,59 @@ namespace CHM9 {
 			this->mainPage->Text = L"Основная задача";
 			this->mainPage->UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// buttonSolve
 			// 
-			this->button2->Location = System::Drawing::Point(25, 209);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(228, 47);
-			this->button2->TabIndex = 10;
-			this->button2->Text = L"Решить";
-			this->button2->UseVisualStyleBackColor = true;
+			this->buttonSolve->Location = System::Drawing::Point(25, 209);
+			this->buttonSolve->Name = L"buttonSolve";
+			this->buttonSolve->Size = System::Drawing::Size(228, 47);
+			this->buttonSolve->TabIndex = 10;
+			this->buttonSolve->Text = L"Решить";
+			this->buttonSolve->UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// buttonClear
 			// 
-			this->button3->Location = System::Drawing::Point(25, 262);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(228, 47);
-			this->button3->TabIndex = 10;
-			this->button3->Text = L"Очистить область";
-			this->button3->UseVisualStyleBackColor = true;
+			this->buttonClear->Location = System::Drawing::Point(25, 262);
+			this->buttonClear->Name = L"buttonClear";
+			this->buttonClear->Size = System::Drawing::Size(228, 47);
+			this->buttonClear->TabIndex = 10;
+			this->buttonClear->Text = L"Очистить область";
+			this->buttonClear->UseVisualStyleBackColor = true;
 			// 
-			// button5
+			// buttonTable
 			// 
-			this->button5->Location = System::Drawing::Point(25, 407);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(228, 47);
-			this->button5->TabIndex = 10;
-			this->button5->Text = L"Таблица";
-			this->button5->UseVisualStyleBackColor = true;
+			this->buttonTable->Location = System::Drawing::Point(25, 407);
+			this->buttonTable->Name = L"buttonTable";
+			this->buttonTable->Size = System::Drawing::Size(228, 47);
+			this->buttonTable->TabIndex = 10;
+			this->buttonTable->Text = L"Таблица";
+			this->buttonTable->UseVisualStyleBackColor = true;
 			// 
-			// button4
+			// buttonError
 			// 
-			this->button4->Location = System::Drawing::Point(25, 460);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(228, 47);
-			this->button4->TabIndex = 10;
-			this->button4->Text = L"Лок. погрешность";
-			this->button4->UseVisualStyleBackColor = true;
+			this->buttonError->Location = System::Drawing::Point(25, 460);
+			this->buttonError->Name = L"buttonError";
+			this->buttonError->Size = System::Drawing::Size(228, 47);
+			this->buttonError->TabIndex = 10;
+			this->buttonError->Text = L"Лок. погрешность";
+			this->buttonError->UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// buttonRef
 			// 
-			this->button1->Location = System::Drawing::Point(25, 354);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(228, 47);
-			this->button1->TabIndex = 10;
-			this->button1->Text = L"Справка";
-			this->button1->UseVisualStyleBackColor = true;
+			this->buttonRef->Location = System::Drawing::Point(25, 354);
+			this->buttonRef->Name = L"buttonRef";
+			this->buttonRef->Size = System::Drawing::Size(228, 47);
+			this->buttonRef->TabIndex = 10;
+			this->buttonRef->Text = L"Справка";
+			this->buttonRef->UseVisualStyleBackColor = true;
 			// 
-			// pictureBox1
+			// pictureBoxGraphic
 			// 
-			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->pictureBox1->Location = System::Drawing::Point(285, 177);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(554, 414);
-			this->pictureBox1->TabIndex = 9;
-			this->pictureBox1->TabStop = false;
+			this->pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
+			this->pictureBoxGraphic->Name = L"pictureBoxGraphic";
+			this->pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
+			this->pictureBoxGraphic->TabIndex = 9;
+			this->pictureBoxGraphic->TabStop = false;
 			// 
 			// groupBoxParametrs
 			// 
@@ -265,7 +246,6 @@ namespace CHM9 {
 			this->groupBoxParametrs->Controls->Add(this->textBoxA2);
 			this->groupBoxParametrs->Controls->Add(this->textBoxLenght);
 			this->groupBoxParametrs->Controls->Add(this->textBoxA1);
-			this->groupBoxParametrs->Controls->Add(this->label1);
 			this->groupBoxParametrs->Location = System::Drawing::Point(285, 6);
 			this->groupBoxParametrs->Name = L"groupBoxParametrs";
 			this->groupBoxParametrs->Size = System::Drawing::Size(554, 156);
@@ -451,15 +431,6 @@ namespace CHM9 {
 			this->textBoxA1->Location = System::Drawing::Point(67, 37);
 			this->textBoxA1->Name = L"textBoxA1";
 			this->textBoxA1->Size = System::Drawing::Size(106, 20);
-			this->textBoxA1->TabIndex = 4;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(30, 21);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(0, 13);
-			this->label1->TabIndex = 3;
 			// 
 			// pictureBoxMainTask
 			// 
@@ -482,7 +453,7 @@ namespace CHM9 {
 			this->Text = L"Задача 9, вариант 3";
 			this->tabControl->ResumeLayout(false);
 			this->mainPage->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxGraphic))->EndInit();
 			this->groupBoxParametrs->ResumeLayout(false);
 			this->groupBoxParametrs->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBoxMainTask))->EndInit();
