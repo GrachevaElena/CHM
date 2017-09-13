@@ -1,6 +1,7 @@
 #pragma once
 
-const int N = 100000;
+const int MainTask = 1;
+const int TestTask = 0;
 
 //Don't laugh, please, I know that names are stupid
 struct Row {
@@ -15,9 +16,40 @@ struct Row {
 	double viItog;
 	double stepInc;
 	double stepDec;
-	double Total;
+	double total;
 	double ui;
 	double abs_ui_vi;
 };
 
-typedef Row Table[N];
+class Table {
+	Row* Data;
+	int Size;
+public:
+	Table() { Data = 0; }
+	Table(int size) { 
+		Size = size; 
+		Data = new Row[Size];
+	}
+	Table(Row* data, int size) {
+		Size = size;
+		Data = new Row[Size];
+		for (int i = 0; i < size; i++) {
+			Data[i] = data[i];
+		}
+	}
+	Table(const Table& t) {
+		Size = t.Size;
+		Data = new Row[Size];
+		for (int i = 0; i < t.Size; i++) {
+			Data[i] = t.Data[i];
+		}
+	}
+	~Table(){
+		delete[] Data;
+		Data = 0;
+		Size = 0;
+	}
+	Row& operator[] (int i) { return Data[i]; }
+	int GetSize() { return Size; }
+
+};
