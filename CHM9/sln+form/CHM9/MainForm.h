@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdlib>
 #include "Table.h"
 #include "TableForm.h"
 
@@ -16,14 +17,35 @@ namespace CHM9 {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public:
+
+	public: Table* table;
+			int X;
+
 		MainForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: добавьте код конструктора
-			//
+			table = new Table(4);
+			SetTable();
+			X = 10;
 		}
+
+	protected: void SetTable() {
+		(*table)[0].i = 0;
+		(*table)[0].xi = 1;
+		(*table)[0].viItog = 1;
+
+		(*table)[1].i = 1;
+		(*table)[1].xi = 3;
+		(*table)[1].viItog = 17;
+
+		(*table)[2].i = 2;
+		(*table)[2].xi = 5;
+		(*table)[2].viItog = 12;
+
+		(*table)[3].i = 3;
+		(*table)[3].xi = 10;
+		(*table)[3].viItog = 15;
+	}
 
 	protected:
 		/// <summary>
@@ -71,10 +93,6 @@ namespace CHM9 {
 	private: System::Windows::Forms::Button^  main_buttonRef;
 	private: System::Windows::Forms::Label^  main_labelParameters;
 	private: System::Windows::Forms::Button^  main_buttonClear;
-
-
-
-
 
 
 	private:
@@ -177,6 +195,7 @@ namespace CHM9 {
 			this->main_buttonSolve->TabIndex = 10;
 			this->main_buttonSolve->Text = L"Решить";
 			this->main_buttonSolve->UseVisualStyleBackColor = true;
+			this->main_buttonSolve->Click += gcnew System::EventHandler(this, &MainForm::main_buttonSolve_Click);
 			// 
 			// main_buttonClear
 			// 
@@ -427,6 +446,7 @@ namespace CHM9 {
 			this->main_textBoxLenght->Name = L"main_textBoxLenght";
 			this->main_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLenght->TabIndex = 4;
+			this->main_textBoxLenght->Text = L"10";
 			// 
 			// main_textBoxA1
 			// 
@@ -463,10 +483,36 @@ namespace CHM9 {
 			this->ResumeLayout(false);
 
 		}
+#pragma endregion
+
 private: System::Void main_buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-	Table table(20);
-	TableForm^ tableForm = gcnew TableForm(MainTask, table);
+	TableForm^ tableForm = gcnew TableForm(MainTask, *table);
 	tableForm->Show();
+}
+private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
+	//call function
+
+	this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::main_pictureBoxGraphic_Paint);
+	main_pictureBoxGraphic->Refresh();
+}
+
+private: System::Void main_pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+	Color color;
+	Pen^ pen = gcnew Pen(color.Red, 2);
+
+	Graphics^ g = e->Graphics;
+
+	//Drawing
+	const int dx = main_pictureBoxGraphic->Width/X;
+
+	int maxV=0;
+	for (int i = 0; i < table->GetSize(); i++)
+		if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
+	const int dy= main_pictureBoxGraphic->Height / maxV;
+
+	for (int i = 0; i < table->GetSize()-1; i++) {
+		g->DrawLine(pen,(int)(*table)[i].xi*dx, main_pictureBoxGraphic->Height-(int)(*table)[i].viItog*dy,(int)(*table)[i+1].xi*dx, main_pictureBoxGraphic->Height - (int)(*table)[i+1].viItog*dy);
+	}
 }
 };
 }
