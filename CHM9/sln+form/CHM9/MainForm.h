@@ -464,7 +464,8 @@ namespace CHM9 {
 
 		}
 private: System::Void main_buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-	TableForm^ tableForm = gcnew TableForm(MainTask);
+	Table table(20);
+	TableForm^ tableForm = gcnew TableForm(MainTask, table);
 	tableForm->Show();
 }
 };

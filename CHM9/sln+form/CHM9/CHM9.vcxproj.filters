@@ -34,5 +34,8 @@
     <EmbeddedResource Include="MainForm.resx">
       <Filter>Файлы ресурсов</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="TableForm.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

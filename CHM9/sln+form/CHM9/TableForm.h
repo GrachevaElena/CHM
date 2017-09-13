@@ -18,10 +18,11 @@ namespace CHM9 {
 
 		int Task;
 	public:
-		TableForm(int _task)
+		TableForm(int task, Table& table)
 		{
-			Task = _task;
+			Task = task;
 			InitializeComponent();
+			ShowTable(table);
 		}
 
 	protected:
@@ -207,5 +208,30 @@ namespace CHM9 {
 
 		}
 #pragma endregion
+
+
+	protected: void ShowTable(Table& table) {
+		for (int i = 0; i < table.GetSize(); i++) // Цикл добавления строк
+		{
+			this->dataGridView1->Rows->Add();
+			this->dataGridView1->Rows[i]->Cells[0]->Value = table[i].i;
+			this->dataGridView1->Rows[i]->Cells[1]->Value = table[i].hi_1;
+			this->dataGridView1->Rows[i]->Cells[2]->Value = table[i].xi;
+			this->dataGridView1->Rows[i]->Cells[3]->Value = table[i].viPr;
+			this->dataGridView1->Rows[i]->Cells[4]->Value = table[i].viKor;
+			this->dataGridView1->Rows[i]->Cells[5]->Value = table[i].viPr_viKor;
+			this->dataGridView1->Rows[i]->Cells[6]->Value = table[i].s;
+			this->dataGridView1->Rows[i]->Cells[7]->Value = table[i].viUtoch;
+			this->dataGridView1->Rows[i]->Cells[8]->Value = table[i].viItog;
+			this->dataGridView1->Rows[i]->Cells[9]->Value = table[i].stepDec;
+			this->dataGridView1->Rows[i]->Cells[10]->Value = table[i].stepInc;
+			this->dataGridView1->Rows[i]->Cells[11]->Value = table[i].total;
+			if (Task == TestTask) {
+				this->dataGridView1->Rows[i]->Cells[12]->Value = table[i].ui;
+				this->dataGridView1->Rows[i]->Cells[13]->Value = table[i].abs_ui_vi;
+			}
+		}
+	}
+
 	};
 }
