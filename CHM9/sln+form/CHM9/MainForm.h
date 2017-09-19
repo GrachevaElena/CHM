@@ -19,7 +19,11 @@ namespace CHM9 {
 	{
 
 	public: Table* table;
-			int X;
+	private: System::Windows::Forms::Button^  test_buttonTrueSolution;
+	public:
+
+	public:
+		int X;
 
 		MainForm(void)
 		{
@@ -64,15 +68,12 @@ namespace CHM9 {
 	private: System::Windows::Forms::TabPage^  mainPage;
 
 	private: System::Windows::Forms::PictureBox^  main_pictureBoxTask;
+	private: System::Windows::Forms::PictureBox^  main_pictureBoxGraphic;
 	private: System::Windows::Forms::GroupBox^  main_groupBoxParametrs;
 	private: System::Windows::Forms::Label^  main_labelM;
 	private: System::Windows::Forms::Label^  main_labelA2;
 	private: System::Windows::Forms::Label^  main_labelA1;
-	private: System::Windows::Forms::TextBox^ main_textBoxM;
-	private: System::Windows::Forms::TextBox^  main_textBoxA2;
-	private: System::Windows::Forms::TextBox^  main_textBoxA1;
 	private: System::Windows::Forms::Label^  main_labelU0;
-	private: System::Windows::Forms::TextBox^  main_textBoxU0;
 	private: System::Windows::Forms::Label^  main_labelX;
 	private: System::Windows::Forms::Label^  main_labelLength;
 	private: System::Windows::Forms::Label^  main_labelStep;
@@ -81,19 +82,52 @@ namespace CHM9 {
 	private: System::Windows::Forms::Label^  main_labelH;
 	private: System::Windows::Forms::Label^  main_labelAccurBoard;
 	private: System::Windows::Forms::Label^  main_labelL;
+	private: System::Windows::Forms::Label^  main_labelParameters;
+	private: System::Windows::Forms::TextBox^ main_textBoxM;
+	private: System::Windows::Forms::TextBox^  main_textBoxA2;
+	private: System::Windows::Forms::TextBox^  main_textBoxA1;
+	private: System::Windows::Forms::TextBox^  main_textBoxU0;
 	private: System::Windows::Forms::TextBox^  main_textBoxStep;
 	private: System::Windows::Forms::TextBox^  main_textBoxMaxNumSteps;
 	private: System::Windows::Forms::TextBox^  main_textBoxLocError;
 	private: System::Windows::Forms::TextBox^  main_textBoxAccurBoard;
 	private: System::Windows::Forms::TextBox^  main_textBoxLenght;
-	private: System::Windows::Forms::PictureBox^  main_pictureBoxGraphic;
 	private: System::Windows::Forms::Button^  main_buttonSolve;
 	private: System::Windows::Forms::Button^  main_buttonTable;
 	private: System::Windows::Forms::Button^  main_buttonError;
 	private: System::Windows::Forms::Button^  main_buttonRef;
-	private: System::Windows::Forms::Label^  main_labelParameters;
 	private: System::Windows::Forms::Button^  main_buttonClear;
 
+	private: System::Windows::Forms::Button^  test_buttonSolve;
+	private: System::Windows::Forms::Button^  test_buttonClear;
+	private: System::Windows::Forms::Button^  test_buttonTable;
+	private: System::Windows::Forms::Button^  test_buttonError;
+
+
+
+
+	private: System::Windows::Forms::Button^  test_buttonRef;
+
+
+	private: System::Windows::Forms::GroupBox^  test_groupBoxParametrs;
+	private: System::Windows::Forms::Label^  test_labelStep;
+	private: System::Windows::Forms::Label^  test_labelMaxNumSteps;
+	private: System::Windows::Forms::Label^  test_labelLocError;
+	private: System::Windows::Forms::Label^  test_labelH;
+	private: System::Windows::Forms::Label^  test_labelAccurBoard;
+	private: System::Windows::Forms::Label^  test_labelParameters;
+	private: System::Windows::Forms::Label^  test_labelLenght;
+	private: System::Windows::Forms::Label^  test_labelL;
+	private: System::Windows::Forms::Label^  test_labelX;
+	private: System::Windows::Forms::Label^  test_labelU0;
+	private: System::Windows::Forms::TextBox^  test_textBoxU0;
+	private: System::Windows::Forms::TextBox^  test_textBoxStep;
+	private: System::Windows::Forms::TextBox^  test_textBoxMaxNumSteps;
+	private: System::Windows::Forms::TextBox^  test_textBoxLocError;
+	private: System::Windows::Forms::TextBox^  test_textBoxAccurBoard;
+	private: System::Windows::Forms::TextBox^  test_textBoxLenght;
+	private: System::Windows::Forms::PictureBox^  test_pictureBoxGraphic;
+	private: System::Windows::Forms::PictureBox^  test_pictureBoxTask;
 
 	private:
 		/// <summary>
@@ -111,6 +145,31 @@ namespace CHM9 {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->testPage = (gcnew System::Windows::Forms::TabPage());
+			this->test_buttonSolve = (gcnew System::Windows::Forms::Button());
+			this->test_buttonClear = (gcnew System::Windows::Forms::Button());
+			this->test_buttonTable = (gcnew System::Windows::Forms::Button());
+			this->test_buttonError = (gcnew System::Windows::Forms::Button());
+			this->test_buttonTrueSolution = (gcnew System::Windows::Forms::Button());
+			this->test_buttonRef = (gcnew System::Windows::Forms::Button());
+			this->test_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
+			this->test_labelStep = (gcnew System::Windows::Forms::Label());
+			this->test_labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
+			this->test_labelLocError = (gcnew System::Windows::Forms::Label());
+			this->test_labelH = (gcnew System::Windows::Forms::Label());
+			this->test_labelAccurBoard = (gcnew System::Windows::Forms::Label());
+			this->test_labelParameters = (gcnew System::Windows::Forms::Label());
+			this->test_labelLenght = (gcnew System::Windows::Forms::Label());
+			this->test_labelL = (gcnew System::Windows::Forms::Label());
+			this->test_labelX = (gcnew System::Windows::Forms::Label());
+			this->test_labelU0 = (gcnew System::Windows::Forms::Label());
+			this->test_textBoxU0 = (gcnew System::Windows::Forms::TextBox());
+			this->test_textBoxStep = (gcnew System::Windows::Forms::TextBox());
+			this->test_textBoxMaxNumSteps = (gcnew System::Windows::Forms::TextBox());
+			this->test_textBoxLocError = (gcnew System::Windows::Forms::TextBox());
+			this->test_textBoxAccurBoard = (gcnew System::Windows::Forms::TextBox());
+			this->test_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
+			this->test_pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
+			this->test_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
 			this->mainPage = (gcnew System::Windows::Forms::TabPage());
 			this->main_buttonSolve = (gcnew System::Windows::Forms::Button());
 			this->main_buttonClear = (gcnew System::Windows::Forms::Button());
@@ -143,6 +202,10 @@ namespace CHM9 {
 			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
 			this->tabControl->SuspendLayout();
+			this->testPage->SuspendLayout();
+			this->test_groupBoxParametrs->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxGraphic))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxTask))->BeginInit();
 			this->mainPage->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->BeginInit();
 			this->main_groupBoxParametrs->SuspendLayout();
@@ -161,6 +224,15 @@ namespace CHM9 {
 			// 
 			// testPage
 			// 
+			this->testPage->Controls->Add(this->test_buttonSolve);
+			this->testPage->Controls->Add(this->test_buttonClear);
+			this->testPage->Controls->Add(this->test_buttonTable);
+			this->testPage->Controls->Add(this->test_buttonError);
+			this->testPage->Controls->Add(this->test_buttonTrueSolution);
+			this->testPage->Controls->Add(this->test_buttonRef);
+			this->testPage->Controls->Add(this->test_groupBoxParametrs);
+			this->testPage->Controls->Add(this->test_pictureBoxGraphic);
+			this->testPage->Controls->Add(this->test_pictureBoxTask);
 			this->testPage->Location = System::Drawing::Point(4, 22);
 			this->testPage->Name = L"testPage";
 			this->testPage->Padding = System::Windows::Forms::Padding(3);
@@ -168,6 +240,241 @@ namespace CHM9 {
 			this->testPage->TabIndex = 0;
 			this->testPage->Text = L"Тестовая задача";
 			this->testPage->UseVisualStyleBackColor = true;
+			// 
+			// test_buttonSolve
+			// 
+			this->test_buttonSolve->Location = System::Drawing::Point(25, 209);
+			this->test_buttonSolve->Name = L"test_buttonSolve";
+			this->test_buttonSolve->Size = System::Drawing::Size(228, 47);
+			this->test_buttonSolve->TabIndex = 12;
+			this->test_buttonSolve->Text = L"Решить";
+			this->test_buttonSolve->UseVisualStyleBackColor = true;
+			this->test_buttonSolve->Click += gcnew System::EventHandler(this, &MainForm::test_buttonSolve_Click);
+			// 
+			// test_buttonClear
+			// 
+			this->test_buttonClear->Location = System::Drawing::Point(25, 315);
+			this->test_buttonClear->Name = L"test_buttonClear";
+			this->test_buttonClear->Size = System::Drawing::Size(228, 47);
+			this->test_buttonClear->TabIndex = 13;
+			this->test_buttonClear->Text = L"Очистить область";
+			this->test_buttonClear->UseVisualStyleBackColor = true;
+			this->test_buttonClear->Click += gcnew System::EventHandler(this, &MainForm::test_buttonClear_Click);
+			// 
+			// test_buttonTable
+			// 
+			this->test_buttonTable->Location = System::Drawing::Point(25, 451);
+			this->test_buttonTable->Name = L"test_buttonTable";
+			this->test_buttonTable->Size = System::Drawing::Size(228, 47);
+			this->test_buttonTable->TabIndex = 14;
+			this->test_buttonTable->Text = L"Таблица";
+			this->test_buttonTable->UseVisualStyleBackColor = true;
+			this->test_buttonTable->Click += gcnew System::EventHandler(this, &MainForm::buttonTable_Click);
+			// 
+			// test_buttonError
+			// 
+			this->test_buttonError->Location = System::Drawing::Point(25, 504);
+			this->test_buttonError->Name = L"test_buttonError";
+			this->test_buttonError->Size = System::Drawing::Size(228, 47);
+			this->test_buttonError->TabIndex = 15;
+			this->test_buttonError->Text = L"Лок. погрешность";
+			this->test_buttonError->UseVisualStyleBackColor = true;
+			// 
+			// test_buttonTrueSolution
+			// 
+			this->test_buttonTrueSolution->Location = System::Drawing::Point(25, 262);
+			this->test_buttonTrueSolution->Name = L"test_buttonTrueSolution";
+			this->test_buttonTrueSolution->Size = System::Drawing::Size(228, 47);
+			this->test_buttonTrueSolution->TabIndex = 16;
+			this->test_buttonTrueSolution->Text = L"Показать истинное решение";
+			this->test_buttonTrueSolution->UseVisualStyleBackColor = true;
+			// 
+			// test_buttonRef
+			// 
+			this->test_buttonRef->Location = System::Drawing::Point(25, 398);
+			this->test_buttonRef->Name = L"test_buttonRef";
+			this->test_buttonRef->Size = System::Drawing::Size(228, 47);
+			this->test_buttonRef->TabIndex = 16;
+			this->test_buttonRef->Text = L"Справка";
+			this->test_buttonRef->UseVisualStyleBackColor = true;
+			// 
+			// test_groupBoxParametrs
+			// 
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelStep);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelMaxNumSteps);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelLocError);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelH);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelAccurBoard);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelParameters);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelLenght);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelL);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelX);
+			this->test_groupBoxParametrs->Controls->Add(this->test_labelU0);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxU0);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxStep);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxMaxNumSteps);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxLocError);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxAccurBoard);
+			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxLenght);
+			this->test_groupBoxParametrs->Location = System::Drawing::Point(285, 6);
+			this->test_groupBoxParametrs->Name = L"test_groupBoxParametrs";
+			this->test_groupBoxParametrs->Size = System::Drawing::Size(554, 156);
+			this->test_groupBoxParametrs->TabIndex = 11;
+			this->test_groupBoxParametrs->TabStop = false;
+			this->test_groupBoxParametrs->Text = L"Параметры задачи";
+			// 
+			// test_labelStep
+			// 
+			this->test_labelStep->AutoSize = true;
+			this->test_labelStep->Location = System::Drawing::Point(37, 84);
+			this->test_labelStep->Name = L"test_labelStep";
+			this->test_labelStep->Size = System::Drawing::Size(112, 13);
+			this->test_labelStep->TabIndex = 8;
+			this->test_labelStep->Text = L"Шаг интегрирования";
+			// 
+			// test_labelMaxNumSteps
+			// 
+			this->test_labelMaxNumSteps->AutoSize = true;
+			this->test_labelMaxNumSteps->Location = System::Drawing::Point(371, 85);
+			this->test_labelMaxNumSteps->Name = L"test_labelMaxNumSteps";
+			this->test_labelMaxNumSteps->Size = System::Drawing::Size(150, 13);
+			this->test_labelMaxNumSteps->TabIndex = 8;
+			this->test_labelMaxNumSteps->Text = L"Максимальное число шагов";
+			// 
+			// test_labelLocError
+			// 
+			this->test_labelLocError->AutoSize = true;
+			this->test_labelLocError->Location = System::Drawing::Point(201, 85);
+			this->test_labelLocError->Name = L"test_labelLocError";
+			this->test_labelLocError->Size = System::Drawing::Size(148, 13);
+			this->test_labelLocError->TabIndex = 8;
+			this->test_labelLocError->Text = L"Контроль лок. погрешности";
+			// 
+			// test_labelH
+			// 
+			this->test_labelH->AutoSize = true;
+			this->test_labelH->Location = System::Drawing::Point(37, 106);
+			this->test_labelH->Name = L"test_labelH";
+			this->test_labelH->Size = System::Drawing::Size(22, 13);
+			this->test_labelH->TabIndex = 5;
+			this->test_labelH->Text = L" h=";
+			// 
+			// test_labelAccurBoard
+			// 
+			this->test_labelAccurBoard->AutoSize = true;
+			this->test_labelAccurBoard->Location = System::Drawing::Point(371, 32);
+			this->test_labelAccurBoard->Name = L"test_labelAccurBoard";
+			this->test_labelAccurBoard->Size = System::Drawing::Size(152, 13);
+			this->test_labelAccurBoard->TabIndex = 8;
+			this->test_labelAccurBoard->Text = L"Точность выхода на границу";
+			// 
+			// test_labelParameters
+			// 
+			this->test_labelParameters->AutoSize = true;
+			this->test_labelParameters->Location = System::Drawing::Point(37, 31);
+			this->test_labelParameters->Name = L"test_labelParameters";
+			this->test_labelParameters->Size = System::Drawing::Size(66, 13);
+			this->test_labelParameters->TabIndex = 8;
+			this->test_labelParameters->Text = L"Параметры";
+			// 
+			// test_labelLenght
+			// 
+			this->test_labelLenght->AutoSize = true;
+			this->test_labelLenght->Location = System::Drawing::Point(201, 32);
+			this->test_labelLenght->Name = L"test_labelLenght";
+			this->test_labelLenght->Size = System::Drawing::Size(96, 13);
+			this->test_labelLenght->TabIndex = 8;
+			this->test_labelLenght->Text = L"Длина интервала";
+			// 
+			// test_labelL
+			// 
+			this->test_labelL->AutoSize = true;
+			this->test_labelL->Location = System::Drawing::Point(201, 107);
+			this->test_labelL->Name = L"test_labelL";
+			this->test_labelL->Size = System::Drawing::Size(22, 13);
+			this->test_labelL->TabIndex = 5;
+			this->test_labelL->Text = L" L=";
+			// 
+			// test_labelX
+			// 
+			this->test_labelX->AutoSize = true;
+			this->test_labelX->Location = System::Drawing::Point(201, 53);
+			this->test_labelX->Name = L"test_labelX";
+			this->test_labelX->Size = System::Drawing::Size(23, 13);
+			this->test_labelX->TabIndex = 5;
+			this->test_labelX->Text = L" X=";
+			// 
+			// test_labelU0
+			// 
+			this->test_labelU0->AutoSize = true;
+			this->test_labelU0->Location = System::Drawing::Point(34, 53);
+			this->test_labelU0->Name = L"test_labelU0";
+			this->test_labelU0->Size = System::Drawing::Size(25, 13);
+			this->test_labelU0->TabIndex = 5;
+			this->test_labelU0->Text = L"u0=";
+			// 
+			// test_textBoxU0
+			// 
+			this->test_textBoxU0->Location = System::Drawing::Point(62, 50);
+			this->test_textBoxU0->Name = L"test_textBoxU0";
+			this->test_textBoxU0->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxU0->TabIndex = 4;
+			// 
+			// test_textBoxStep
+			// 
+			this->test_textBoxStep->Location = System::Drawing::Point(61, 103);
+			this->test_textBoxStep->Name = L"test_textBoxStep";
+			this->test_textBoxStep->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxStep->TabIndex = 4;
+			// 
+			// test_textBoxMaxNumSteps
+			// 
+			this->test_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 104);
+			this->test_textBoxMaxNumSteps->Name = L"test_textBoxMaxNumSteps";
+			this->test_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxMaxNumSteps->TabIndex = 4;
+			// 
+			// test_textBoxLocError
+			// 
+			this->test_textBoxLocError->Location = System::Drawing::Point(225, 104);
+			this->test_textBoxLocError->Name = L"test_textBoxLocError";
+			this->test_textBoxLocError->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxLocError->TabIndex = 4;
+			// 
+			// test_textBoxAccurBoard
+			// 
+			this->test_textBoxAccurBoard->Location = System::Drawing::Point(376, 49);
+			this->test_textBoxAccurBoard->Name = L"test_textBoxAccurBoard";
+			this->test_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxAccurBoard->TabIndex = 4;
+			// 
+			// test_textBoxLenght
+			// 
+			this->test_textBoxLenght->Location = System::Drawing::Point(225, 49);
+			this->test_textBoxLenght->Name = L"test_textBoxLenght";
+			this->test_textBoxLenght->Size = System::Drawing::Size(106, 20);
+			this->test_textBoxLenght->TabIndex = 4;
+			this->test_textBoxLenght->Text = L"10";
+			// 
+			// test_pictureBoxGraphic
+			// 
+			this->test_pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->test_pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
+			this->test_pictureBoxGraphic->Name = L"test_pictureBoxGraphic";
+			this->test_pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
+			this->test_pictureBoxGraphic->TabIndex = 10;
+			this->test_pictureBoxGraphic->TabStop = false;
+			// 
+			// test_pictureBoxTask
+			// 
+			this->test_pictureBoxTask->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"test_pictureBoxTask.BackgroundImage")));
+			this->test_pictureBoxTask->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->test_pictureBoxTask->ErrorImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"test_pictureBoxTask.ErrorImage")));
+			this->test_pictureBoxTask->Location = System::Drawing::Point(25, 12);
+			this->test_pictureBoxTask->Name = L"test_pictureBoxTask";
+			this->test_pictureBoxTask->Size = System::Drawing::Size(228, 150);
+			this->test_pictureBoxTask->TabIndex = 3;
+			this->test_pictureBoxTask->TabStop = false;
 			// 
 			// mainPage
 			// 
@@ -205,6 +512,7 @@ namespace CHM9 {
 			this->main_buttonClear->TabIndex = 10;
 			this->main_buttonClear->Text = L"Очистить область";
 			this->main_buttonClear->UseVisualStyleBackColor = true;
+			this->main_buttonClear->Click += gcnew System::EventHandler(this, &MainForm::main_buttonClear_Click);
 			// 
 			// main_buttonTable
 			// 
@@ -214,7 +522,7 @@ namespace CHM9 {
 			this->main_buttonTable->TabIndex = 10;
 			this->main_buttonTable->Text = L"Таблица";
 			this->main_buttonTable->UseVisualStyleBackColor = true;
-			this->main_buttonTable->Click += gcnew System::EventHandler(this, &MainForm::main_buttonTable_Click);
+			this->main_buttonTable->Click += gcnew System::EventHandler(this, &MainForm::buttonTable_Click);
 			// 
 			// main_buttonError
 			// 
@@ -475,6 +783,11 @@ namespace CHM9 {
 			this->Name = L"MainForm";
 			this->Text = L"Задача 9, вариант 3";
 			this->tabControl->ResumeLayout(false);
+			this->testPage->ResumeLayout(false);
+			this->test_groupBoxParametrs->ResumeLayout(false);
+			this->test_groupBoxParametrs->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxGraphic))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxTask))->EndInit();
 			this->mainPage->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->EndInit();
 			this->main_groupBoxParametrs->ResumeLayout(false);
@@ -485,34 +798,55 @@ namespace CHM9 {
 		}
 #pragma endregion
 
-private: System::Void main_buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-	TableForm^ tableForm = gcnew TableForm(MainTask, *table);
-	tableForm->Show();
-}
-private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
-	//call function
-
-	this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::main_pictureBoxGraphic_Paint);
-	main_pictureBoxGraphic->Refresh();
-}
-
-private: System::Void main_pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-	Color color;
-	Pen^ pen = gcnew Pen(color.Red, 2);
-
-	Graphics^ g = e->Graphics;
-
-	//Drawing
-	const int dx = main_pictureBoxGraphic->Width/X;
-
-	int maxV=0;
-	for (int i = 0; i < table->GetSize(); i++)
-		if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
-	const int dy= main_pictureBoxGraphic->Height / maxV;
-
-	for (int i = 0; i < table->GetSize()-1; i++) {
-		g->DrawLine(pen,(int)(*table)[i].xi*dx, main_pictureBoxGraphic->Height-(int)(*table)[i].viItog*dy,(int)(*table)[i+1].xi*dx, main_pictureBoxGraphic->Height - (int)(*table)[i+1].viItog*dy);
+	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
+		TableForm^ tableForm = gcnew TableForm(MainTask, *table);
+		tableForm->Show();
 	}
-}
-};
+
+	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
+		//call function
+
+		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+		main_pictureBoxGraphic->Refresh();
+	}
+	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
+		//call function
+
+		this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+		test_pictureBoxGraphic->Refresh();
+	}
+
+
+	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+		Color color;
+		Pen^ pen = gcnew Pen(color.Red, 2);
+
+		PictureBox^ p = (PictureBox^)sender;
+
+		Graphics^ g = e->Graphics;
+
+
+		//Drawing
+		const int dx = p->Width / X;
+
+		int maxV = 0;
+		for (int i = 0; i < table->GetSize(); i++)
+			if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
+		const int dy = p->Height / maxV;
+
+		for (int i = 0; i < table->GetSize() - 1; i++) {
+			g->DrawLine(pen, (int)(*table)[i].xi*dx, p->Height - (int)(*table)[i].viItog*dy, (int)(*table)[i + 1].xi*dx, p->Height - (int)(*table)[i + 1].viItog*dy);
+		}
+	}
+
+
+	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
+		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
+		g->Clear(Color::White);
+	}
+	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
+		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
+		g->Clear(Color::White);
+	}
+	};
 }
