@@ -19,43 +19,52 @@ namespace CHM9 {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 
-	public: Table* table;
+	public: std::list<Table>* table;
 	private: System::Windows::Forms::Button^  test_buttonTrueSolution;
 	public:
 
 	public:
 		double X;
-
+		double maxV, minV, maxX;
+		Table* t1;
+		Table* t2;
+		int a;
 		MainForm(void)
 		{
 			InitializeComponent();
-			table = new Table();
-			SetTable();
+			table = new std::list<Table>();
+			t1 = new Table();
+			t2 = new Table();
+			SetTable(*t1,1);
+			table->push_front(*t1);
 			X = 10;
+			maxX = maxV = 0;
+			minV = 1000000000000;
+			a = 0;
 		}
 
-	protected: void SetTable() {
+	protected: void SetTable(Table& t, int a) {
 		Row row;
 
 		row.i = 0;
 		row.xi = 0;
-		row.viItog = 1;
-		(*table).AddRow(row);
+		row.viItog = 1*a;
+		t.AddRow(row);
 
 		row.i = 1;
 		row.xi = 3;
-		row.viItog = 17;
-		(*table).AddRow(row);
+		row.viItog = 17 * a;
+		t.AddRow(row);
 
 		row.i = 2;
 		row.xi = 5;
-		row.viItog = 12;
-		(*table).AddRow(row);
+		row.viItog = 12 * a;
+		t.AddRow(row);
 
 		row.i = 3;
 		row.xi = 10;
-		row.viItog = 15;
-		(*table).AddRow(row);
+		row.viItog = 15 * a;
+		t.AddRow(row);
 	}
 
 	protected:
@@ -66,6 +75,7 @@ namespace CHM9 {
 		{
 			if (components)
 			{
+				delete table;
 				delete components;
 			}
 		}
@@ -808,7 +818,7 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		TableForm^ tableForm = gcnew TableForm(MainTask, *table);
+		TableForm^ tableForm = gcnew TableForm(MainTask, *(table->begin()));
 		tableForm->Show();
 	}
 
@@ -821,9 +831,21 @@ namespace CHM9 {
 
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
-
-		this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-		test_pictureBoxGraphic->Refresh();
+		if (a == 0) {
+			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+			test_pictureBoxGraphic->Refresh();
+			a = 1;
+		}
+		else if (a==1) {
+			SetTable(*t2, 2);
+			table->push_front(*t2);
+			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+			test_pictureBoxGraphic->Refresh();
+			a = 2;
+		} else if (a == 2) {
+			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+			test_pictureBoxGraphic->Refresh();
+		}
 	}
 
 

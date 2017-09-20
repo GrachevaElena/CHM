@@ -17,9 +17,8 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 	Graphics^ g = e->Graphics;
 
-	double maxV, minV;
-	maxV = minV = table->begin()->viItog;
-	for (auto it = table->begin(); it != table->end(); it++) {
+	for (auto it = table->begin()->begin(); it != table->begin()->end(); it++) {
+		if (it->xi > maxX) maxX = it->xi;
 		if (it->viItog > maxV) maxV = it->viItog;
 		if (it->viItog < minV) minV = it->viItog;
 	}
@@ -30,13 +29,13 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	const int width = p->Width - offsetX;
 	const int height = p->Height - offsetY;
 
-	const int dx = width / X;
+	const int dx = width / maxX;
 	const int dy = height / (maxV - minV);
 
 	const int h = 20;
 	const int d = 15;
 
-	const double dhx = h*X / width;
+	const double dhx = h*maxX / width;
 	const double dhy = h*(maxV-minV) / height;
 
 	const int n = width / h + 1;
@@ -72,10 +71,11 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 
 	//Drawing
-	Pen^ pen = gcnew Pen(Color::Red, 2);
+	Pen ^ pen=gcnew Pen(Color::Red, 2);
 
-	for (auto it = table->begin(); it != --(table->end()); ) {
-		g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY));
-	}
+	for (auto itl = table->begin(); itl != table->end(); itl++)
+		for (auto it = itl->begin(); it != --(itl->end()); ) {
+			g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY));
+		}
 }
 
