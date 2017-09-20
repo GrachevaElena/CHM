@@ -23,7 +23,7 @@ namespace CHM9 {
 	public:
 
 	public:
-		int X;
+		double X;
 
 		MainForm(void)
 		{

@@ -17,7 +17,7 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 	Graphics^ g = e->Graphics;
 
-	double maxV, minV; 
+	double maxV, minV;
 	maxV = minV = (*table)[0].viItog;
 	for (int i = 1; i < table->GetSize(); i++) {
 		if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
@@ -31,23 +31,45 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	const int height = p->Height - offsetY;
 
 	const int dx = width / X;
-	const int dy = height / (maxV-minV);
+	const int dy = height / (maxV - minV);
 
 	const int h = 20;
 	const int d = 15;
+
+	const double dhx = h*X / width;
+	const double dhy = h*(maxV-minV) / height;
 
 	const int n = width / h + 1;
 	const int m = height / h + 1;
 
 	//Markup
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++) {
 		if (i % 5 == 0)
 			g->DrawLine(gcnew Pen(Color::LightGray, 1), i*h + offsetX, 0, i*h + offsetX, p->Height - offsetY + d);
 		else g->DrawLine(gcnew Pen(Color::LightGray, 1), i*h + offsetX, 0, i*h + offsetX, p->Height - offsetY);
-	for (int i = 0; i < m; i++)
+	}
+	for (int i = 0; i < m; i++) {
 		if (i % 5 == 0)
-			g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + offsetX-d, p->Height-(i*h+offsetY), p->Width+offsetX, p->Height-(i*h+offsetY));
-		else g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + offsetX, p->Height - (i*h + offsetY), p->Width + offsetX, p->Height - (i*h + offsetY));
+			g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + offsetX - d, p->Height - (i*h + offsetY), p->Width + offsetX, p->Height - (i*h + offsetY));
+		else g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + offsetX, p->Height - (i*h + offsetY), p->Width, p->Height - (i*h + offsetY));
+	}
+
+	g->DrawLine(gcnew Pen(Color::Black, 2), 0 + offsetX, p->Height - offsetY, 0 + offsetX, 0);
+	g->DrawLine(gcnew Pen(Color::Black, 2), 0 + offsetX, p->Height - offsetY, p->Width, p->Height - offsetY);
+
+	System::Drawing::Font^ font = gcnew System::Drawing::Font("Microsoft Sans Serif", 8, FontStyle::Bold);
+	System::Drawing::SolidBrush^ brush = gcnew System::Drawing::SolidBrush(Color::Black);
+
+	g->DrawString("X", font, brush, PointF(p->Width - 20, p->Height - offsetY + 5));
+	g->DrawString("U", font, brush, PointF(offsetX - 20, 20));
+
+	font = gcnew System::Drawing::Font("Microsoft Sans Serif", 8, FontStyle::Regular);
+
+	for (int i = 0; i < m / 5 + 1; i++)
+		g->DrawString((Math::Round(minV+i*5*dhy,3)).ToString(), font, brush, PointF(offsetX / 5, p->Height - offsetY - i * 5 * h));
+	for (int i = 0; i < n / 5 + 1; i++)
+		g->DrawString((Math::Round(i * 5 * dhx, 3)).ToString(), font, brush, PointF(offsetX + i*5*h, p->Height - offsetY/1.8));
+
 
 	//Drawing
 	Pen^ pen = gcnew Pen(Color::Red, 2);
