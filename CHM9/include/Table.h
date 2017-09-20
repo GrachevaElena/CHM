@@ -28,7 +28,12 @@ public:
 	Table() {}
 	Table(const Table& t):Data(t.Data) {}
 	~Table() {}
-	auto GetIterator() { return Data.begin(); }
+
+	typedef std::list<Row>::iterator iterator;
+
+	iterator begin() { return Data.begin(); }
+	iterator end() { return Data.end(); }
+
 	int GetSize() { return Data.size(); }
 	void AddRow(Row row) { Data.push_back(row); }
 	Row GetLastRow() { return *(--Data.end()); } 
