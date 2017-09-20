@@ -18,6 +18,7 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	PictureBox^ p = (PictureBox^)sender;
 
 	Graphics^ g = e->Graphics;
+	g->Clear(Color::White);
 
 	int tabPage = tabControl->SelectedIndex;
 

@@ -887,11 +887,15 @@ namespace CHM9 {
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
+		table[1]->clear();
+		pens[1]->clear();
 	}
 
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
+		table[0]->clear();
+		pens[0]->clear();
 	}
 
 
