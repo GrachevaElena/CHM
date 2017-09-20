@@ -28,11 +28,8 @@ public:
 	Table() {}
 	Table(const Table& t):Data(t.Data) {}
 	~Table() {}
-	Row& operator[] (int n) {
-		auto it = Data.begin();
-		for (int i = 0; i < n; i++, it++);
-		return (*it);
-	}
+	auto GetIterator() { return Data.begin(); }
 	int GetSize() { return Data.size(); }
 	void AddRow(Row row) { Data.push_back(row); }
+	Row GetLastRow() { return *(--Data.end()); } 
 };
