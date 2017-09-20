@@ -19,27 +19,36 @@ namespace CHM9 {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 
-	public: std::list<Table>* table;
-	private: System::Windows::Forms::Button^  test_buttonTrueSolution;
-	public:
+	public: array<std::list<Table>*>^ table;
 
-	public:
+	private:
 		double X;
-		double maxV, minV, maxX;
+		double* maxV, *minV, *maxX;
 		Table* t1;
 		Table* t2;
 		int a;
+
+	public:
 		MainForm(void)
 		{
 			InitializeComponent();
-			table = new std::list<Table>();
+			table = gcnew array<std::list<Table>*>(5);
+			table[0] = new std::list<Table>();
+			table[1] = new std::list<Table>();
+
+			maxV = new double[2];
+			minV = new double[2];
+			maxX = new double[2];
+			maxX[0] = maxX[1] = maxV[0] = maxV[1] = 0;
+			minV[0] = minV[1] = 1000000;
+
 			t1 = new Table();
 			t2 = new Table();
 			SetTable(*t1,1);
-			table->push_front(*t1);
+			table[0]->push_front(*t1);
+			table[1]->push_front(*t1);
 			X = 10;
-			maxX = maxV = 0;
-			minV = 1000000000000;
+
 			a = 0;
 		}
 
@@ -76,6 +85,9 @@ namespace CHM9 {
 			if (components)
 			{
 				delete table;
+				delete[] maxX;
+				delete[] maxV;
+				delete[] minV;
 				delete components;
 			}
 		}
@@ -119,13 +131,8 @@ namespace CHM9 {
 	private: System::Windows::Forms::Button^  test_buttonClear;
 	private: System::Windows::Forms::Button^  test_buttonTable;
 	private: System::Windows::Forms::Button^  test_buttonError;
-
-
-
-
 	private: System::Windows::Forms::Button^  test_buttonRef;
-
-
+	private: System::Windows::Forms::Button^  test_buttonTrueSolution;
 	private: System::Windows::Forms::GroupBox^  test_groupBoxParametrs;
 	private: System::Windows::Forms::Label^  test_labelStep;
 	private: System::Windows::Forms::Label^  test_labelMaxNumSteps;
@@ -818,13 +825,12 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		TableForm^ tableForm = gcnew TableForm(MainTask, *(table->begin()));
+		TableForm^ tableForm = gcnew TableForm(MainTask, *(table[tabControl->SelectedIndex]->begin()));
 		tableForm->Show();
 	}
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
-
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
@@ -838,7 +844,7 @@ namespace CHM9 {
 		}
 		else if (a==1) {
 			SetTable(*t2, 2);
-			table->push_front(*t2);
+			table[tabControl->SelectedIndex]->push_front(*t2);
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
 			a = 2;

@@ -17,10 +17,12 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 	Graphics^ g = e->Graphics;
 
-	for (auto it = table->begin()->begin(); it != table->begin()->end(); it++) {
-		if (it->xi > maxX) maxX = it->xi;
-		if (it->viItog > maxV) maxV = it->viItog;
-		if (it->viItog < minV) minV = it->viItog;
+	int tabPage = tabControl->SelectedIndex;
+
+	for (auto it = table[tabPage]->begin()->begin(); it != table[tabPage]->begin()->end(); it++) {
+		if (it->xi > maxX[tabPage]) maxX[tabPage] = it->xi;
+		if (it->viItog > maxV[tabPage]) maxV[tabPage] = it->viItog;
+		if (it->viItog < minV[tabPage]) minV[tabPage] = it->viItog;
 	}
 
 	const int offsetX = 60;
@@ -29,14 +31,14 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	const int width = p->Width - offsetX;
 	const int height = p->Height - offsetY;
 
-	const int dx = width / maxX;
-	const int dy = height / (maxV - minV);
+	const int dx = width / maxX[tabPage];
+	const int dy = height / (maxV[tabPage] - minV[tabPage]);
 
 	const int h = 20;
 	const int d = 15;
 
-	const double dhx = h*maxX / width;
-	const double dhy = h*(maxV-minV) / height;
+	const double dhx = h*maxX[tabPage] / width;
+	const double dhy = h*(maxV[tabPage] -minV[tabPage]) / height;
 
 	const int n = width / h + 1;
 	const int m = height / h + 1;
@@ -65,7 +67,7 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	font = gcnew System::Drawing::Font("Microsoft Sans Serif", 8, FontStyle::Regular);
 
 	for (int i = 0; i < m / 5 + 1; i++)
-		g->DrawString((Math::Round(minV+i*5*dhy,3)).ToString(), font, brush, PointF(offsetX / 5, p->Height - offsetY - i * 5 * h));
+		g->DrawString((Math::Round(minV[tabPage] +i*5*dhy,3)).ToString(), font, brush, PointF(offsetX / 5, p->Height - offsetY - i * 5 * h));
 	for (int i = 0; i < n / 5 + 1; i++)
 		g->DrawString((Math::Round(i * 5 * dhx, 3)).ToString(), font, brush, PointF(offsetX + i*5*h, p->Height - offsetY/1.8));
 
@@ -73,9 +75,9 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	//Drawing
 	Pen ^ pen=gcnew Pen(Color::Red, 2);
 
-	for (auto itl = table->begin(); itl != table->end(); itl++)
+	for (auto itl = table[tabPage]->begin(); itl != table[tabPage]->end(); itl++)
 		for (auto it = itl->begin(); it != --(itl->end()); ) {
-			g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY));
+			g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY));
 		}
 }
 
