@@ -18,10 +18,10 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	Graphics^ g = e->Graphics;
 
 	double maxV, minV;
-	maxV = minV = (*table)[0].viItog;
-	for (int i = 1; i < table->GetSize(); i++) {
-		if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
-		if ((*table)[i].viItog < minV) minV = (*table)[i].viItog;
+	maxV = minV = table->begin()->viItog;
+	for (auto it = table->begin(); it != table->end(); it++) {
+		if (it->viItog > maxV) maxV = it->viItog;
+		if (it->viItog < minV) minV = it->viItog;
 	}
 
 	const int offsetX = 60;
@@ -74,8 +74,8 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	//Drawing
 	Pen^ pen = gcnew Pen(Color::Red, 2);
 
-	for (int i = 0; i < table->GetSize() - 1; i++) {
-		g->DrawLine(pen, (int)(*table)[i].xi*dx + offsetX, p->Height - ((int)((*table)[i].viItog - minV)*dy + offsetY), (int)(*table)[i + 1].xi*dx + offsetX, p->Height - ((int)((*table)[i + 1].viItog - minV)*dy + offsetY));
+	for (auto it = table->begin(); it != --(table->end()); ) {
+		g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV)*dy + offsetY));
 	}
 }
 

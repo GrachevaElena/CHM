@@ -29,27 +29,33 @@ namespace CHM9 {
 		MainForm(void)
 		{
 			InitializeComponent();
-			table = new Table(4);
+			table = new Table();
 			SetTable();
 			X = 10;
 		}
 
 	protected: void SetTable() {
-		(*table)[0].i = 0;
-		(*table)[0].xi = 0;
-		(*table)[0].viItog = 1;
+		Row row;
 
-		(*table)[1].i = 1;
-		(*table)[1].xi = 3;
-		(*table)[1].viItog = 17;
+		row.i = 0;
+		row.xi = 0;
+		row.viItog = 1;
+		(*table).AddRow(row);
 
-		(*table)[2].i = 2;
-		(*table)[2].xi = 5;
-		(*table)[2].viItog = 12;
+		row.i = 1;
+		row.xi = 3;
+		row.viItog = 17;
+		(*table).AddRow(row);
 
-		(*table)[3].i = 3;
-		(*table)[3].xi = 10;
-		(*table)[3].viItog = 15;
+		row.i = 2;
+		row.xi = 5;
+		row.viItog = 12;
+		(*table).AddRow(row);
+
+		row.i = 3;
+		row.xi = 10;
+		row.viItog = 15;
+		(*table).AddRow(row);
 	}
 
 	protected:
