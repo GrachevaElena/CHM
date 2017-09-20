@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 
 const int MainTask = 1;
 const int TestTask = 0;
@@ -22,34 +23,18 @@ struct Row {
 };
 
 class Table {
-	Row* Data;
-	int Size;
+	std::list<Row> Data;
 public:
-	Table() { Data = 0; }
-	Table(int size) { 
-		Size = size; 
-		Data = new Row[Size];
-	}
-	Table(Row* data, int size) {
-		Size = size;
-		Data = new Row[Size];
-		for (int i = 0; i < size; i++) {
-			Data[i] = data[i];
-		}
-	}
-	Table(const Table& t) {
-		Size = t.Size;
-		Data = new Row[Size];
-		for (int i = 0; i < t.Size; i++) {
-			Data[i] = t.Data[i];
-		}
-	}
-	~Table(){
-		delete[] Data;
-		Data = 0;
-		Size = 0;
-	}
-	Row& operator[] (int i) { return Data[i]; }
-	int GetSize() { return Size; }
+	Table() {}
+	Table(const Table& t):Data(t.Data) {}
+	~Table() {}
 
+	typedef std::list<Row>::iterator iterator;
+
+	iterator begin() { return Data.begin(); }
+	iterator end() { return Data.end(); }
+
+	int GetSize() { return Data.size(); }
+	void AddRow(Row row) { Data.push_back(row); }
+	Row GetLastRow() { return *(--Data.end()); } 
 };
