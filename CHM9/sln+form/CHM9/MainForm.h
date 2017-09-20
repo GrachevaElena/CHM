@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "Table.h"
 #include "TableForm.h"
+#include "RefForm.h"
 
 namespace CHM9 {
 
@@ -297,6 +298,7 @@ namespace CHM9 {
 			this->test_buttonRef->TabIndex = 16;
 			this->test_buttonRef->Text = L"Справка";
 			this->test_buttonRef->UseVisualStyleBackColor = true;
+			this->test_buttonRef->Click += gcnew System::EventHandler(this, &MainForm::buttonRef_Click);
 			// 
 			// test_groupBoxParametrs
 			// 
@@ -541,6 +543,7 @@ namespace CHM9 {
 			this->main_buttonRef->TabIndex = 10;
 			this->main_buttonRef->Text = L"Справка";
 			this->main_buttonRef->UseVisualStyleBackColor = true;
+			this->main_buttonRef->Click += gcnew System::EventHandler(this, &MainForm::buttonRef_Click);
 			// 
 			// main_pictureBoxGraphic
 			// 
@@ -830,5 +833,9 @@ namespace CHM9 {
 
 
 	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
-	};
+	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
+		RefForm^ refForm = gcnew RefForm(0,1,2,3.4);
+		refForm->Show();
+	}
+};
 }
