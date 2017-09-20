@@ -35,7 +35,7 @@ namespace CHM9 {
 
 	protected: void SetTable() {
 		(*table)[0].i = 0;
-		(*table)[0].xi = 1;
+		(*table)[0].xi = 0;
 		(*table)[0].viItog = 1;
 
 		(*table)[1].i = 1;
@@ -809,6 +809,7 @@ namespace CHM9 {
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
+
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
 
@@ -817,36 +818,17 @@ namespace CHM9 {
 	}
 
 
-	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-		Color color;
-		Pen^ pen = gcnew Pen(color.Red, 2);
-
-		PictureBox^ p = (PictureBox^)sender;
-
-		Graphics^ g = e->Graphics;
-
-
-		//Drawing
-		const int dx = p->Width / X;
-
-		int maxV = 0;
-		for (int i = 0; i < table->GetSize(); i++)
-			if ((*table)[i].viItog > maxV) maxV = (*table)[i].viItog;
-		const int dy = p->Height / maxV;
-
-		for (int i = 0; i < table->GetSize() - 1; i++) {
-			g->DrawLine(pen, (int)(*table)[i].xi*dx, p->Height - (int)(*table)[i].viItog*dy, (int)(*table)[i + 1].xi*dx, p->Height - (int)(*table)[i + 1].viItog*dy);
-		}
-	}
-
-
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
 	}
+
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
 	}
+
+
+	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 	};
 }
