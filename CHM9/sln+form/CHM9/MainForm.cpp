@@ -11,6 +11,8 @@ int main(array<String^>^ args) {
 	Application::Run(%form);
 }
 
+static int colors[10] = { 0xff1e90ff, 0xffF4a460, 0xffffc1c1, 0xff8b4513, 0x7ff006400, 0xffadff2f, 0xff7cfc00, 0xffff4500, 0xffff0000, 0xffffff00};
+
 System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
 {
 	PictureBox^ p = (PictureBox^)sender;
@@ -73,11 +75,11 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 
 	//Drawing
-	Pen ^ pen=gcnew Pen(Color::Red, 2);
+	auto itPen = pens[tabControl->SelectedIndex]->begin();
 
-	for (auto itl = table[tabPage]->begin(); itl != table[tabPage]->end(); itl++)
-		for (auto it = itl->begin(); it != --(itl->end()); ) {
-			g->DrawLine(pen, (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY));
+	for (auto itL = table[tabPage]->begin(); itL != table[tabPage]->end(); itL++, itPen++)
+		for (auto it = itL->begin(); it != --(itL->end()); ) {
+			g->DrawLine(gcnew Pen(Color::FromArgb(colors[*itPen]),2), (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY));
 		}
 }
 

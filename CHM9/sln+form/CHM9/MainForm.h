@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdlib>
+#include <ctime>
 #include "Table.h"
 #include "TableForm.h"
 #include "RefForm.h"
@@ -20,6 +21,7 @@ namespace CHM9 {
 	{
 
 	public: array<std::list<Table>*>^ table;
+	public: std::list<int>** pens;
 
 	private:
 		double X;
@@ -32,9 +34,14 @@ namespace CHM9 {
 		MainForm(void)
 		{
 			InitializeComponent();
-			table = gcnew array<std::list<Table>*>(5);
+
+			table = gcnew array<std::list<Table>*>(2);
 			table[0] = new std::list<Table>();
 			table[1] = new std::list<Table>();
+
+			pens = new std::list<int>*[2];
+			pens[0] = new std::list<int>();
+			pens[1] = new std::list<int>();
 
 			maxV = new double[2];
 			minV = new double[2];
@@ -84,10 +91,20 @@ namespace CHM9 {
 		{
 			if (components)
 			{
-				delete table;
+				delete table[0];
+				delete table[1];
+
+				delete pens[0];
+				delete pens[1];
+				delete[] pens;
+
 				delete[] maxX;
 				delete[] maxV;
 				delete[] minV;
+
+				delete t1;
+				delete t2;
+
 				delete components;
 			}
 		}
@@ -831,12 +848,24 @@ namespace CHM9 {
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
+
+		//for every table her own color
+		srand(time(NULL));
+		int color = rand() % 10;
+		pens[tabControl->SelectedIndex]->push_front(color);
+
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
 
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
+
+		//for every table her own color
+		srand(time(NULL));
+		int color = rand() % 10;
+		pens[tabControl->SelectedIndex]->push_front(color);
+
 		if (a == 0) {
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
