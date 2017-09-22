@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include "Table.h"
 #include "Table_for_drawing.h"
 #include "TableForm.h"
@@ -18,6 +19,7 @@ namespace CHM9 {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
+	public:
 
 	public: array<std::list<Table_for_drawing>*>^ table_for_drawing;
 	public: array<Table*>^ table;
@@ -34,7 +36,7 @@ namespace CHM9 {
 
 			test_X = main_X = 10;
 			test_h = main_h = 0.001;
-			test_U0 = main_U0 = 0;
+			test_U0 = main_U0 = -1;
 			test_L = main_L = 0.00001;
 			test_maxSteps = main_maxSteps = 1000;
 			test_eps = main_eps = 0.01;
@@ -73,8 +75,8 @@ namespace CHM9 {
 			maxV = new double[2];
 			minV = new double[2];
 			maxX = new double[2];
-			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = 0;
-			minV[MainTask] = minV[TestTask] = 100000000;
+			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
+			minV[MainTask] = minV[TestTask] = 10000000;
 
 			a = 0;
 		}
@@ -345,6 +347,7 @@ namespace CHM9 {
 			this->test_buttonTrueSolution->TabIndex = 16;
 			this->test_buttonTrueSolution->Text = L"Показать истинное решение";
 			this->test_buttonTrueSolution->UseVisualStyleBackColor = true;
+			this->test_buttonTrueSolution->Click += gcnew System::EventHandler(this, &MainForm::test_buttonTrueSolution_Click);
 			// 
 			// test_buttonRef
 			// 
@@ -857,8 +860,10 @@ namespace CHM9 {
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
+
 		Table_for_drawing t(*(table[MainTask]));
 		table_for_drawing[MainTask]->push_front(t);
+
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
@@ -866,27 +871,11 @@ namespace CHM9 {
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
 
-		if (a == 0) {
 			Table_for_drawing t(*(table[TestTask]));
 			table_for_drawing[TestTask]->push_front(t);
 
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
-			a = 1;
-		}
-		else if (a==1) {
-			SetTable(*(table[TestTask]), 2);
-			Table_for_drawing t(*(table[TestTask]));
-			
-			table_for_drawing[TestTask]->push_front(t);
-			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-			test_pictureBoxGraphic->Refresh();
-			a = 2;
-		} 
-		else if (a == 2) {
-			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-			test_pictureBoxGraphic->Refresh();
-		}
 	}
 
 
@@ -894,16 +883,44 @@ namespace CHM9 {
 		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
 		table_for_drawing[TestTask]->clear();
+		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
+		minV[MainTask] = minV[TestTask] = 10000000;
 	}
 
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
 		table_for_drawing[MainTask]->clear();
+		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
+		minV[MainTask] = minV[TestTask] = 10000000;
 	}
 
+	private: System::Void test_buttonTrueSolution_Click(System::Object^  sender, System::EventArgs^  e) {
+		const int OffsetX = 60;
+		const int OffsetY = 40;
+
+		const int Width = test_pictureBoxGraphic->Width - OffsetX;
+		const int Height = test_pictureBoxGraphic->Height - OffsetY;
+
+		int d = 5;
+		double dx = test_X / Width * d;
+
+		Table_for_drawing t;
+		Row_for_drawing r;
+		for (int i = 0; i < Width / d; i++) {
+			r.x = dx*i;
+			r.v = test_U0*exp(r.x);
+			t.AddRow(r);
+		}
+		t.AddColor();
+		table_for_drawing[TestTask]->push_front(t);
+
+		test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+		test_pictureBoxGraphic->Refresh();
+	}
 
 	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
+
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
 		RefForm^ refForm = gcnew RefForm(0,1,2,3.4);
 		refForm->Show();
@@ -933,7 +950,7 @@ private: System::Void test_textBoxU0_TextChanged(System::Object^  sender, System
 private: System::Void test_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = test_eps;
 	bool f = Double::TryParse(test_textBoxAccurBoard->Text, test_eps);
-	if ((!f)||(test_eps<0.0000000001)) {
+	if (!f) {
 		test_eps = _x;
 		test_textBoxAccurBoard->Text = test_eps.ToString();
 		MessageBox::Show("Неверное значение");
@@ -942,7 +959,7 @@ private: System::Void test_textBoxAccurBoard_TextChanged(System::Object^  sender
 private: System::Void test_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = test_h;
 	bool f = Double::TryParse(test_textBoxStep->Text, test_h);
-	if ((!f)||(test_h<0.0000001)) {
+	if (!f) {
 		test_h = _x;
 		test_textBoxStep->Text = test_h.ToString();
 		MessageBox::Show("Неверное значение");
@@ -951,7 +968,7 @@ private: System::Void test_textBoxStep_TextChanged(System::Object^  sender, Syst
 private: System::Void test_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = test_L;
 	bool f = Double::TryParse(test_textBoxLocError->Text, test_L);
-	if ((!f)||(test_L<0.00000001)) {
+	if (!f) {
 		test_L = _x;
 		test_textBoxLocError->Text = test_L.ToString();
 		MessageBox::Show("Неверное значение");
@@ -961,7 +978,7 @@ private: System::Void test_textBoxLocError_TextChanged(System::Object^  sender, 
 private: System::Void test_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	int _x = test_maxSteps;
 	bool f = Int32::TryParse(test_textBoxMaxNumSteps->Text, test_maxSteps);
-	if ((!f)||(test_maxSteps>100000)) {
+	if (!f) {
 		test_maxSteps = _x;
 		test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 		MessageBox::Show("Неверное значение");
@@ -1016,7 +1033,7 @@ private: System::Void main_textBoxLenght_TextChanged(System::Object^  sender, Sy
 private: System::Void main_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = main_h;
 	bool f = Double::TryParse(main_textBoxStep->Text, main_h);
-	if ((!f) || (test_h<0.0000001)) {
+	if (!f) {
 		main_h = _x;
 		main_textBoxStep->Text = main_h.ToString();
 		MessageBox::Show("Неверное значение");
@@ -1025,7 +1042,7 @@ private: System::Void main_textBoxStep_TextChanged(System::Object^  sender, Syst
 private: System::Void main_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = main_eps;
 	bool f = Double::TryParse(main_textBoxAccurBoard->Text, main_eps);
-	if ((!f)||(main_eps<0.0000000001)) {
+	if (!f) {
 		main_eps = _x;
 		main_textBoxAccurBoard->Text = main_eps.ToString();
 		MessageBox::Show("Неверное значение");
@@ -1034,7 +1051,7 @@ private: System::Void main_textBoxAccurBoard_TextChanged(System::Object^  sender
 private: System::Void main_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	int _x = main_maxSteps;
 	bool f = Int32::TryParse(main_textBoxMaxNumSteps->Text, main_maxSteps);
-	if ((!f)||(main_maxSteps>100000)) {
+	if (!f) {
 		main_maxSteps = _x;
 		main_textBoxMaxNumSteps->Text = main_maxSteps.ToString();
 		MessageBox::Show("Неверное значение");
@@ -1043,11 +1060,12 @@ private: System::Void main_textBoxMaxNumSteps_TextChanged(System::Object^  sende
 private: System::Void main_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 	double _x = main_L;
 	bool f = Double::TryParse(main_textBoxLocError->Text, main_L);
-	if ((!f)||(main_L<0.00000001)) {
+	if (!f) {
 		main_L = _x;
 		main_textBoxLocError->Text = main_L.ToString();
 		MessageBox::Show("Неверное значение");
 	}
 }
+
 };
 }

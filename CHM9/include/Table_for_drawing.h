@@ -15,6 +15,8 @@ class Table_for_drawing {
 	int Color;
 
 public:
+	Table_for_drawing() {}
+	~Table_for_drawing() { Clear(); }
 	Table_for_drawing(Table& t) {
 		AddTable(t);
 	}
@@ -36,6 +38,16 @@ public:
 			Data.push_back(r);
 		}
 	}
+	void AddColor() {
+		srand(time(NULL));
+		Color = rand() % 10;
+	}
+
+	void AddRow(Row_for_drawing& r) {
+		Data.push_back(r);
+	}
 
 	int GetColor() { return colors[Color]; }
+
+	void Clear() { Data.clear(); }
 };
