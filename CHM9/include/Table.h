@@ -1,6 +1,8 @@
 #pragma once
 #include <list>
 
+const int N = 100000;
+
 //Don't laugh, please, I know that names are stupid
 struct Row {
 	unsigned i;
