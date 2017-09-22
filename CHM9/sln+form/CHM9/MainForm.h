@@ -1,7 +1,6 @@
 #pragma once
-#include <cstdlib>
-#include <ctime>
 #include "Table.h"
+#include "Table_for_drawing.h"
 #include "TableForm.h"
 #include "RefForm.h"
 
@@ -20,14 +19,12 @@ namespace CHM9 {
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
 
-	public: array<std::list<Table>*>^ table;
-	public: std::list<int>** pens;
+	public: array<std::list<Table_for_drawing>*>^ table_for_drawing;
+	public: array<Table*>^ table;
 
 	private:
 		double X;
 		double* maxV, *minV, *maxX;
-		Table* t1;
-		Table* t2;
 		int a;
 
 	public:
@@ -35,31 +32,31 @@ namespace CHM9 {
 		{
 			InitializeComponent();
 
-			table = gcnew array<std::list<Table>*>(2);
-			table[0] = new std::list<Table>();
-			table[1] = new std::list<Table>();
+			table = gcnew array<Table*>(2);
+			table[0] = new Table();
+			table[1] = new Table();
 
-			pens = new std::list<int>*[2];
-			pens[0] = new std::list<int>();
-			pens[1] = new std::list<int>();
+			SetTable(*(table[MainTask]), 1);
+			SetTable(*(table[TestTask]), 1);
+
+			table_for_drawing = gcnew array<std::list<Table_for_drawing>*>(2);	
+			table_for_drawing[MainTask] = new std::list<Table_for_drawing>;
+			table_for_drawing[TestTask] = new std::list<Table_for_drawing>;
 
 			maxV = new double[2];
 			minV = new double[2];
 			maxX = new double[2];
-			maxX[0] = maxX[1] = maxV[0] = maxV[1] = 0;
-			minV[0] = minV[1] = 1000000;
+			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = 0;
+			minV[MainTask] = minV[TestTask] = 100000000;
 
-			t1 = new Table();
-			t2 = new Table();
-			SetTable(*t1,1);
-			table[0]->push_front(*t1);
-			table[1]->push_front(*t1);
 			X = 10;
 
 			a = 0;
 		}
 
 	protected: void SetTable(Table& t, int a) {
+		t.Clear();
+
 		Row row;
 
 		row.i = 0;
@@ -94,16 +91,12 @@ namespace CHM9 {
 				delete table[0];
 				delete table[1];
 
-				delete pens[0];
-				delete pens[1];
-				delete[] pens;
+				delete table_for_drawing[0];
+				delete table_for_drawing[1];
 
 				delete[] maxX;
 				delete[] maxV;
 				delete[] minV;
-
-				delete t1;
-				delete t2;
 
 				delete components;
 			}
@@ -842,18 +835,14 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		TableForm^ tableForm = gcnew TableForm(MainTask, *(table[tabControl->SelectedIndex]->begin()));
+		TableForm^ tableForm = gcnew TableForm(tabControl->SelectedIndex, *(table[tabControl->SelectedIndex]));
 		tableForm->Show();
 	}
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
-
-		//for every table her own color
-		srand(time(NULL));
-		int color = rand() % 10;
-		pens[tabControl->SelectedIndex]->push_front(color);
-
+		Table_for_drawing t(*(table[MainTask]));
+		table_for_drawing[MainTask]->push_front(t);
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
@@ -861,23 +850,24 @@ namespace CHM9 {
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		//call function
 
-		//for every table her own color
-		srand(time(NULL));
-		int color = rand() % 10;
-		pens[tabControl->SelectedIndex]->push_front(color);
-
 		if (a == 0) {
+			Table_for_drawing t(*(table[TestTask]));
+			table_for_drawing[TestTask]->push_front(t);
+
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
 			a = 1;
 		}
 		else if (a==1) {
-			SetTable(*t2, 2);
-			table[tabControl->SelectedIndex]->push_front(*t2);
+			SetTable(*(table[TestTask]), 2);
+			Table_for_drawing t(*(table[TestTask]));
+			
+			table_for_drawing[TestTask]->push_front(t);
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
 			a = 2;
-		} else if (a == 2) {
+		} 
+		else if (a == 2) {
 			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 			test_pictureBoxGraphic->Refresh();
 		}
@@ -887,15 +877,13 @@ namespace CHM9 {
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
-		table[1]->clear();
-		pens[1]->clear();
+		table_for_drawing[TestTask]->clear();
 	}
 
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
-		table[0]->clear();
-		pens[0]->clear();
+		table_for_drawing[MainTask]->clear();
 	}
 
 

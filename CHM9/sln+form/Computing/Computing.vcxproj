@@ -113,11 +113,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\Computing.h" />
     <ClInclude Include="..\..\include\Table.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\scr\Computing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,7 +11,6 @@ int main(array<String^>^ args) {
 	Application::Run(%form);
 }
 
-static int colors[10] = { 0xff1e90ff, 0xffF4a460, 0xffffc1c1, 0xff8b4513, 0x7ff006400, 0xffadff2f, 0xff7cfc00, 0xffff4500, 0xffff0000, 0xffffff00};
 
 System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
 {
@@ -22,10 +21,10 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 	int tabPage = tabControl->SelectedIndex;
 
-	for (auto it = table[tabPage]->begin()->begin(); it != table[tabPage]->begin()->end(); it++) {
-		if (it->xi > maxX[tabPage]) maxX[tabPage] = it->xi;
-		if (it->viItog > maxV[tabPage]) maxV[tabPage] = it->viItog;
-		if (it->viItog < minV[tabPage]) minV[tabPage] = it->viItog;
+	for (auto it = table_for_drawing[tabPage]->begin()->begin(); it != table_for_drawing[tabPage]->begin()->end(); it++) {
+		if (it->x > maxX[tabPage]) maxX[tabPage] = it->x;
+		if (it->v > maxV[tabPage]) maxV[tabPage] = it->v;
+		if (it->v < minV[tabPage]) minV[tabPage] = it->v;
 	}
 
 	const int offsetX = 60;
@@ -76,11 +75,10 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 
 	//Drawing
-	auto itPen = pens[tabControl->SelectedIndex]->begin();
 
-	for (auto itL = table[tabPage]->begin(); itL != table[tabPage]->end(); itL++, itPen++)
-		for (auto it = itL->begin(); it != --(itL->end()); ) {
-			g->DrawLine(gcnew Pen(Color::FromArgb(colors[*itPen]),2), (int)it->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY), (int)(++it)->xi*dx + offsetX, p->Height - ((int)(it->viItog - minV[tabPage])*dy + offsetY));
+	for (auto itL = table_for_drawing[tabPage]->begin(); itL != table_for_drawing[tabPage]->end(); itL++)//all tables
+		for (auto it = itL->begin(); it != --(itL->end()); ) { //all rows
+			g->DrawLine(gcnew Pen(Color::FromArgb(itL->GetColor()),2), (int)it->x*dx + offsetX, p->Height - ((int)(it->v - minV[tabPage])*dy + offsetY), (int)(++it)->x*dx + offsetX, p->Height - ((int)(it->v - minV[tabPage])*dy + offsetY));
 		}
 }
 

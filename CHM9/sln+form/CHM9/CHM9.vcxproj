@@ -141,6 +141,7 @@
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\Table_for_drawing.h" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

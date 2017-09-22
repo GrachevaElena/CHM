@@ -37,4 +37,6 @@ public:
 	int GetSize() { return Data.size(); }
 	void AddRow(Row row) { Data.push_back(row); }
 	Row GetLastRow() { return *(--Data.end()); } 
+
+	void Clear() { Data.clear(); }
 };
