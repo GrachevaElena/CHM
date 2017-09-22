@@ -23,14 +23,41 @@ namespace CHM9 {
 	public: array<Table*>^ table;
 
 	private:
-		double X;
+		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
+		int test_maxSteps, main_maxSteps;
 		double* maxV, *minV, *maxX;
 		int a;
 
 	public:
 		MainForm(void)
 		{
+
+			test_X = main_X = 10;
+			test_h = main_h = 0.001;
+			test_U0 = main_U0 = 0;
+			test_L = main_L = 0.00001;
+			test_maxSteps = main_maxSteps = 1000;
+			test_eps = main_eps = 0.01;
+			a1 = a2 = m = 1;
+
 			InitializeComponent();
+
+			this->test_textBoxU0->Text = test_U0.ToString();
+			this->test_textBoxStep->Text = test_h.ToString();
+			this->test_textBoxLocError->Text = test_L.ToString();
+			this->test_textBoxAccurBoard->Text = test_eps.ToString();
+			this->test_textBoxLenght->Text = test_X.ToString();
+			this->main_textBoxStep->Text = main_h.ToString();
+			this->main_textBoxM->Text = m.ToString();
+			this->main_textBoxA2->Text = a2.ToString();
+			this->main_textBoxLocError->Text = main_L.ToString();
+			this->main_textBoxA1->Text = a1.ToString();
+			this->main_textBoxU0->Text = main_U0.ToString();
+			this->main_textBoxMaxNumSteps->Text = main_maxSteps.ToString();
+			this->main_textBoxLenght->Text = main_X.ToString();
+			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
+			this->main_textBoxAccurBoard->Text = main_eps.ToString();
+
 
 			table = gcnew array<Table*>(2);
 			table[0] = new Table();
@@ -48,8 +75,6 @@ namespace CHM9 {
 			maxX = new double[2];
 			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = 0;
 			minV[MainTask] = minV[TestTask] = 100000000;
-
-			X = 10;
 
 			a = 0;
 		}
@@ -120,7 +145,7 @@ namespace CHM9 {
 	private: System::Windows::Forms::Label^  main_labelLocError;
 	private: System::Windows::Forms::Label^  main_labelH;
 	private: System::Windows::Forms::Label^  main_labelAccurBoard;
-	private: System::Windows::Forms::Label^  main_labelL;
+
 	private: System::Windows::Forms::Label^  main_labelParameters;
 	private: System::Windows::Forms::TextBox^ main_textBoxM;
 	private: System::Windows::Forms::TextBox^  main_textBoxA2;
@@ -151,7 +176,7 @@ namespace CHM9 {
 	private: System::Windows::Forms::Label^  test_labelAccurBoard;
 	private: System::Windows::Forms::Label^  test_labelParameters;
 	private: System::Windows::Forms::Label^  test_labelLenght;
-	private: System::Windows::Forms::Label^  test_labelL;
+
 	private: System::Windows::Forms::Label^  test_labelX;
 	private: System::Windows::Forms::Label^  test_labelU0;
 	private: System::Windows::Forms::TextBox^  test_textBoxU0;
@@ -193,7 +218,6 @@ namespace CHM9 {
 			this->test_labelAccurBoard = (gcnew System::Windows::Forms::Label());
 			this->test_labelParameters = (gcnew System::Windows::Forms::Label());
 			this->test_labelLenght = (gcnew System::Windows::Forms::Label());
-			this->test_labelL = (gcnew System::Windows::Forms::Label());
 			this->test_labelX = (gcnew System::Windows::Forms::Label());
 			this->test_labelU0 = (gcnew System::Windows::Forms::Label());
 			this->test_textBoxU0 = (gcnew System::Windows::Forms::TextBox());
@@ -219,7 +243,6 @@ namespace CHM9 {
 			this->main_labelAccurBoard = (gcnew System::Windows::Forms::Label());
 			this->main_labelParameters = (gcnew System::Windows::Forms::Label());
 			this->main_labelLength = (gcnew System::Windows::Forms::Label());
-			this->main_labelL = (gcnew System::Windows::Forms::Label());
 			this->main_labelX = (gcnew System::Windows::Forms::Label());
 			this->main_labelU0 = (gcnew System::Windows::Forms::Label());
 			this->main_labelM = (gcnew System::Windows::Forms::Label());
@@ -342,7 +365,6 @@ namespace CHM9 {
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelAccurBoard);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelParameters);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelLenght);
-			this->test_groupBoxParametrs->Controls->Add(this->test_labelL);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelX);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelU0);
 			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxU0);
@@ -421,15 +443,6 @@ namespace CHM9 {
 			this->test_labelLenght->TabIndex = 8;
 			this->test_labelLenght->Text = L"Длина интервала";
 			// 
-			// test_labelL
-			// 
-			this->test_labelL->AutoSize = true;
-			this->test_labelL->Location = System::Drawing::Point(201, 107);
-			this->test_labelL->Name = L"test_labelL";
-			this->test_labelL->Size = System::Drawing::Size(22, 13);
-			this->test_labelL->TabIndex = 5;
-			this->test_labelL->Text = L" L=";
-			// 
 			// test_labelX
 			// 
 			this->test_labelX->AutoSize = true;
@@ -454,6 +467,7 @@ namespace CHM9 {
 			this->test_textBoxU0->Name = L"test_textBoxU0";
 			this->test_textBoxU0->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxU0->TabIndex = 4;
+			this->test_textBoxU0->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxU0_TextChanged);
 			// 
 			// test_textBoxStep
 			// 
@@ -461,6 +475,7 @@ namespace CHM9 {
 			this->test_textBoxStep->Name = L"test_textBoxStep";
 			this->test_textBoxStep->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxStep->TabIndex = 4;
+			this->test_textBoxStep->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxStep_TextChanged);
 			// 
 			// test_textBoxMaxNumSteps
 			// 
@@ -468,6 +483,7 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Name = L"test_textBoxMaxNumSteps";
 			this->test_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxMaxNumSteps->TabIndex = 4;
+			this->test_textBoxMaxNumSteps->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxMaxNumSteps_TextChanged);
 			// 
 			// test_textBoxLocError
 			// 
@@ -475,6 +491,7 @@ namespace CHM9 {
 			this->test_textBoxLocError->Name = L"test_textBoxLocError";
 			this->test_textBoxLocError->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxLocError->TabIndex = 4;
+			this->test_textBoxLocError->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxLocError_TextChanged);
 			// 
 			// test_textBoxAccurBoard
 			// 
@@ -482,6 +499,7 @@ namespace CHM9 {
 			this->test_textBoxAccurBoard->Name = L"test_textBoxAccurBoard";
 			this->test_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxAccurBoard->TabIndex = 4;
+			this->test_textBoxAccurBoard->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxAccurBoard_TextChanged);
 			// 
 			// test_textBoxLenght
 			// 
@@ -489,7 +507,7 @@ namespace CHM9 {
 			this->test_textBoxLenght->Name = L"test_textBoxLenght";
 			this->test_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxLenght->TabIndex = 4;
-			this->test_textBoxLenght->Text = L"10";
+			this->test_textBoxLenght->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxLenght_TextChanged);
 			// 
 			// test_pictureBoxGraphic
 			// 
@@ -596,7 +614,6 @@ namespace CHM9 {
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelAccurBoard);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelParameters);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelLength);
-			this->main_groupBoxParametrs->Controls->Add(this->main_labelL);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelX);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelU0);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelM);
@@ -621,7 +638,7 @@ namespace CHM9 {
 			// main_labelStep
 			// 
 			this->main_labelStep->AutoSize = true;
-			this->main_labelStep->Location = System::Drawing::Point(207, 106);
+			this->main_labelStep->Location = System::Drawing::Point(207, 107);
 			this->main_labelStep->Name = L"main_labelStep";
 			this->main_labelStep->Size = System::Drawing::Size(112, 13);
 			this->main_labelStep->TabIndex = 8;
@@ -639,7 +656,7 @@ namespace CHM9 {
 			// main_labelLocError
 			// 
 			this->main_labelLocError->AutoSize = true;
-			this->main_labelLocError->Location = System::Drawing::Point(207, 62);
+			this->main_labelLocError->Location = System::Drawing::Point(372, 106);
 			this->main_labelLocError->Name = L"main_labelLocError";
 			this->main_labelLocError->Size = System::Drawing::Size(148, 13);
 			this->main_labelLocError->TabIndex = 8;
@@ -648,7 +665,7 @@ namespace CHM9 {
 			// main_labelH
 			// 
 			this->main_labelH->AutoSize = true;
-			this->main_labelH->Location = System::Drawing::Point(207, 128);
+			this->main_labelH->Location = System::Drawing::Point(207, 129);
 			this->main_labelH->Name = L"main_labelH";
 			this->main_labelH->Size = System::Drawing::Size(22, 13);
 			this->main_labelH->TabIndex = 5;
@@ -675,25 +692,16 @@ namespace CHM9 {
 			// main_labelLength
 			// 
 			this->main_labelLength->AutoSize = true;
-			this->main_labelLength->Location = System::Drawing::Point(207, 20);
+			this->main_labelLength->Location = System::Drawing::Point(207, 65);
 			this->main_labelLength->Name = L"main_labelLength";
 			this->main_labelLength->Size = System::Drawing::Size(96, 13);
 			this->main_labelLength->TabIndex = 8;
 			this->main_labelLength->Text = L"Длина интервала";
 			// 
-			// main_labelL
-			// 
-			this->main_labelL->AutoSize = true;
-			this->main_labelL->Location = System::Drawing::Point(207, 84);
-			this->main_labelL->Name = L"main_labelL";
-			this->main_labelL->Size = System::Drawing::Size(22, 13);
-			this->main_labelL->TabIndex = 5;
-			this->main_labelL->Text = L" L=";
-			// 
 			// main_labelX
 			// 
 			this->main_labelX->AutoSize = true;
-			this->main_labelX->Location = System::Drawing::Point(207, 41);
+			this->main_labelX->Location = System::Drawing::Point(207, 86);
 			this->main_labelX->Name = L"main_labelX";
 			this->main_labelX->Size = System::Drawing::Size(23, 13);
 			this->main_labelX->TabIndex = 5;
@@ -702,7 +710,7 @@ namespace CHM9 {
 			// main_labelU0
 			// 
 			this->main_labelU0->AutoSize = true;
-			this->main_labelU0->Location = System::Drawing::Point(39, 128);
+			this->main_labelU0->Location = System::Drawing::Point(203, 41);
 			this->main_labelU0->Name = L"main_labelU0";
 			this->main_labelU0->Size = System::Drawing::Size(25, 13);
 			this->main_labelU0->TabIndex = 5;
@@ -711,7 +719,7 @@ namespace CHM9 {
 			// main_labelM
 			// 
 			this->main_labelM->AutoSize = true;
-			this->main_labelM->Location = System::Drawing::Point(39, 94);
+			this->main_labelM->Location = System::Drawing::Point(39, 131);
 			this->main_labelM->Name = L"main_labelM";
 			this->main_labelM->Size = System::Drawing::Size(24, 13);
 			this->main_labelM->TabIndex = 7;
@@ -719,15 +727,16 @@ namespace CHM9 {
 			// 
 			// main_textBoxU0
 			// 
-			this->main_textBoxU0->Location = System::Drawing::Point(67, 125);
+			this->main_textBoxU0->Location = System::Drawing::Point(231, 38);
 			this->main_textBoxU0->Name = L"main_textBoxU0";
 			this->main_textBoxU0->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxU0->TabIndex = 4;
+			this->main_textBoxU0->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxU0_TextChanged);
 			// 
 			// main_labelA2
 			// 
 			this->main_labelA2->AutoSize = true;
-			this->main_labelA2->Location = System::Drawing::Point(39, 67);
+			this->main_labelA2->Location = System::Drawing::Point(39, 86);
 			this->main_labelA2->Name = L"main_labelA2";
 			this->main_labelA2->Size = System::Drawing::Size(25, 13);
 			this->main_labelA2->TabIndex = 6;
@@ -744,17 +753,19 @@ namespace CHM9 {
 			// 
 			// main_textBoxStep
 			// 
-			this->main_textBoxStep->Location = System::Drawing::Point(231, 125);
+			this->main_textBoxStep->Location = System::Drawing::Point(231, 126);
 			this->main_textBoxStep->Name = L"main_textBoxStep";
 			this->main_textBoxStep->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxStep->TabIndex = 4;
+			this->main_textBoxStep->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxStep_TextChanged);
 			// 
 			// main_textBoxM
 			// 
-			this->main_textBoxM->Location = System::Drawing::Point(67, 89);
+			this->main_textBoxM->Location = System::Drawing::Point(67, 126);
 			this->main_textBoxM->Name = L"main_textBoxM";
 			this->main_textBoxM->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxM->TabIndex = 4;
+			this->main_textBoxM->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxM_TextChanged);
 			// 
 			// main_textBoxMaxNumSteps
 			// 
@@ -762,13 +773,15 @@ namespace CHM9 {
 			this->main_textBoxMaxNumSteps->Name = L"main_textBoxMaxNumSteps";
 			this->main_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxMaxNumSteps->TabIndex = 4;
+			this->main_textBoxMaxNumSteps->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxMaxNumSteps_TextChanged);
 			// 
 			// main_textBoxLocError
 			// 
-			this->main_textBoxLocError->Location = System::Drawing::Point(231, 81);
+			this->main_textBoxLocError->Location = System::Drawing::Point(376, 125);
 			this->main_textBoxLocError->Name = L"main_textBoxLocError";
 			this->main_textBoxLocError->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLocError->TabIndex = 4;
+			this->main_textBoxLocError->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxLocError_TextChanged);
 			// 
 			// main_textBoxAccurBoard
 			// 
@@ -776,21 +789,23 @@ namespace CHM9 {
 			this->main_textBoxAccurBoard->Name = L"main_textBoxAccurBoard";
 			this->main_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxAccurBoard->TabIndex = 4;
+			this->main_textBoxAccurBoard->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxAccurBoard_TextChanged);
 			// 
 			// main_textBoxA2
 			// 
-			this->main_textBoxA2->Location = System::Drawing::Point(67, 63);
+			this->main_textBoxA2->Location = System::Drawing::Point(67, 82);
 			this->main_textBoxA2->Name = L"main_textBoxA2";
 			this->main_textBoxA2->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxA2->TabIndex = 4;
+			this->main_textBoxA2->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxA2_TextChanged);
 			// 
 			// main_textBoxLenght
 			// 
-			this->main_textBoxLenght->Location = System::Drawing::Point(231, 37);
+			this->main_textBoxLenght->Location = System::Drawing::Point(231, 82);
 			this->main_textBoxLenght->Name = L"main_textBoxLenght";
 			this->main_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLenght->TabIndex = 4;
-			this->main_textBoxLenght->Text = L"10";
+			this->main_textBoxLenght->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxLenght_TextChanged);
 			// 
 			// main_textBoxA1
 			// 
@@ -798,6 +813,7 @@ namespace CHM9 {
 			this->main_textBoxA1->Name = L"main_textBoxA1";
 			this->main_textBoxA1->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxA1->TabIndex = 9;
+			this->main_textBoxA1->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxA1_TextChanged);
 			// 
 			// main_pictureBoxTask
 			// 
@@ -892,5 +908,146 @@ namespace CHM9 {
 		RefForm^ refForm = gcnew RefForm(0,1,2,3.4);
 		refForm->Show();
 	}
+
+//parametrs
+private: System::Void test_textBoxLenght_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = test_X;
+	bool f=Double::TryParse(test_textBoxLenght->Text, test_X);
+	if ((!f)||(test_X<0)) {
+		test_X = _x;
+		test_textBoxLenght->Text = test_X.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+
+}
+private: System::Void test_textBoxU0_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = test_U0;
+	bool f = Double::TryParse(test_textBoxU0->Text, test_U0);
+	if (!f) if (test_textBoxU0->Text == "-") main_U0 = -main_U0;
+	else {
+		test_U0 = _x;
+		test_textBoxU0->Text = test_U0.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void test_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = test_eps;
+	bool f = Double::TryParse(test_textBoxAccurBoard->Text, test_eps);
+	if ((!f)||(test_eps<0.0000000001)) {
+		test_eps = _x;
+		test_textBoxAccurBoard->Text = test_eps.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void test_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = test_h;
+	bool f = Double::TryParse(test_textBoxStep->Text, test_h);
+	if ((!f)||(test_h<0.0000001)) {
+		test_h = _x;
+		test_textBoxStep->Text = test_h.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void test_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = test_L;
+	bool f = Double::TryParse(test_textBoxLocError->Text, test_L);
+	if ((!f)||(test_L<0.00000001)) {
+		test_L = _x;
+		test_textBoxLocError->Text = test_L.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+
+}
+private: System::Void test_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	int _x = test_maxSteps;
+	bool f = Int32::TryParse(test_textBoxMaxNumSteps->Text, test_maxSteps);
+	if ((!f)||(test_maxSteps>100000)) {
+		test_maxSteps = _x;
+		test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxA1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = a1;
+	bool f = Double::TryParse(main_textBoxA1->Text, a1);
+	if ((!f)||(a1<=0)) {
+		a1 = _x;
+		main_textBoxA1->Text = a1.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxA2_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = a2;
+	bool f = Double::TryParse(main_textBoxA2->Text, a2);
+	if ((!f)||(a2<=0)) {
+		a2 = _x;
+		main_textBoxA2->Text = a2.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxM_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = m;
+	bool f = Double::TryParse(main_textBoxM->Text, m);
+	if ((!f)||(m<0)) {
+		m = _x;
+		main_textBoxM->Text = m.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxU0_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = main_U0;
+	bool f = Double::TryParse(main_textBoxU0->Text, main_U0);
+	if (!f) if (main_textBoxU0->Text == "-") main_U0 = -main_U0;
+	else {
+		main_U0 = _x;
+		main_textBoxU0->Text = main_U0.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxLenght_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = main_X;
+	bool f = Double::TryParse(main_textBoxLenght->Text, main_X);
+	if ((!f)||(main_X<=0)) {
+		main_X = _x;
+		main_textBoxLenght->Text = main_X.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = main_h;
+	bool f = Double::TryParse(main_textBoxStep->Text, main_h);
+	if ((!f) || (test_h<0.0000001)) {
+		main_h = _x;
+		main_textBoxStep->Text = main_h.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = main_eps;
+	bool f = Double::TryParse(main_textBoxAccurBoard->Text, main_eps);
+	if ((!f)||(main_eps<0.0000000001)) {
+		main_eps = _x;
+		main_textBoxAccurBoard->Text = main_eps.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	int _x = main_maxSteps;
+	bool f = Int32::TryParse(main_textBoxMaxNumSteps->Text, main_maxSteps);
+	if ((!f)||(main_maxSteps>100000)) {
+		main_maxSteps = _x;
+		main_textBoxMaxNumSteps->Text = main_maxSteps.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
+private: System::Void main_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	double _x = main_L;
+	bool f = Double::TryParse(main_textBoxLocError->Text, main_L);
+	if ((!f)||(main_L<0.00000001)) {
+		main_L = _x;
+		main_textBoxLocError->Text = main_L.ToString();
+		MessageBox::Show("Неверное значение");
+	}
+}
 };
 }
