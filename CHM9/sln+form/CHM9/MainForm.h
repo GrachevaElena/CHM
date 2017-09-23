@@ -28,6 +28,11 @@ namespace CHM9 {
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
 		int test_maxSteps, main_maxSteps;
 		double* maxV, *minV, *maxX;
+	private: System::Windows::Forms::ComboBox^  test_comboBoxMethod;
+	private: System::Windows::Forms::ComboBox^  main_comboBoxMethod;
+
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Label^  label1;
 
 	public:
 		MainForm(void)
@@ -211,7 +216,9 @@ namespace CHM9 {
 			this->test_buttonTrueSolution = (gcnew System::Windows::Forms::Button());
 			this->test_buttonRef = (gcnew System::Windows::Forms::Button());
 			this->test_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
+			this->test_comboBoxMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->test_labelStep = (gcnew System::Windows::Forms::Label());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->test_labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
 			this->test_labelLocError = (gcnew System::Windows::Forms::Label());
 			this->test_labelH = (gcnew System::Windows::Forms::Label());
@@ -258,6 +265,8 @@ namespace CHM9 {
 			this->main_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
 			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
+			this->main_comboBoxMethod = (gcnew System::Windows::Forms::ComboBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
 			this->test_groupBoxParametrs->SuspendLayout();
@@ -300,7 +309,7 @@ namespace CHM9 {
 			// 
 			// test_buttonSolve
 			// 
-			this->test_buttonSolve->Location = System::Drawing::Point(25, 209);
+			this->test_buttonSolve->Location = System::Drawing::Point(25, 223);
 			this->test_buttonSolve->Name = L"test_buttonSolve";
 			this->test_buttonSolve->Size = System::Drawing::Size(228, 47);
 			this->test_buttonSolve->TabIndex = 12;
@@ -310,7 +319,7 @@ namespace CHM9 {
 			// 
 			// test_buttonClear
 			// 
-			this->test_buttonClear->Location = System::Drawing::Point(25, 315);
+			this->test_buttonClear->Location = System::Drawing::Point(25, 329);
 			this->test_buttonClear->Name = L"test_buttonClear";
 			this->test_buttonClear->Size = System::Drawing::Size(228, 47);
 			this->test_buttonClear->TabIndex = 13;
@@ -340,7 +349,7 @@ namespace CHM9 {
 			// 
 			// test_buttonTrueSolution
 			// 
-			this->test_buttonTrueSolution->Location = System::Drawing::Point(25, 262);
+			this->test_buttonTrueSolution->Location = System::Drawing::Point(25, 276);
 			this->test_buttonTrueSolution->Name = L"test_buttonTrueSolution";
 			this->test_buttonTrueSolution->Size = System::Drawing::Size(228, 47);
 			this->test_buttonTrueSolution->TabIndex = 16;
@@ -360,7 +369,9 @@ namespace CHM9 {
 			// 
 			// test_groupBoxParametrs
 			// 
+			this->test_groupBoxParametrs->Controls->Add(this->test_comboBoxMethod);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelStep);
+			this->test_groupBoxParametrs->Controls->Add(this->label1);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelMaxNumSteps);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelLocError);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelH);
@@ -382,6 +393,15 @@ namespace CHM9 {
 			this->test_groupBoxParametrs->TabStop = false;
 			this->test_groupBoxParametrs->Text = L"Параметры задачи";
 			// 
+			// test_comboBoxMethod
+			// 
+			this->test_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
+			this->test_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Эйлера", L"Рунге-Кутта 2 порядка" });
+			this->test_comboBoxMethod->Location = System::Drawing::Point(376, 124);
+			this->test_comboBoxMethod->Name = L"test_comboBoxMethod";
+			this->test_comboBoxMethod->Size = System::Drawing::Size(162, 21);
+			this->test_comboBoxMethod->TabIndex = 17;
+			// 
 			// test_labelStep
 			// 
 			this->test_labelStep->AutoSize = true;
@@ -391,10 +411,19 @@ namespace CHM9 {
 			this->test_labelStep->TabIndex = 8;
 			this->test_labelStep->Text = L"Шаг интегрирования";
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(372, 106);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(39, 13);
+			this->label1->TabIndex = 8;
+			this->label1->Text = L"Метод";
+			// 
 			// test_labelMaxNumSteps
 			// 
 			this->test_labelMaxNumSteps->AutoSize = true;
-			this->test_labelMaxNumSteps->Location = System::Drawing::Point(371, 85);
+			this->test_labelMaxNumSteps->Location = System::Drawing::Point(371, 62);
 			this->test_labelMaxNumSteps->Name = L"test_labelMaxNumSteps";
 			this->test_labelMaxNumSteps->Size = System::Drawing::Size(150, 13);
 			this->test_labelMaxNumSteps->TabIndex = 8;
@@ -421,7 +450,7 @@ namespace CHM9 {
 			// test_labelAccurBoard
 			// 
 			this->test_labelAccurBoard->AutoSize = true;
-			this->test_labelAccurBoard->Location = System::Drawing::Point(371, 32);
+			this->test_labelAccurBoard->Location = System::Drawing::Point(371, 19);
 			this->test_labelAccurBoard->Name = L"test_labelAccurBoard";
 			this->test_labelAccurBoard->Size = System::Drawing::Size(152, 13);
 			this->test_labelAccurBoard->TabIndex = 8;
@@ -479,7 +508,7 @@ namespace CHM9 {
 			// 
 			// test_textBoxMaxNumSteps
 			// 
-			this->test_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 104);
+			this->test_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 81);
 			this->test_textBoxMaxNumSteps->Name = L"test_textBoxMaxNumSteps";
 			this->test_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxMaxNumSteps->TabIndex = 4;
@@ -493,7 +522,7 @@ namespace CHM9 {
 			// 
 			// test_textBoxAccurBoard
 			// 
-			this->test_textBoxAccurBoard->Location = System::Drawing::Point(376, 49);
+			this->test_textBoxAccurBoard->Location = System::Drawing::Point(376, 36);
 			this->test_textBoxAccurBoard->Name = L"test_textBoxAccurBoard";
 			this->test_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxAccurBoard->TabIndex = 4;
@@ -604,6 +633,8 @@ namespace CHM9 {
 			// 
 			// main_groupBoxParametrs
 			// 
+			this->main_groupBoxParametrs->Controls->Add(this->main_comboBoxMethod);
+			this->main_groupBoxParametrs->Controls->Add(this->label2);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelStep);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelMaxNumSteps);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelLocError);
@@ -635,7 +666,7 @@ namespace CHM9 {
 			// main_labelStep
 			// 
 			this->main_labelStep->AutoSize = true;
-			this->main_labelStep->Location = System::Drawing::Point(207, 107);
+			this->main_labelStep->Location = System::Drawing::Point(206, 61);
 			this->main_labelStep->Name = L"main_labelStep";
 			this->main_labelStep->Size = System::Drawing::Size(112, 13);
 			this->main_labelStep->TabIndex = 8;
@@ -644,7 +675,7 @@ namespace CHM9 {
 			// main_labelMaxNumSteps
 			// 
 			this->main_labelMaxNumSteps->AutoSize = true;
-			this->main_labelMaxNumSteps->Location = System::Drawing::Point(371, 62);
+			this->main_labelMaxNumSteps->Location = System::Drawing::Point(371, 18);
 			this->main_labelMaxNumSteps->Name = L"main_labelMaxNumSteps";
 			this->main_labelMaxNumSteps->Size = System::Drawing::Size(150, 13);
 			this->main_labelMaxNumSteps->TabIndex = 8;
@@ -653,7 +684,7 @@ namespace CHM9 {
 			// main_labelLocError
 			// 
 			this->main_labelLocError->AutoSize = true;
-			this->main_labelLocError->Location = System::Drawing::Point(372, 106);
+			this->main_labelLocError->Location = System::Drawing::Point(372, 62);
 			this->main_labelLocError->Name = L"main_labelLocError";
 			this->main_labelLocError->Size = System::Drawing::Size(148, 13);
 			this->main_labelLocError->TabIndex = 8;
@@ -662,7 +693,7 @@ namespace CHM9 {
 			// main_labelH
 			// 
 			this->main_labelH->AutoSize = true;
-			this->main_labelH->Location = System::Drawing::Point(207, 129);
+			this->main_labelH->Location = System::Drawing::Point(206, 83);
 			this->main_labelH->Name = L"main_labelH";
 			this->main_labelH->Size = System::Drawing::Size(22, 13);
 			this->main_labelH->TabIndex = 5;
@@ -671,7 +702,7 @@ namespace CHM9 {
 			// main_labelAccurBoard
 			// 
 			this->main_labelAccurBoard->AutoSize = true;
-			this->main_labelAccurBoard->Location = System::Drawing::Point(371, 20);
+			this->main_labelAccurBoard->Location = System::Drawing::Point(207, 104);
 			this->main_labelAccurBoard->Name = L"main_labelAccurBoard";
 			this->main_labelAccurBoard->Size = System::Drawing::Size(152, 13);
 			this->main_labelAccurBoard->TabIndex = 8;
@@ -689,7 +720,7 @@ namespace CHM9 {
 			// main_labelLength
 			// 
 			this->main_labelLength->AutoSize = true;
-			this->main_labelLength->Location = System::Drawing::Point(207, 65);
+			this->main_labelLength->Location = System::Drawing::Point(206, 19);
 			this->main_labelLength->Name = L"main_labelLength";
 			this->main_labelLength->Size = System::Drawing::Size(96, 13);
 			this->main_labelLength->TabIndex = 8;
@@ -698,7 +729,7 @@ namespace CHM9 {
 			// main_labelX
 			// 
 			this->main_labelX->AutoSize = true;
-			this->main_labelX->Location = System::Drawing::Point(207, 86);
+			this->main_labelX->Location = System::Drawing::Point(206, 40);
 			this->main_labelX->Name = L"main_labelX";
 			this->main_labelX->Size = System::Drawing::Size(23, 13);
 			this->main_labelX->TabIndex = 5;
@@ -707,7 +738,7 @@ namespace CHM9 {
 			// main_labelU0
 			// 
 			this->main_labelU0->AutoSize = true;
-			this->main_labelU0->Location = System::Drawing::Point(203, 41);
+			this->main_labelU0->Location = System::Drawing::Point(39, 124);
 			this->main_labelU0->Name = L"main_labelU0";
 			this->main_labelU0->Size = System::Drawing::Size(25, 13);
 			this->main_labelU0->TabIndex = 5;
@@ -716,7 +747,7 @@ namespace CHM9 {
 			// main_labelM
 			// 
 			this->main_labelM->AutoSize = true;
-			this->main_labelM->Location = System::Drawing::Point(39, 131);
+			this->main_labelM->Location = System::Drawing::Point(39, 98);
 			this->main_labelM->Name = L"main_labelM";
 			this->main_labelM->Size = System::Drawing::Size(24, 13);
 			this->main_labelM->TabIndex = 7;
@@ -724,7 +755,7 @@ namespace CHM9 {
 			// 
 			// main_textBoxU0
 			// 
-			this->main_textBoxU0->Location = System::Drawing::Point(231, 38);
+			this->main_textBoxU0->Location = System::Drawing::Point(67, 121);
 			this->main_textBoxU0->Name = L"main_textBoxU0";
 			this->main_textBoxU0->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxU0->TabIndex = 4;
@@ -732,7 +763,7 @@ namespace CHM9 {
 			// main_labelA2
 			// 
 			this->main_labelA2->AutoSize = true;
-			this->main_labelA2->Location = System::Drawing::Point(39, 86);
+			this->main_labelA2->Location = System::Drawing::Point(39, 69);
 			this->main_labelA2->Name = L"main_labelA2";
 			this->main_labelA2->Size = System::Drawing::Size(25, 13);
 			this->main_labelA2->TabIndex = 6;
@@ -749,49 +780,49 @@ namespace CHM9 {
 			// 
 			// main_textBoxStep
 			// 
-			this->main_textBoxStep->Location = System::Drawing::Point(231, 126);
+			this->main_textBoxStep->Location = System::Drawing::Point(230, 80);
 			this->main_textBoxStep->Name = L"main_textBoxStep";
 			this->main_textBoxStep->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxStep->TabIndex = 4;
 			// 
 			// main_textBoxM
 			// 
-			this->main_textBoxM->Location = System::Drawing::Point(67, 126);
+			this->main_textBoxM->Location = System::Drawing::Point(67, 93);
 			this->main_textBoxM->Name = L"main_textBoxM";
 			this->main_textBoxM->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxM->TabIndex = 4;
 			// 
 			// main_textBoxMaxNumSteps
 			// 
-			this->main_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 81);
+			this->main_textBoxMaxNumSteps->Location = System::Drawing::Point(376, 37);
 			this->main_textBoxMaxNumSteps->Name = L"main_textBoxMaxNumSteps";
 			this->main_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxMaxNumSteps->TabIndex = 4;
 			// 
 			// main_textBoxLocError
 			// 
-			this->main_textBoxLocError->Location = System::Drawing::Point(376, 125);
+			this->main_textBoxLocError->Location = System::Drawing::Point(376, 81);
 			this->main_textBoxLocError->Name = L"main_textBoxLocError";
 			this->main_textBoxLocError->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLocError->TabIndex = 4;
 			// 
 			// main_textBoxAccurBoard
 			// 
-			this->main_textBoxAccurBoard->Location = System::Drawing::Point(376, 37);
+			this->main_textBoxAccurBoard->Location = System::Drawing::Point(230, 121);
 			this->main_textBoxAccurBoard->Name = L"main_textBoxAccurBoard";
 			this->main_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxAccurBoard->TabIndex = 4;
 			// 
 			// main_textBoxA2
 			// 
-			this->main_textBoxA2->Location = System::Drawing::Point(67, 82);
+			this->main_textBoxA2->Location = System::Drawing::Point(67, 65);
 			this->main_textBoxA2->Name = L"main_textBoxA2";
 			this->main_textBoxA2->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxA2->TabIndex = 4;
 			// 
 			// main_textBoxLenght
 			// 
-			this->main_textBoxLenght->Location = System::Drawing::Point(231, 82);
+			this->main_textBoxLenght->Location = System::Drawing::Point(230, 36);
 			this->main_textBoxLenght->Name = L"main_textBoxLenght";
 			this->main_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLenght->TabIndex = 4;
@@ -813,6 +844,24 @@ namespace CHM9 {
 			this->main_pictureBoxTask->Size = System::Drawing::Size(228, 150);
 			this->main_pictureBoxTask->TabIndex = 2;
 			this->main_pictureBoxTask->TabStop = false;
+			// 
+			// main_comboBoxMethod
+			// 
+			this->main_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
+			this->main_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Эйлера", L"Рунге-Кутта 2 порядка" });
+			this->main_comboBoxMethod->Location = System::Drawing::Point(376, 121);
+			this->main_comboBoxMethod->Name = L"main_comboBoxMethod";
+			this->main_comboBoxMethod->Size = System::Drawing::Size(162, 21);
+			this->main_comboBoxMethod->TabIndex = 19;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(372, 104);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(39, 13);
+			this->label2->TabIndex = 18;
+			this->label2->Text = L"Метод";
 			// 
 			// MainForm
 			// 

@@ -14,6 +14,7 @@ int main(array<String^>^ args) {
 
 System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
 {
+	if (table_for_drawing[tabControl->SelectedIndex]->size()==0) return;
 	PictureBox^ p = (PictureBox^)sender;
 
 	Graphics^ g = e->Graphics;
