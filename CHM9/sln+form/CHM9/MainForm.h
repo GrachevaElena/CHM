@@ -65,6 +65,7 @@ namespace CHM9 {
 			table[0] = new Table();
 			table[1] = new Table();
 
+			//добавить пустые
 			SetTable(*(table[MainTask]), 1);
 			SetTable(*(table[TestTask]), 1);
 
@@ -338,6 +339,7 @@ namespace CHM9 {
 			this->test_buttonError->TabIndex = 15;
 			this->test_buttonError->Text = L"Ћок. погрешность";
 			this->test_buttonError->UseVisualStyleBackColor = true;
+			this->test_buttonError->Click += gcnew System::EventHandler(this, &MainForm::test_buttonError_Click);
 			// 
 			// test_buttonTrueSolution
 			// 
@@ -582,6 +584,7 @@ namespace CHM9 {
 			this->main_buttonError->TabIndex = 10;
 			this->main_buttonError->Text = L"Ћок. погрешность";
 			this->main_buttonError->UseVisualStyleBackColor = true;
+			this->main_buttonError->Click += gcnew System::EventHandler(this, &MainForm::main_buttonError_Click);
 			// 
 			// main_buttonRef
 			// 
@@ -839,6 +842,10 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (table[tabControl->SelectedIndex]->GetSize() == 0) {
+			MessageBox::Show("ѕока нет ни одного решени€");
+			return;
+		}
 		TableForm^ tableForm = gcnew TableForm(tabControl->SelectedIndex, *(table[tabControl->SelectedIndex]));
 		tableForm->Show();
 	}
@@ -883,13 +890,15 @@ namespace CHM9 {
 	}
 
 	private: System::Void test_buttonTrueSolution_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (!CheckValues()) return;
+
 		const int OffsetX = 60;
 		const int OffsetY = 40;
 
 		const int Width = test_pictureBoxGraphic->Width - OffsetX;
 		const int Height = test_pictureBoxGraphic->Height - OffsetY;
 
-		int d = 5;
+		int d = 2;
 		double dx = test_X / Width * d;
 
 		Table_for_drawing t;
@@ -975,7 +984,7 @@ namespace CHM9 {
 				MessageBox::Show("Ќеверное значение: значение длины отрезка интегрировани€ не может быть отрицательным числом");
 				return false;
 			}
-
+			return true;
 		}
 		if (tabControl->SelectedIndex == MainTask) {
 
@@ -1065,9 +1074,14 @@ namespace CHM9 {
 				MessageBox::Show("Ќеверное значение: значение m не может быть неположительным числом");
 				return false;
 			}
+			return true;
 		}
 		return false;
 
 	}
+private: System::Void main_buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void test_buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
+}
 };
 }

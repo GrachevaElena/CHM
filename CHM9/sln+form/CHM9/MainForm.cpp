@@ -39,8 +39,8 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	const int N = Width / H + 1;
 	const int M = Height / H + 1;
 
-	const int dx =(int)(Width/maxX[tabPage]);//сколько пикселей за 1 шаг
-	const int dy = (int)(Height/(maxV[tabPage] - minV[tabPage]));
+	const double dx =Width/maxX[tabPage];//сколько пикселей соответствует единице длины
+	const double dy = Height/(maxV[tabPage] - minV[tabPage]);
 
 	const double dhx = H*maxX[tabPage] / Width;
 	const double dhy = H*(maxV[tabPage] -minV[tabPage]) / Height;
@@ -70,9 +70,9 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 	font = gcnew System::Drawing::Font("Microsoft Sans Serif", 8, FontStyle::Regular);
 
 	for (int i = 0; i < M / 5 + 1; i++)
-		g->DrawString((Math::Round(minV[tabPage] +i*5*dhy,3)).ToString(), font, brush, PointF(OffsetX / 5, p->Height - OffsetY - i * 5 * H));
+		g->DrawString((Math::Round(minV[tabPage] +i*5*dhy,3)).ToString(), font, brush, PointF(3, p->Height - OffsetY - i * 5 * H));
 	for (int i = 0; i < N / 5 + 1; i++)
-		g->DrawString((Math::Round(i * 5 * dhx, 3)).ToString(), font, brush, PointF(OffsetX + i*5*H, p->Height - OffsetY/1.8));
+		g->DrawString((Math::Round(i * 5 * dhx, 3)).ToString(), font, brush, PointF(OffsetX + i*5*H, p->Height - 35));
 
 
 	//Drawing
