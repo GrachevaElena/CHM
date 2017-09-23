@@ -470,7 +470,6 @@ namespace CHM9 {
 			this->test_textBoxU0->Name = L"test_textBoxU0";
 			this->test_textBoxU0->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxU0->TabIndex = 4;
-			this->test_textBoxU0->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxU0_TextChanged);
 			// 
 			// test_textBoxStep
 			// 
@@ -478,7 +477,6 @@ namespace CHM9 {
 			this->test_textBoxStep->Name = L"test_textBoxStep";
 			this->test_textBoxStep->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxStep->TabIndex = 4;
-			this->test_textBoxStep->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxStep_TextChanged);
 			// 
 			// test_textBoxMaxNumSteps
 			// 
@@ -486,7 +484,6 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Name = L"test_textBoxMaxNumSteps";
 			this->test_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxMaxNumSteps->TabIndex = 4;
-			this->test_textBoxMaxNumSteps->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxMaxNumSteps_TextChanged);
 			// 
 			// test_textBoxLocError
 			// 
@@ -494,7 +491,6 @@ namespace CHM9 {
 			this->test_textBoxLocError->Name = L"test_textBoxLocError";
 			this->test_textBoxLocError->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxLocError->TabIndex = 4;
-			this->test_textBoxLocError->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxLocError_TextChanged);
 			// 
 			// test_textBoxAccurBoard
 			// 
@@ -502,7 +498,6 @@ namespace CHM9 {
 			this->test_textBoxAccurBoard->Name = L"test_textBoxAccurBoard";
 			this->test_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxAccurBoard->TabIndex = 4;
-			this->test_textBoxAccurBoard->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxAccurBoard_TextChanged);
 			// 
 			// test_textBoxLenght
 			// 
@@ -510,7 +505,6 @@ namespace CHM9 {
 			this->test_textBoxLenght->Name = L"test_textBoxLenght";
 			this->test_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxLenght->TabIndex = 4;
-			this->test_textBoxLenght->TextChanged += gcnew System::EventHandler(this, &MainForm::test_textBoxLenght_TextChanged);
 			// 
 			// test_pictureBoxGraphic
 			// 
@@ -734,7 +728,6 @@ namespace CHM9 {
 			this->main_textBoxU0->Name = L"main_textBoxU0";
 			this->main_textBoxU0->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxU0->TabIndex = 4;
-			this->main_textBoxU0->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxU0_TextChanged);
 			// 
 			// main_labelA2
 			// 
@@ -760,7 +753,6 @@ namespace CHM9 {
 			this->main_textBoxStep->Name = L"main_textBoxStep";
 			this->main_textBoxStep->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxStep->TabIndex = 4;
-			this->main_textBoxStep->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxStep_TextChanged);
 			// 
 			// main_textBoxM
 			// 
@@ -768,7 +760,6 @@ namespace CHM9 {
 			this->main_textBoxM->Name = L"main_textBoxM";
 			this->main_textBoxM->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxM->TabIndex = 4;
-			this->main_textBoxM->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxM_TextChanged);
 			// 
 			// main_textBoxMaxNumSteps
 			// 
@@ -776,7 +767,6 @@ namespace CHM9 {
 			this->main_textBoxMaxNumSteps->Name = L"main_textBoxMaxNumSteps";
 			this->main_textBoxMaxNumSteps->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxMaxNumSteps->TabIndex = 4;
-			this->main_textBoxMaxNumSteps->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxMaxNumSteps_TextChanged);
 			// 
 			// main_textBoxLocError
 			// 
@@ -784,7 +774,6 @@ namespace CHM9 {
 			this->main_textBoxLocError->Name = L"main_textBoxLocError";
 			this->main_textBoxLocError->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLocError->TabIndex = 4;
-			this->main_textBoxLocError->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxLocError_TextChanged);
 			// 
 			// main_textBoxAccurBoard
 			// 
@@ -792,7 +781,6 @@ namespace CHM9 {
 			this->main_textBoxAccurBoard->Name = L"main_textBoxAccurBoard";
 			this->main_textBoxAccurBoard->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxAccurBoard->TabIndex = 4;
-			this->main_textBoxAccurBoard->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxAccurBoard_TextChanged);
 			// 
 			// main_textBoxA2
 			// 
@@ -800,7 +788,6 @@ namespace CHM9 {
 			this->main_textBoxA2->Name = L"main_textBoxA2";
 			this->main_textBoxA2->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxA2->TabIndex = 4;
-			this->main_textBoxA2->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxA2_TextChanged);
 			// 
 			// main_textBoxLenght
 			// 
@@ -808,7 +795,6 @@ namespace CHM9 {
 			this->main_textBoxLenght->Name = L"main_textBoxLenght";
 			this->main_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxLenght->TabIndex = 4;
-			this->main_textBoxLenght->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxLenght_TextChanged);
 			// 
 			// main_textBoxA1
 			// 
@@ -816,7 +802,6 @@ namespace CHM9 {
 			this->main_textBoxA1->Name = L"main_textBoxA1";
 			this->main_textBoxA1->Size = System::Drawing::Size(106, 20);
 			this->main_textBoxA1->TabIndex = 9;
-			this->main_textBoxA1->TextChanged += gcnew System::EventHandler(this, &MainForm::main_textBoxA1_TextChanged);
 			// 
 			// main_pictureBoxTask
 			// 
@@ -859,6 +844,7 @@ namespace CHM9 {
 	}
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (!CheckValues()) return;
 		//call function
 
 		Table_for_drawing t(*(table[MainTask]));
@@ -869,6 +855,7 @@ namespace CHM9 {
 	}
 
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (!CheckValues()) return;
 		//call function
 
 			Table_for_drawing t(*(table[TestTask]));
@@ -926,146 +913,161 @@ namespace CHM9 {
 		refForm->Show();
 	}
 
-//parametrs
-private: System::Void test_textBoxLenght_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = test_X;
-	bool f=Double::TryParse(test_textBoxLenght->Text, test_X);
-	if ((!f)||(test_X<0)) {
-		test_X = _x;
-		test_textBoxLenght->Text = test_X.ToString();
-		MessageBox::Show("Неверное значение");
-	}
+	public: bool CheckValues() {
+		bool f;
+		double d;
+		int i;
+		if (tabControl->SelectedIndex == TestTask) {
 
-}
-private: System::Void test_textBoxU0_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = test_U0;
-	bool f = Double::TryParse(test_textBoxU0->Text, test_U0);
-	if (!f) if (test_textBoxU0->Text == "-") main_U0 = -main_U0;
-	else {
-		test_U0 = _x;
-		test_textBoxU0->Text = test_U0.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void test_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = test_eps;
-	bool f = Double::TryParse(test_textBoxAccurBoard->Text, test_eps);
-	if (!f) {
-		test_eps = _x;
-		test_textBoxAccurBoard->Text = test_eps.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void test_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = test_h;
-	bool f = Double::TryParse(test_textBoxStep->Text, test_h);
-	if (!f) {
-		test_h = _x;
-		test_textBoxStep->Text = test_h.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void test_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = test_L;
-	bool f = Double::TryParse(test_textBoxLocError->Text, test_L);
-	if (!f) {
-		test_L = _x;
-		test_textBoxLocError->Text = test_L.ToString();
-		MessageBox::Show("Неверное значение");
-	}
+			f = Double::TryParse(test_textBoxStep->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение шага интегрирования h должно быть числом");
+				return false;
+			}
+			test_h = d;
+			f = Double::TryParse(test_textBoxLenght->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение длины отрезка интегрирования Х должно быть числом");
+				return false;
+			}
+			test_X = d;
+			f = Int32::TryParse(test_textBoxMaxNumSteps->Text, i);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение максимального количества шагов должно быть числом");
+				return false;
+			}
+			test_maxSteps = i;
+			f = Double::TryParse(test_textBoxU0->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение начального условия U0 должно быть числом");
+				return false;
+			}
+			test_U0 = d;
+			f = Double::TryParse(test_textBoxAccurBoard->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение погрешности выхода на границу должно быть числом");
+				return false;
+			}
+			test_eps = d;
+			f = Double::TryParse(test_textBoxLocError->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение контроля локальной погрешности должно быть числом ");
+				return false;
+			}
+			test_L = d;
+			if (test_h < 10E-7) {
+				MessageBox::Show("Неверное значение: шаг интегрирования h не может быть меньше 10E-7");
+				return false;
+			}
+			if (test_L < 10E-10) {
+				MessageBox::Show("Неверное значение: значение контроля локальной погрешности не может быть меньше 10Е-10");
+				return false;
+			}
+			if (test_maxSteps > 10E7) {
+				MessageBox::Show("Неверное значение: значение максимального количества шагов не может быть больше 10Е7");
+				return false;
+			}
+			if (test_eps < 10E-7) {
+				MessageBox::Show("Неверное значение: значение контроля выхода на границу не может быть меньше 10Е-7");
+				return false;
+			}
+			if (test_X < 0) {
+				MessageBox::Show("Неверное значение: значение длины отрезка интегрирования не может быть отрицательным числом");
+				return false;
+			}
 
-}
-private: System::Void test_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	int _x = test_maxSteps;
-	bool f = Int32::TryParse(test_textBoxMaxNumSteps->Text, test_maxSteps);
-	if (!f) {
-		test_maxSteps = _x;
-		test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxA1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = a1;
-	bool f = Double::TryParse(main_textBoxA1->Text, a1);
-	if ((!f)||(a1<=0)) {
-		a1 = _x;
-		main_textBoxA1->Text = a1.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxA2_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = a2;
-	bool f = Double::TryParse(main_textBoxA2->Text, a2);
-	if ((!f)||(a2<=0)) {
-		a2 = _x;
-		main_textBoxA2->Text = a2.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxM_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = m;
-	bool f = Double::TryParse(main_textBoxM->Text, m);
-	if ((!f)||(m<0)) {
-		m = _x;
-		main_textBoxM->Text = m.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxU0_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = main_U0;
-	bool f = Double::TryParse(main_textBoxU0->Text, main_U0);
-	if (!f) if (main_textBoxU0->Text == "-") main_U0 = -main_U0;
-	else {
-		main_U0 = _x;
-		main_textBoxU0->Text = main_U0.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxLenght_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = main_X;
-	bool f = Double::TryParse(main_textBoxLenght->Text, main_X);
-	if ((!f)||(main_X<=0)) {
-		main_X = _x;
-		main_textBoxLenght->Text = main_X.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxStep_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = main_h;
-	bool f = Double::TryParse(main_textBoxStep->Text, main_h);
-	if (!f) {
-		main_h = _x;
-		main_textBoxStep->Text = main_h.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxAccurBoard_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = main_eps;
-	bool f = Double::TryParse(main_textBoxAccurBoard->Text, main_eps);
-	if (!f) {
-		main_eps = _x;
-		main_textBoxAccurBoard->Text = main_eps.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxMaxNumSteps_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	int _x = main_maxSteps;
-	bool f = Int32::TryParse(main_textBoxMaxNumSteps->Text, main_maxSteps);
-	if (!f) {
-		main_maxSteps = _x;
-		main_textBoxMaxNumSteps->Text = main_maxSteps.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
-private: System::Void main_textBoxLocError_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	double _x = main_L;
-	bool f = Double::TryParse(main_textBoxLocError->Text, main_L);
-	if (!f) {
-		main_L = _x;
-		main_textBoxLocError->Text = main_L.ToString();
-		MessageBox::Show("Неверное значение");
-	}
-}
+		}
+		if (tabControl->SelectedIndex == MainTask) {
 
+			f = Double::TryParse(main_textBoxA1->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение a1 должно быть числом");
+				return false;
+			}
+			a1 = d;
+			f = Double::TryParse(main_textBoxA2->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение a2 должно быть числом");
+				return false;
+			}
+			a2 = d;
+			f = Double::TryParse(main_textBoxM->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение m должно быть числом");
+				return false;
+			}
+			m = d;
+			f = Double::TryParse(main_textBoxStep->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение шага интегрирования h должно быть числом");
+				return false;
+			}
+			main_h = d;
+			f = Double::TryParse(main_textBoxLenght->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение длины отрезка интегрирования Х должно быть числом");
+				return false;
+			}
+			main_X = d;
+			f = Int32::TryParse(main_textBoxMaxNumSteps->Text, i);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение максимального количества шагов должно быть числом");
+				return false;
+			}
+			main_maxSteps = i;
+			f = Double::TryParse(main_textBoxU0->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение начального условия U0 должно быть числом");
+				return false;
+			}
+			main_U0 = d;
+			f = Double::TryParse(main_textBoxAccurBoard->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение погрешности выхода на границу должно быть числом");
+				return false;
+			}
+			main_eps = d;
+			f = Double::TryParse(main_textBoxLocError->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение контроля локальной погрешности должно быть числом ");
+				return false;
+			}
+			main_L = d;
+			if (main_h < 10E-7){
+				MessageBox::Show("Неверное значение: шаг интегрирования h не может быть меньше 10E-7");
+				return false;
+			}
+			if (main_L < 10E-10){
+				MessageBox::Show("Неверное значение: значение контроля локальной погрешности не может быть меньше 10Е-10");
+				return false;
+			}
+			if (main_maxSteps > 10E7) {
+				MessageBox::Show("Неверное значение: значение максимального количества шагов не может быть больше 10Е7");
+				return false;
+			}
+			if (main_eps < 10E-7) {
+				MessageBox::Show("Неверное значение: значение контроля выхода на границу не может быть меньше 10Е-7");
+				return false;
+			}
+			if (main_X < 0) {
+				MessageBox::Show("Неверное значение: значение длины отрезка интегрирования не может быть отрицательным числом");
+				return false;
+			}
+			if (a1 <= 0) {
+				MessageBox::Show("Неверное значение: значение a1 не может быть неположительным числом");
+				return false;
+			}
+			if (a2 <= 0) {
+				MessageBox::Show("Неверное значение: значение a2 не может быть неположительным числом");
+				return false;
+			}
+			if (m <= 0) {
+				MessageBox::Show("Неверное значение: значение m не может быть неположительным числом");
+				return false;
+			}
+		}
+		return false;
+
+	}
 };
 }
