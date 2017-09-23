@@ -28,7 +28,6 @@ namespace CHM9 {
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
 		int test_maxSteps, main_maxSteps;
 		double* maxV, *minV, *maxX;
-		int a;
 
 	public:
 		MainForm(void)
@@ -78,8 +77,6 @@ namespace CHM9 {
 			maxX = new double[2];
 			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 			minV[MainTask] = minV[TestTask] = 10000000;
-
-			a = 0;
 		}
 
 	protected: void SetTable(Table& t, int a) {
@@ -918,7 +915,18 @@ namespace CHM9 {
 	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
-		RefForm^ refForm = gcnew RefForm(0,1,2,3.4);
+		int nUv, nUm, nS;
+		double maxL;
+		nUv = nUm = nS = maxL = 0;
+		auto it = table[tabControl->SelectedIndex]->begin();
+		for (; it != --(table[tabControl->SelectedIndex]->end()); it++) {
+			nS++;
+			if (it->hi_1 < (++it)->hi_1) nUv++; 
+			else if (it->hi_1 < (--it)->hi_1) nUm++; 
+			if (abs(it->s) > maxL) maxL = abs(it->s);
+		}
+		if (abs(it->s) > maxL) maxL = abs(it->s);
+		RefForm^ refForm = gcnew RefForm(nUv,nUm,nS,maxL);
 		refForm->Show();
 	}
 
