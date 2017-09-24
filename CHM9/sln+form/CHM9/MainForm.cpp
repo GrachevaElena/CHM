@@ -28,33 +28,34 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 		if (it->v < minV[tabPage]) minV[tabPage] = it->v;
 	}
 
-	const int OffsetX = 60;
+	const int OffsetX = 60;//отступ для разметки
 	const int OffsetY = 40;
 
-	const int Width = p->Width - OffsetX;
+	const int Width = p->Width - OffsetX;//ширина(длина) области, в которой стоится график
 	const int Height = p->Height - OffsetY;
 
-	const int H = 20;
-	const int D = 15;
+	const int H = 20;//шаг разметки
+	const int D = 15; //на сколько длиннее каждая LH строка(столбец) разметки
+	const int LH = 5; //какая строка(столбец) по счету будет выделяться в разметке
 
-	const int N = Width / H + 1;
+	const int N = Width / H + 1;//число столбцов (строк) разметки
 	const int M = Height / H + 1;
 
 	const double dx =Width/maxX[tabPage];//сколько пикселей соответствует единице длины
 	const double dy = Height/(maxV[tabPage] - minV[tabPage]);
 
-	const double dhx = H*maxX[tabPage] / Width;
+	const double dhx = H*maxX[tabPage] / Width;//как изменится x за шаг H на графике
 	const double dhy = H*(maxV[tabPage] -minV[tabPage]) / Height;
 
 
 	//Markup
 	for (int i = 0; i < N; i++) {
-		if (i % 5 == 0)
+		if (i % LH == 0)
 			g->DrawLine(gcnew Pen(Color::LightGray, 1), i*H + OffsetX, 0, i*H + OffsetX, p->Height - OffsetY + D);
 		else g->DrawLine(gcnew Pen(Color::LightGray, 1), i*H + OffsetX, 0, i*H + OffsetX, p->Height - OffsetY);
 	}
 	for (int i = 0; i < M; i++) {
-		if (i % 5 == 0)
+		if (i % LH == 0)
 			g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + OffsetX - D, p->Height - (i*H + OffsetY), p->Width + OffsetX, p->Height - (i*H + OffsetY));
 		else g->DrawLine(gcnew Pen(Color::LightGray, 1), 0 + OffsetX, p->Height - (i*H + OffsetY), p->Width, p->Height - (i*H + OffsetY));
 	}
@@ -70,9 +71,9 @@ System::Void CHM9::MainForm::pictureBoxGraphic_Paint(System::Object ^ sender, Sy
 
 	font = gcnew System::Drawing::Font("Microsoft Sans Serif", 8, FontStyle::Regular);
 
-	for (int i = 0; i < M / 5 + 1; i++)
+	for (int i = 0; i < M / LH + 1; i++)
 		g->DrawString((Math::Round(minV[tabPage] +i*5*dhy,3)).ToString(), font, brush, PointF(3, p->Height - OffsetY - i * 5 * H));
-	for (int i = 0; i < N / 5 + 1; i++)
+	for (int i = 0; i < N / LH + 1; i++)
 		g->DrawString((Math::Round(i * 5 * dhx, 3)).ToString(), font, brush, PointF(OffsetX + i*5*H, p->Height - 35));
 
 

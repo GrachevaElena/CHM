@@ -4,6 +4,7 @@
 #include "Table_for_drawing.h"
 #include "TableForm.h"
 #include "RefForm.h"
+#include "ErrorForm.h"
 
 namespace CHM9 {
 
@@ -70,8 +71,8 @@ namespace CHM9 {
 			table[1] = new Table();
 
 			//добавить пустые
-			SetTable(*(table[MainTask]), 1);
-			SetTable(*(table[TestTask]), 1);
+			SetTable(*(table[MainTask]));
+			SetTable(*(table[TestTask]));
 
 			table_for_drawing = gcnew array<std::list<Table_for_drawing>*>(2);	
 			table_for_drawing[MainTask] = new std::list<Table_for_drawing>;
@@ -84,29 +85,33 @@ namespace CHM9 {
 			minV[MainTask] = minV[TestTask] = 10000000;
 		}
 
-	protected: void SetTable(Table& t, int a) {
+	protected: void SetTable(Table& t) {
 		t.Clear();
 
 		Row row;
 
 		row.i = 0;
 		row.xi = 0;
-		row.viItog = 1*a;
+		row.viItog = 1;
+		row.s = 0;
 		t.AddRow(row);
 
 		row.i = 1;
 		row.xi = 3;
-		row.viItog = 17 * a;
+		row.viItog = 17;
+		row.s = -1E-10;
 		t.AddRow(row);
 
 		row.i = 2;
 		row.xi = 5;
-		row.viItog = 12 * a;
+		row.viItog = 12;
+		row.s = 7E-10;
 		t.AddRow(row);
 
 		row.i = 3;
 		row.xi = 10;
-		row.viItog = 15 * a;
+		row.viItog = 15;
+		row.s = 8E-10;
 		t.AddRow(row);
 	}
 
@@ -345,7 +350,7 @@ namespace CHM9 {
 			this->test_buttonError->TabIndex = 15;
 			this->test_buttonError->Text = L"Лок. погрешность";
 			this->test_buttonError->UseVisualStyleBackColor = true;
-			this->test_buttonError->Click += gcnew System::EventHandler(this, &MainForm::test_buttonError_Click);
+			this->test_buttonError->Click += gcnew System::EventHandler(this, &MainForm::buttonError_Click);
 			// 
 			// test_buttonTrueSolution
 			// 
@@ -610,7 +615,7 @@ namespace CHM9 {
 			this->main_buttonError->TabIndex = 10;
 			this->main_buttonError->Text = L"Лок. погрешность";
 			this->main_buttonError->UseVisualStyleBackColor = true;
-			this->main_buttonError->Click += gcnew System::EventHandler(this, &MainForm::main_buttonError_Click);
+			this->main_buttonError->Click += gcnew System::EventHandler(this, &MainForm::buttonError_Click);
 			// 
 			// main_buttonRef
 			// 
@@ -888,7 +893,7 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (table[tabControl->SelectedIndex]->GetSize() == 0) {
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
@@ -906,7 +911,6 @@ namespace CHM9 {
 		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
 		main_pictureBoxGraphic->Refresh();
 	}
-
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 		//call function
@@ -918,6 +922,15 @@ namespace CHM9 {
 			test_pictureBoxGraphic->Refresh();
 	}
 
+	private: System::Void buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+			MessageBox::Show("Пока нет ни одного решения");
+			return;
+		}
+		double _X = tabControl->SelectedIndex == MainTask ? main_X : test_X;
+		ErrorForm^ errorForm = gcnew ErrorForm(_X,*(table[tabControl->SelectedIndex]));
+		errorForm->Show();
+	}
 
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
@@ -926,7 +939,6 @@ namespace CHM9 {
 		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 		minV[MainTask] = minV[TestTask] = 10000000;
 	}
-
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
 		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
 		g->Clear(Color::White);
@@ -961,9 +973,11 @@ namespace CHM9 {
 		test_pictureBoxGraphic->Refresh();
 	}
 
-	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
-
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+			MessageBox::Show("Пока нет ни одного решения");
+			return;
+		}
 		int nUv, nUm, nS;
 		double maxL;
 		nUv = nUm = nS = maxL = 0;
@@ -978,7 +992,9 @@ namespace CHM9 {
 		RefForm^ refForm = gcnew RefForm(nUv,nUm,nS,maxL);
 		refForm->Show();
 	}
-
+			
+	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
+	
 	public: bool CheckValues() {
 		bool f;
 		double d;
@@ -1136,9 +1152,6 @@ namespace CHM9 {
 		return false;
 
 	}
-private: System::Void main_buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void test_buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
-}
+	
 };
 }
