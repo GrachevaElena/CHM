@@ -41,7 +41,7 @@ namespace CHM9 {
 
 			test_X = main_X = 10;
 			test_h = main_h = 0.001;
-			test_U0 = main_U0 = -1;
+			test_U0 = main_U0 = 1;
 			test_L = main_L = 0.00001;
 			test_maxSteps = main_maxSteps = 1000;
 			test_eps = main_eps = 0.01;
@@ -49,6 +49,8 @@ namespace CHM9 {
 
 			InitializeComponent();
 
+			this->main_comboBoxMethod->SelectedIndex = 1;
+			this->test_comboBoxMethod->SelectedIndex = 1;
 			this->test_textBoxU0->Text = test_U0.ToString();
 			this->test_textBoxStep->Text = test_h.ToString();
 			this->test_textBoxLocError->Text = test_L.ToString();
@@ -70,9 +72,9 @@ namespace CHM9 {
 			table[0] = new Table();
 			table[1] = new Table();
 
-			//добавить пустые
-			SetTable(*(table[MainTask]));
-			SetTable(*(table[TestTask]));
+			//добавить null
+			table[MainTask] = NULL;
+			table[TestTask] = NULL;
 
 			table_for_drawing = gcnew array<std::list<Table_for_drawing>*>(2);	
 			table_for_drawing[MainTask] = new std::list<Table_for_drawing>;
@@ -127,8 +129,8 @@ namespace CHM9 {
 		{
 			if (components)
 			{
-				delete table[0];
-				delete table[1];
+				if (table[0]!=NULL) delete table[0];
+				if (table[0] != NULL) delete table[1];
 
 				delete table_for_drawing[0];
 				delete table_for_drawing[1];
@@ -252,6 +254,8 @@ namespace CHM9 {
 			this->main_buttonRef = (gcnew System::Windows::Forms::Button());
 			this->main_pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
 			this->main_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
+			this->main_comboBoxMethod = (gcnew System::Windows::Forms::ComboBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->main_labelStep = (gcnew System::Windows::Forms::Label());
 			this->main_labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
 			this->main_labelLocError = (gcnew System::Windows::Forms::Label());
@@ -274,8 +278,6 @@ namespace CHM9 {
 			this->main_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
 			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
-			this->main_comboBoxMethod = (gcnew System::Windows::Forms::ComboBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
 			this->test_groupBoxParametrs->SuspendLayout();
@@ -672,6 +674,24 @@ namespace CHM9 {
 			this->main_groupBoxParametrs->TabStop = false;
 			this->main_groupBoxParametrs->Text = L"Параметры задачи";
 			// 
+			// main_comboBoxMethod
+			// 
+			this->main_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
+			this->main_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Эйлера", L"Рунге-Кутта 2 порядка" });
+			this->main_comboBoxMethod->Location = System::Drawing::Point(376, 121);
+			this->main_comboBoxMethod->Name = L"main_comboBoxMethod";
+			this->main_comboBoxMethod->Size = System::Drawing::Size(162, 21);
+			this->main_comboBoxMethod->TabIndex = 19;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(372, 104);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(39, 13);
+			this->label2->TabIndex = 18;
+			this->label2->Text = L"Метод";
+			// 
 			// main_labelStep
 			// 
 			this->main_labelStep->AutoSize = true;
@@ -854,24 +874,6 @@ namespace CHM9 {
 			this->main_pictureBoxTask->TabIndex = 2;
 			this->main_pictureBoxTask->TabStop = false;
 			// 
-			// main_comboBoxMethod
-			// 
-			this->main_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
-			this->main_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Эйлера", L"Рунге-Кутта 2 порядка" });
-			this->main_comboBoxMethod->Location = System::Drawing::Point(376, 121);
-			this->main_comboBoxMethod->Name = L"main_comboBoxMethod";
-			this->main_comboBoxMethod->Size = System::Drawing::Size(162, 21);
-			this->main_comboBoxMethod->TabIndex = 19;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(372, 104);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(39, 13);
-			this->label2->TabIndex = 18;
-			this->label2->Text = L"Метод";
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -907,6 +909,14 @@ namespace CHM9 {
 
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
+		//пока
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+			MessageBox::Show("Не реализована функция");
+			return;
+		}
+
+		//if (table[MainTask]!=NULL) delete table[MainTask];
+		//table[MainTask]=new Table();
 		//call function
 
 		Table_for_drawing t(*(table[MainTask]));
@@ -917,13 +927,21 @@ namespace CHM9 {
 	}
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
+		//пока
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+			MessageBox::Show("Не реализована функция");
+			return;
+		}
+
+		//if (table[TestTask]!=NULL) delete table[MainTask];
+		//table[TestTask]=new Table();
 		//call function
 
-			Table_for_drawing t(*(table[TestTask]));
-			table_for_drawing[TestTask]->push_front(t);
+		Table_for_drawing t(*(table[TestTask]));
+		table_for_drawing[TestTask]->push_front(t);
 
-			this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-			test_pictureBoxGraphic->Refresh();
+		this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
+		test_pictureBoxGraphic->Refresh();
 	}
 
 	private: System::Void buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
