@@ -94,24 +94,28 @@ namespace CHM9 {
 		row.xi = 0;
 		row.viItog = 1;
 		row.s = 0;
+		row.hi_1 = 0;
 		t.AddRow(row);
 
 		row.i = 1;
 		row.xi = 3;
 		row.viItog = 17;
 		row.s = -1E-10;
+		row.hi_1 = 3;
 		t.AddRow(row);
 
 		row.i = 2;
 		row.xi = 5;
 		row.viItog = 12;
 		row.s = 7E-10;
+		row.hi_1 = 2;
 		t.AddRow(row);
 
 		row.i = 3;
 		row.xi = 10;
 		row.viItog = 15;
 		row.s = 8E-10;
+		row.hi_1 = 5;
 		t.AddRow(row);
 	}
 
@@ -979,17 +983,20 @@ namespace CHM9 {
 			return;
 		}
 		int nUv, nUm, nS;
-		double maxL;
-		nUv = nUm = nS = maxL = 0;
+		double maxL, maxh, minh;
+		nUv = nUm = nS = maxL = maxh = 0;
+		minh = 100000000;
 		auto it = table[tabControl->SelectedIndex]->begin();
 		for (; it != --(table[tabControl->SelectedIndex]->end()); it++) {
 			nS++;
-			if (it->hi_1 < (++it)->hi_1) nUv++; 
-			else if (it->hi_1 < (--it)->hi_1) nUm++; 
+			if ((++it)->hi_1 > (--it)->hi_1) nUv++;
+			else if ((++it)->hi_1 < (--it)->hi_1) nUm++;
 			if (abs(it->s) > maxL) maxL = abs(it->s);
+			if (maxh < ((++it)--)->hi_1) maxh = ((++it)--)->hi_1;
+			else if (minh >((++it)--)->hi_1) minh = ((++it)--)->hi_1;
 		}
 		if (abs(it->s) > maxL) maxL = abs(it->s);
-		RefForm^ refForm = gcnew RefForm(nUv,nUm,nS,maxL);
+		RefForm^ refForm = gcnew RefForm(nUv,nUm,maxh,minh,nS,maxL);
 		refForm->Show();
 	}
 			
