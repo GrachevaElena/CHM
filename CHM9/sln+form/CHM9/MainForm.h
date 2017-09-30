@@ -15,25 +15,34 @@ namespace CHM9 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	const int NC = 57;
+	const int colors[NC] =
+	{ 0xffCD5C5C ,0xffFFA07A ,0xffDC143C ,0xffFF0000 ,0xffB22222 ,
+		0xff8B0000 ,0xffFF1493 ,0xffC71585 ,0xffDB7093 ,0xffFFA07A ,
+		0xffFF7F50 ,0xffFF6347 ,0xffFF4500 ,0xffFF8C00 ,0xffFFA500 ,
+		0xffFFD700 ,0xffFFFF00 ,0xffFF00FF ,0xffBA55D3 ,0xff9400D3 ,
+		0xff8B008B ,0xff4B0082 ,0xff6A5ACD ,0xff483D8B ,0xffBC8F8F ,
+		0xffA0522D ,0xff8B4513 ,0xffD2691E ,0xffB8860B ,0xffDAA520 ,
+		0xffFF00FF ,0xff800080 ,0xffFFFF00 ,0xff00FF00 ,0xff008000 ,
+		0xff00FFFF ,0xff008080 ,0xff0000FF ,0xff000080 ,0xff32CD32 ,
+		0xff7CFC00 ,0xff00FF00 ,0xff98FB98 ,0xff90EE90 ,0xff00FA9A ,
+		0xff008000 ,0xff808000 ,0xff66CDAA ,0xff20B2AA ,0xff4682B4 ,
+		0xffB0C4DE ,0xff7B68EE ,0xff0000CD ,0xff00008B ,0xff000080 ,
+		0xff191970 ,0xff2F4F4F };
+
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public:
-
-	public: array<std::list<Table_for_drawing>*>^ table_for_drawing;
 	public: array<Table*>^ table;
 
 	private:
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
 		int test_maxSteps, main_maxSteps;
-		double* maxV, *minV, *maxX;
-	private: System::Windows::Forms::ComboBox^  test_comboBoxMethod;
-	private: System::Windows::Forms::ComboBox^  main_comboBoxMethod;
+		double* maxV, *minV, *maxX, *minX;
 
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::Label^  label1;
+	private: int NSeries;
 
 	public:
 		MainForm(void)
@@ -67,24 +76,26 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 			this->main_textBoxAccurBoard->Text = main_eps.ToString();
 
+			NSeries = 0;
 
 			table = gcnew array<Table*>(2);
+			//убрать
 			table[0] = new Table();
 			table[1] = new Table();
+			SetTable(*(table[TestTask]));
+			SetTable(*(table[MainTask]));
 
 			//добавить null
-			table[MainTask] = NULL;
-			table[TestTask] = NULL;
+			//table[MainTask] = NULL;
+			//table[TestTask] = NULL;
 
-			table_for_drawing = gcnew array<std::list<Table_for_drawing>*>(2);	
-			table_for_drawing[MainTask] = new std::list<Table_for_drawing>;
-			table_for_drawing[TestTask] = new std::list<Table_for_drawing>;
 
 			maxV = new double[2];
 			minV = new double[2];
 			maxX = new double[2];
+			minX = new double[2];
 			maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
-			minV[MainTask] = minV[TestTask] = 10000000;
+			minV[MainTask] = minV[TestTask] = minX[MainTask] = minX[TestTask] = 10000000;
 		}
 
 	protected: void SetTable(Table& t) {
@@ -132,23 +143,26 @@ namespace CHM9 {
 				if (table[0]!=NULL) delete table[0];
 				if (table[0] != NULL) delete table[1];
 
-				delete table_for_drawing[0];
-				delete table_for_drawing[1];
-
 				delete[] maxX;
 				delete[] maxV;
 				delete[] minV;
+				delete[] minX;
 
 				delete components;
 			}
 		}
 
+	private: System::Windows::Forms::ComboBox^  test_comboBoxMethod;
+	private: System::Windows::Forms::ComboBox^  main_comboBoxMethod;
+	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  test_chart;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^  main_chart;
 	private: System::Windows::Forms::TabControl^  tabControl;
 	private: System::Windows::Forms::TabPage^  testPage;
 	private: System::Windows::Forms::TabPage^  mainPage;
-
+	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::PictureBox^  main_pictureBoxTask;
-	private: System::Windows::Forms::PictureBox^  main_pictureBoxGraphic;
+
 	private: System::Windows::Forms::GroupBox^  main_groupBoxParametrs;
 	private: System::Windows::Forms::Label^  main_labelM;
 	private: System::Windows::Forms::Label^  main_labelA2;
@@ -201,7 +215,7 @@ namespace CHM9 {
 	private: System::Windows::Forms::TextBox^  test_textBoxLocError;
 	private: System::Windows::Forms::TextBox^  test_textBoxAccurBoard;
 	private: System::Windows::Forms::TextBox^  test_textBoxLenght;
-	private: System::Windows::Forms::PictureBox^  test_pictureBoxGraphic;
+
 	private: System::Windows::Forms::PictureBox^  test_pictureBoxTask;
 
 	private:
@@ -217,9 +231,12 @@ namespace CHM9 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->testPage = (gcnew System::Windows::Forms::TabPage());
+			this->test_chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->test_buttonSolve = (gcnew System::Windows::Forms::Button());
 			this->test_buttonClear = (gcnew System::Windows::Forms::Button());
 			this->test_buttonTable = (gcnew System::Windows::Forms::Button());
@@ -244,15 +261,14 @@ namespace CHM9 {
 			this->test_textBoxLocError = (gcnew System::Windows::Forms::TextBox());
 			this->test_textBoxAccurBoard = (gcnew System::Windows::Forms::TextBox());
 			this->test_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
-			this->test_pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
 			this->test_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
 			this->mainPage = (gcnew System::Windows::Forms::TabPage());
+			this->main_chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			this->main_buttonSolve = (gcnew System::Windows::Forms::Button());
 			this->main_buttonClear = (gcnew System::Windows::Forms::Button());
 			this->main_buttonTable = (gcnew System::Windows::Forms::Button());
 			this->main_buttonError = (gcnew System::Windows::Forms::Button());
 			this->main_buttonRef = (gcnew System::Windows::Forms::Button());
-			this->main_pictureBoxGraphic = (gcnew System::Windows::Forms::PictureBox());
 			this->main_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
 			this->main_comboBoxMethod = (gcnew System::Windows::Forms::ComboBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -280,11 +296,11 @@ namespace CHM9 {
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_chart))->BeginInit();
 			this->test_groupBoxParametrs->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxGraphic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxTask))->BeginInit();
 			this->mainPage->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_chart))->BeginInit();
 			this->main_groupBoxParametrs->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxTask))->BeginInit();
 			this->SuspendLayout();
@@ -301,6 +317,7 @@ namespace CHM9 {
 			// 
 			// testPage
 			// 
+			this->testPage->Controls->Add(this->test_chart);
 			this->testPage->Controls->Add(this->test_buttonSolve);
 			this->testPage->Controls->Add(this->test_buttonClear);
 			this->testPage->Controls->Add(this->test_buttonTable);
@@ -308,7 +325,6 @@ namespace CHM9 {
 			this->testPage->Controls->Add(this->test_buttonTrueSolution);
 			this->testPage->Controls->Add(this->test_buttonRef);
 			this->testPage->Controls->Add(this->test_groupBoxParametrs);
-			this->testPage->Controls->Add(this->test_pictureBoxGraphic);
 			this->testPage->Controls->Add(this->test_pictureBoxTask);
 			this->testPage->Location = System::Drawing::Point(4, 22);
 			this->testPage->Name = L"testPage";
@@ -317,6 +333,18 @@ namespace CHM9 {
 			this->testPage->TabIndex = 0;
 			this->testPage->Text = L"Тестовая задача";
 			this->testPage->UseVisualStyleBackColor = true;
+			// 
+			// test_chart
+			// 
+			this->test_chart->BorderlineColor = System::Drawing::Color::Black;
+			this->test_chart->BorderlineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+			chartArea1->Name = L"ChartArea1";
+			this->test_chart->ChartAreas->Add(chartArea1);
+			this->test_chart->Location = System::Drawing::Point(285, 180);
+			this->test_chart->Name = L"test_chart";
+			this->test_chart->Size = System::Drawing::Size(554, 420);
+			this->test_chart->TabIndex = 17;
+			this->test_chart->Text = L"test_chart";
 			// 
 			// test_buttonSolve
 			// 
@@ -545,15 +573,6 @@ namespace CHM9 {
 			this->test_textBoxLenght->Size = System::Drawing::Size(106, 20);
 			this->test_textBoxLenght->TabIndex = 4;
 			// 
-			// test_pictureBoxGraphic
-			// 
-			this->test_pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->test_pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
-			this->test_pictureBoxGraphic->Name = L"test_pictureBoxGraphic";
-			this->test_pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
-			this->test_pictureBoxGraphic->TabIndex = 10;
-			this->test_pictureBoxGraphic->TabStop = false;
-			// 
 			// test_pictureBoxTask
 			// 
 			this->test_pictureBoxTask->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"test_pictureBoxTask.BackgroundImage")));
@@ -567,12 +586,12 @@ namespace CHM9 {
 			// 
 			// mainPage
 			// 
+			this->mainPage->Controls->Add(this->main_chart);
 			this->mainPage->Controls->Add(this->main_buttonSolve);
 			this->mainPage->Controls->Add(this->main_buttonClear);
 			this->mainPage->Controls->Add(this->main_buttonTable);
 			this->mainPage->Controls->Add(this->main_buttonError);
 			this->mainPage->Controls->Add(this->main_buttonRef);
-			this->mainPage->Controls->Add(this->main_pictureBoxGraphic);
 			this->mainPage->Controls->Add(this->main_groupBoxParametrs);
 			this->mainPage->Controls->Add(this->main_pictureBoxTask);
 			this->mainPage->Location = System::Drawing::Point(4, 22);
@@ -582,6 +601,18 @@ namespace CHM9 {
 			this->mainPage->TabIndex = 1;
 			this->mainPage->Text = L"Основная задача";
 			this->mainPage->UseVisualStyleBackColor = true;
+			// 
+			// main_chart
+			// 
+			this->main_chart->BorderlineColor = System::Drawing::Color::Black;
+			this->main_chart->BorderlineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+			chartArea2->Name = L"ChartArea1";
+			this->main_chart->ChartAreas->Add(chartArea2);
+			this->main_chart->Location = System::Drawing::Point(285, 180);
+			this->main_chart->Name = L"main_chart";
+			this->main_chart->Size = System::Drawing::Size(554, 420);
+			this->main_chart->TabIndex = 11;
+			this->main_chart->Text = L"main_chart";
 			// 
 			// main_buttonSolve
 			// 
@@ -632,15 +663,6 @@ namespace CHM9 {
 			this->main_buttonRef->Text = L"Справка";
 			this->main_buttonRef->UseVisualStyleBackColor = true;
 			this->main_buttonRef->Click += gcnew System::EventHandler(this, &MainForm::buttonRef_Click);
-			// 
-			// main_pictureBoxGraphic
-			// 
-			this->main_pictureBoxGraphic->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->main_pictureBoxGraphic->Location = System::Drawing::Point(285, 177);
-			this->main_pictureBoxGraphic->Name = L"main_pictureBoxGraphic";
-			this->main_pictureBoxGraphic->Size = System::Drawing::Size(554, 414);
-			this->main_pictureBoxGraphic->TabIndex = 9;
-			this->main_pictureBoxGraphic->TabStop = false;
 			// 
 			// main_groupBoxParametrs
 			// 
@@ -884,12 +906,12 @@ namespace CHM9 {
 			this->Text = L"Задача 9, вариант 3";
 			this->tabControl->ResumeLayout(false);
 			this->testPage->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_chart))->EndInit();
 			this->test_groupBoxParametrs->ResumeLayout(false);
 			this->test_groupBoxParametrs->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxGraphic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_pictureBoxTask))->EndInit();
 			this->mainPage->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxGraphic))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_chart))->EndInit();
 			this->main_groupBoxParametrs->ResumeLayout(false);
 			this->main_groupBoxParametrs->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->main_pictureBoxTask))->EndInit();
@@ -910,39 +932,90 @@ namespace CHM9 {
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 		//пока
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		/*if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
 			MessageBox::Show("Не реализована функция");
 			return;
-		}
+		}*/
 
-		//if (table[MainTask]!=NULL) delete table[MainTask];
-		//table[MainTask]=new Table();
+		//delete table[MainTask];
+		//table[MainTask] = new Table();
 		//call function
 
-		Table_for_drawing t(*(table[MainTask]));
-		table_for_drawing[MainTask]->push_front(t);
+		minX[MainTask] = 0;
 
-		this->main_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-		main_pictureBoxGraphic->Refresh();
+		for (auto it = table[MainTask]->begin(); it != table[MainTask]->end(); it++) {
+			if (it->xi > maxX[MainTask]) maxX[MainTask] = it->xi;
+		}
+
+		const int n = (--table[MainTask]->end())->i + 1;
+		array<double^>^ x = gcnew array<double^>(n);
+		array<double^>^ y = gcnew array<double^>(n);
+		int i = 0;
+		for (auto it = table[MainTask]->begin(); it != table[MainTask]->end(); it++, i++) {
+			x[i] = gcnew double;
+			y[i] = gcnew double;
+			x[i] = it->xi;
+			y[i] = it->viItog;
+		}
+
+		Show(MainTask, x, y, minX[MainTask], maxX[MainTask]);
 	}
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 		//пока
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		/*if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
 			MessageBox::Show("Не реализована функция");
 			return;
-		}
+		}*/
 
-		//if (table[TestTask]!=NULL) delete table[MainTask];
-		//table[TestTask]=new Table();
+		//delete table[TestTask];
+		//table[TestTask] = new Table();
 		//call function
 
-		Table_for_drawing t(*(table[TestTask]));
-		table_for_drawing[TestTask]->push_front(t);
+		minX[TestTask] = 0;
+		for (auto it = table[TestTask]->begin(); it != table[TestTask]->end(); it++) {
+			if (it->xi > maxX[TestTask]) maxX[TestTask] = it->xi;
+		}
 
-		this->test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-		test_pictureBoxGraphic->Refresh();
+		const int n = (--table[TestTask]->end())->i + 1;
+		array<double^>^ x = gcnew array<double^>(n);
+		array<double^>^ y = gcnew array<double^>(n);
+		int i = 0;
+		for (auto it = table[TestTask]->begin(); it != table[TestTask]->end(); it++, i++) {
+			x[i] = gcnew double;
+			y[i] = gcnew double;
+			x[i] = it->xi;
+			y[i] = it->viItog;
+		}
+
+		Show(TestTask, x,y, minX[TestTask], maxX[TestTask]);
+		
 	}
+
+	private: System::Void Show(int task, array<double^>^ x, array<double^>^ y, double _minX, double _maxX) {
+		DataVisualization::Charting::Chart^ chart = (task == MainTask) ? main_chart : test_chart;
+		DataVisualization::Charting::Series^ s = gcnew DataVisualization::Charting::Series;
+		chart->Series->Add(s);
+
+		srand(time(NULL));
+		int c = colors[rand() % NC];
+		s->Color = Color::FromArgb(c);
+
+		s->BorderWidth = 2;
+
+		s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+
+		chart->ChartAreas[0]->AxisX->Minimum = _minX;
+		chart->ChartAreas[0]->AxisX->Maximum = _maxX;
+
+		const int H = 20;//шаг разметки
+		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX-_minX) / chart->Width;
+
+		chart->Series[NSeries]->Points->DataBindXY(x,y);
+		NSeries++;
+	}
+
+
 
 	private: System::Void buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
@@ -955,44 +1028,39 @@ namespace CHM9 {
 	}
 
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
-		Graphics^ g = test_pictureBoxGraphic->CreateGraphics();
-		g->Clear(Color::White);
-		table_for_drawing[TestTask]->clear();
+		for (int i = 0; i < NSeries; i++) test_chart->Series[i]->Points->Clear();
 		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 		minV[MainTask] = minV[TestTask] = 10000000;
+		NSeries = 0;
 	}
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
-		Graphics^ g = main_pictureBoxGraphic->CreateGraphics();
-		g->Clear(Color::White);
-		table_for_drawing[MainTask]->clear();
+		for (int i = 0; i < NSeries; i++) main_chart->Series[i]->Points->Clear();
 		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 		minV[MainTask] = minV[TestTask] = 10000000;
+		NSeries = 0;
 	}
 
 	private: System::Void test_buttonTrueSolution_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 
-		const int OffsetX = 60;
-		const int OffsetY = 40;
+		minX[TestTask] = 0;
+		if (test_X > maxX[TestTask]) maxX[TestTask] = test_X;
 
-		const int Width = test_pictureBoxGraphic->Width - OffsetX;
-		const int Height = test_pictureBoxGraphic->Height - OffsetY;
+		const int d = 2;
+		const int n = test_chart->Width / d;
+		const double dx = maxX[TestTask] / n;
+	
+		array<double^>^ x = gcnew array<double^>(n);
+		array<double^>^ y = gcnew array<double^>(n);
 
-		int d = 2;
-		double dx = test_X / Width * d;
-
-		Table_for_drawing t;
-		Row_for_drawing r;
-		for (int i = 0; i < Width / d; i++) {
-			r.x = dx*i;
-			r.v = test_U0*exp(r.x);
-			t.AddRow(r);
+		for (int i=0; i<n; i++) {
+			x[i] = gcnew double;
+			y[i] = gcnew double;
+			x[i] = dx*i;
+			y[i] = test_U0*exp(*(x[i]));
 		}
-		t.AddColor();
-		table_for_drawing[TestTask]->push_front(t);
 
-		test_pictureBoxGraphic->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::pictureBoxGraphic_Paint);
-		test_pictureBoxGraphic->Refresh();
+		Show(TestTask, x,y,minX[TestTask], maxX[TestTask]);
 	}
 
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1016,9 +1084,7 @@ namespace CHM9 {
 		if (abs(it->s) > maxL) maxL = abs(it->s);
 		RefForm^ refForm = gcnew RefForm(nUv,nUm,maxh,minh,nS,maxL);
 		refForm->Show();
-	}
-			
-	private: System::Void pictureBoxGraphic_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
+	}	
 	
 	public: bool CheckValues() {
 		bool f;
