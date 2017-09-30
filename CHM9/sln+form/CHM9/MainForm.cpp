@@ -10,5 +10,3 @@ int main(array<String^>^ args) {
 	CHM9::MainForm form;
 	Application::Run(%form);
 }
-
-

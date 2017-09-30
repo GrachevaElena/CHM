@@ -1,7 +1,6 @@
 #pragma once
 #include <cmath>
 #include "Table.h"
-#include "Table_for_drawing.h"
 #include "TableForm.h"
 #include "RefForm.h"
 #include "ErrorForm.h"
@@ -14,21 +13,6 @@ namespace CHM9 {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
-	const int NC = 57;
-	const int colors[NC] =
-	{ 0xffCD5C5C ,0xffFFA07A ,0xffDC143C ,0xffFF0000 ,0xffB22222 ,
-		0xff8B0000 ,0xffFF1493 ,0xffC71585 ,0xffDB7093 ,0xffFFA07A ,
-		0xffFF7F50 ,0xffFF6347 ,0xffFF4500 ,0xffFF8C00 ,0xffFFA500 ,
-		0xffFFD700 ,0xffFFFF00 ,0xffFF00FF ,0xffBA55D3 ,0xff9400D3 ,
-		0xff8B008B ,0xff4B0082 ,0xff6A5ACD ,0xff483D8B ,0xffBC8F8F ,
-		0xffA0522D ,0xff8B4513 ,0xffD2691E ,0xffB8860B ,0xffDAA520 ,
-		0xffFF00FF ,0xff800080 ,0xffFFFF00 ,0xff00FF00 ,0xff008000 ,
-		0xff00FFFF ,0xff008080 ,0xff0000FF ,0xff000080 ,0xff32CD32 ,
-		0xff7CFC00 ,0xff00FF00 ,0xff98FB98 ,0xff90EE90 ,0xff00FA9A ,
-		0xff008000 ,0xff808000 ,0xff66CDAA ,0xff20B2AA ,0xff4682B4 ,
-		0xffB0C4DE ,0xff7B68EE ,0xff0000CD ,0xff00008B ,0xff000080 ,
-		0xff191970 ,0xff2F4F4F };
 
 	/// <summary>
 	/// Сводка для MainForm
@@ -338,6 +322,8 @@ namespace CHM9 {
 			// 
 			this->test_chart->BorderlineColor = System::Drawing::Color::Black;
 			this->test_chart->BorderlineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+			chartArea1->AxisX->MajorGrid->LineColor = System::Drawing::Color::DarkGray;
+			chartArea1->AxisY->MajorGrid->LineColor = System::Drawing::Color::DarkGray;
 			chartArea1->Name = L"ChartArea1";
 			this->test_chart->ChartAreas->Add(chartArea1);
 			this->test_chart->Location = System::Drawing::Point(285, 180);
@@ -932,10 +918,10 @@ namespace CHM9 {
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 		//пока
-		/*if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
 			MessageBox::Show("Не реализована функция");
 			return;
-		}*/
+		}
 
 		//delete table[MainTask];
 		//table[MainTask] = new Table();
@@ -997,13 +983,12 @@ namespace CHM9 {
 		DataVisualization::Charting::Series^ s = gcnew DataVisualization::Charting::Series;
 		chart->Series->Add(s);
 
-		srand(time(NULL));
-		int c = colors[rand() % NC];
-		s->Color = Color::FromArgb(c);
-
 		s->BorderWidth = 2;
 
 		s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+
+		chart->ChartAreas[0]->AxisX->LineWidth = 2;
+		chart->ChartAreas[0]->AxisY->LineWidth = 2;
 
 		chart->ChartAreas[0]->AxisX->Minimum = _minX;
 		chart->ChartAreas[0]->AxisX->Maximum = _maxX;
@@ -1048,7 +1033,7 @@ namespace CHM9 {
 
 		const int d = 2;
 		const int n = test_chart->Width / d;
-		const double dx = maxX[TestTask] / n;
+		const double dx = test_X / n;
 	
 		array<double^>^ x = gcnew array<double^>(n);
 		array<double^>^ y = gcnew array<double^>(n);
