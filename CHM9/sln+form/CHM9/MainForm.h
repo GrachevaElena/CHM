@@ -25,6 +25,8 @@ namespace CHM9 {
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
 		int test_maxSteps, main_maxSteps;
 		double* maxV, *minV, *maxX, *minX;
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
 
 	private: int NSeries;
 
@@ -92,6 +94,7 @@ namespace CHM9 {
 		row.viItog = 1;
 		row.s = 0;
 		row.hi_1 = 0;
+		row.stepDec = row.stepInc = 0;
 		t.AddRow(row);
 
 		row.i = 1;
@@ -99,6 +102,8 @@ namespace CHM9 {
 		row.viItog = 17;
 		row.s = -1E-10;
 		row.hi_1 = 3;
+		row.stepDec = 0;
+		row.stepInc = 1;
 		t.AddRow(row);
 
 		row.i = 2;
@@ -106,6 +111,8 @@ namespace CHM9 {
 		row.viItog = 12;
 		row.s = 7E-10;
 		row.hi_1 = 2;
+		row.stepDec = 1;
+		row.stepInc = 0;
 		t.AddRow(row);
 
 		row.i = 3;
@@ -113,6 +120,8 @@ namespace CHM9 {
 		row.viItog = 15;
 		row.s = 8E-10;
 		row.hi_1 = 5;
+		row.stepDec = 0;
+		row.stepInc = 1;
 		t.AddRow(row);
 	}
 
@@ -278,6 +287,8 @@ namespace CHM9 {
 			this->main_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
 			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_chart))->BeginInit();
@@ -403,6 +414,7 @@ namespace CHM9 {
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelAccurBoard);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelParameters);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelLenght);
+			this->test_groupBoxParametrs->Controls->Add(this->label3);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelX);
 			this->test_groupBoxParametrs->Controls->Add(this->test_labelU0);
 			this->test_groupBoxParametrs->Controls->Add(this->test_textBoxU0);
@@ -657,6 +669,7 @@ namespace CHM9 {
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelStep);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelMaxNumSteps);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelLocError);
+			this->main_groupBoxParametrs->Controls->Add(this->label4);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelH);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelAccurBoard);
 			this->main_groupBoxParametrs->Controls->Add(this->main_labelParameters);
@@ -882,6 +895,24 @@ namespace CHM9 {
 			this->main_pictureBoxTask->TabIndex = 2;
 			this->main_pictureBoxTask->TabStop = false;
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(201, 106);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(22, 13);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L" e=";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(207, 124);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(22, 13);
+			this->label4->TabIndex = 5;
+			this->label4->Text = L" e=";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -1053,21 +1084,14 @@ namespace CHM9 {
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
-		int nUv, nUm, nS;
-		double maxL, maxh, minh;
-		nUv = nUm = nS = maxL = maxh = 0;
-		minh = 100000000;
-		auto it = table[tabControl->SelectedIndex]->begin();
-		for (; it != --(table[tabControl->SelectedIndex]->end()); it++) {
-			nS++;
-			if ((++it)->hi_1 > (--it)->hi_1) nUv++;
-			else if ((++it)->hi_1 < (--it)->hi_1) nUm++;
-			if (abs(it->s) > maxL) maxL = abs(it->s);
-			if (maxh < ((++it)--)->hi_1) maxh = ((++it)--)->hi_1;
-			else if (minh >((++it)--)->hi_1) minh = ((++it)--)->hi_1;
-		}
-		if (abs(it->s) > maxL) maxL = abs(it->s);
-		RefForm^ refForm = gcnew RefForm(nUv,nUm,maxh,minh,nS,maxL);
+		int t = tabControl->SelectedIndex;
+		double _X = (t == MainTask) ? main_X : test_X;
+		double maxL= (t == MainTask) ? main_L : test_L;
+		int N = (t == MainTask) ? main_maxSteps : test_maxSteps;
+		double eps = (t == MainTask) ? main_eps : test_eps;
+		double h0 = (t == MainTask) ? main_h : test_h;
+		int p = (t == MainTask) ? main_comboBoxMethod->SelectedIndex+1: test_comboBoxMethod->SelectedIndex + 1;
+		RefForm^ refForm = gcnew RefForm(*(table[t]), t, _X, maxL, eps,N,p,h0);
 		refForm->Show();
 	}	
 	

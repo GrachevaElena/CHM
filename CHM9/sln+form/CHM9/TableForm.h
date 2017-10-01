@@ -50,7 +50,6 @@ namespace CHM9 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viItog;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  stepDec;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  stepInc;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  total;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  ui;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  abs_ui_vi;
 
@@ -79,7 +78,6 @@ namespace CHM9 {
 			this->viItog = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->stepDec = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->stepInc = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->total = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ui = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->abs_ui_vi = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
@@ -91,15 +89,15 @@ namespace CHM9 {
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			if (Task == TestTask) {
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(14) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(13) {
 					this->i, this->hi_1,
-						this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->total,
+						this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
 						this->ui, this->abs_ui_vi
 				});
 			} else if (Task == MainTask){
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(12) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
 				this->i, this->hi_1,
-					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->total
+					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
 				});
 			}
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
@@ -128,19 +126,19 @@ namespace CHM9 {
 			// 
 			// viPr
 			// 
-			this->viPr->HeaderText = L"Vпр[i]";
+			this->viPr->HeaderText = L"V[i]";
 			this->viPr->Name = L"viPr";
 			this->viPr->ReadOnly = true;
 			// 
 			// viKor
 			// 
-			this->viKor->HeaderText = L"Vкор[i]";
+			this->viKor->HeaderText = L"Vудв[i]";
 			this->viKor->Name = L"viKor";
 			this->viKor->ReadOnly = true;
 			// 
 			// viPr_viKor
 			// 
-			this->viPr_viKor->HeaderText = L"Vпр[i]-Vкор[i]";
+			this->viPr_viKor->HeaderText = L"V[i]-Vудв[i]";
 			this->viPr_viKor->Name = L"viPr_viKor";
 			this->viPr_viKor->ReadOnly = true;
 			// 
@@ -173,12 +171,6 @@ namespace CHM9 {
 			this->stepInc->HeaderText = L"”в. шага";
 			this->stepInc->Name = L"stepInc";
 			this->stepInc->ReadOnly = true;
-			// 
-			// total
-			// 
-			this->total->HeaderText = L"»т.";
-			this->total->Name = L"total";
-			this->total->ReadOnly = true;
 
 			if (Task == TestTask) {
 				// 
@@ -226,10 +218,9 @@ namespace CHM9 {
 			this->dataGridView1->Rows[i]->Cells[8]->Value = it->viItog;
 			this->dataGridView1->Rows[i]->Cells[9]->Value = it->stepDec;
 			this->dataGridView1->Rows[i]->Cells[10]->Value = it->stepInc;
-			this->dataGridView1->Rows[i]->Cells[11]->Value = it->total;
 			if (Task == TestTask) {
-				this->dataGridView1->Rows[i]->Cells[12]->Value = it->ui;
-				this->dataGridView1->Rows[i]->Cells[13]->Value = it->abs_ui_vi;
+				this->dataGridView1->Rows[i]->Cells[11]->Value = it->ui;
+				this->dataGridView1->Rows[i]->Cells[12]->Value = it->abs_ui_vi;
 			}
 		}
 	}
