@@ -73,8 +73,8 @@ Row DoubleCount(double(*f)(double, double), Row* R)
 
 void Integrate(double(*f)(double, double), double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, double a1, double a2, double m, double u0)
 {
-	SetParam(a1, a2, m, u0);
 	eps = eps_;
+	SetParam(a1,a2,m,u0);
 	int i = 0;
 	Row tmp;
 	tmp.i = 0;
