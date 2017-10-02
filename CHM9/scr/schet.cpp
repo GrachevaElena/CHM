@@ -42,7 +42,7 @@ Row DoubleCount(Method method, Function f, int p, Row* R)
 	double y1 = method(f, h_, R->xi, R->viPr);
 	double y2 = method(f, h_*0.5, R->xi + h_*0.5, method(f, h_*0.5, R->xi, R->viPr));
 	double e_ = (y2 - y1) * (pow(2,p)-1);
-	Row Res; Res.stepDec = Res.stepInc = 0;
+	Row Res; Res.stepDec = Res.stepInc=Res.ui=Res.abs_ui_vi = 0;
 	if (fabs(e_)<eps/(pow(2,p+1)))
 	{
 		Res.stepInc = 1;
@@ -66,10 +66,7 @@ Row DoubleCount(Method method, Function f, int p, Row* R)
 	Res.s = (y2 - y1) / 3;
 	Res.viUtoch = y1 + e_;
 	Res.viItog = y1;
-	Res.stepDec = R->stepDec + x2;
 	Res.total = 0;
-	Res.ui = exp(Res.xi);
-	Res.abs_ui_vi = Res.ui - Res.viPr;
 	return Res;
 }
 
@@ -91,7 +88,7 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 	tmp.stepInc = 0;
 	tmp.stepDec = 0;
 	tmp.total = 0;
-	tmp.ui = exp(x0);
+	tmp.ui = y0*exp(x0);
 	tmp.abs_ui_vi = 0;
 	T->AddRow(tmp);
 	while (tmp.xi<maxX - epsX && i<maxI)
@@ -99,6 +96,8 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 		i++;
 		tmp = DoubleCount(method, f, p, &tmp);
 		tmp.i = i;
+		tmp.ui = y0*exp(tmp.xi);
+		tmp.abs_ui_vi = abs(tmp.ui - tmp.viPr);
 		T->AddRow(tmp);
 	}
 }

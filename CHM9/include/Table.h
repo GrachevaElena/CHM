@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <fstream>
 
 const int MainTask = 1;
 const int TestTask = 0;
@@ -22,6 +23,15 @@ struct Row {
 	double total;
 	double ui;
 	double abs_ui_vi;
+
+	friend std::ifstream& operator>> (std::ifstream & ins, Row& t) {
+		ins >> t.i >> t.hi_1 >> t.xi >> t.viPr >> t.viKor >> t.viPr_viKor >> t.s >> t.viUtoch >> t.viItog >> t.stepDec >> t.stepInc >> t.total >> t.ui >> t.abs_ui_vi;
+		return ins;
+	}
+	friend std::ofstream& operator<< (std::ofstream & outs, Row& t) {
+		outs << t.i <<' '<< t.hi_1 <<' '<< t.xi <<' '<< t.viPr <<' '<< t.viKor <<' '<< t.viPr_viKor <<' '<< t.s <<' '<< t.viUtoch <<' '<< t.viItog <<' '<< t.stepDec <<' '<< t.stepInc <<' '<< t.total <<' '<< t.ui <<' '<< t.abs_ui_vi<<std::endl;
+		return outs;
+	}
 };
 
 class Table {
@@ -41,4 +51,18 @@ public:
 	Row GetLastRow() { return *(--Data.end()); } 
 
 	void Clear() { Data.clear(); }
+
+	friend std::ifstream& operator>> (std::ifstream & ins, Table& t) {
+		Row r;
+		while (!ins.eof()) {
+			ins >> r;
+			if (!ins.eof()) t.AddRow(r);
+		}
+		return ins;
+	}
+	friend std::ofstream& operator<< (std::ofstream & outs, Table& t) {
+		for (auto it = t.begin(); it != t.end(); it++)
+			outs << (*it);
+		return outs;
+	}
 };

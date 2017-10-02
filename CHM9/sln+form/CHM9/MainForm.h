@@ -20,7 +20,8 @@ namespace CHM9 {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public: array<Table*>^ table;
+	public: Table* table;
+			bool flag;
 
 	private:
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
@@ -28,7 +29,7 @@ namespace CHM9 {
 		double* maxV, *minV, *maxX, *minX;
 
 
-	private: int NSeries;
+	private: int test_NSeries, main_NSeries;
 
 	public:
 		MainForm(void)
@@ -62,19 +63,10 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 			this->main_textBoxAccurBoard->Text = main_eps.ToString();
 
-			NSeries = 0;
+			main_NSeries =test_NSeries= 0;
 
-			table = gcnew array<Table*>(2);
-			//убрать
-			//table[0] = new Table();
-			//table[1] = new Table();
-			//SetTable(*(table[TestTask]));
-			//SetTable(*(table[MainTask]));
-
-			//добавить null
-			table[MainTask] = NULL;
-			table[TestTask] = NULL;
-
+			flag = false;
+			table = 0;
 
 			maxV = new double[2];
 			minV = new double[2];
@@ -133,8 +125,6 @@ namespace CHM9 {
 		{
 			if (components)
 			{
-				if (table[0]!=NULL) delete table[0];
-				if (table[0] != NULL) delete table[1];
 
 				delete[] maxX;
 				delete[] maxV;
@@ -942,11 +932,12 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		if (flag==false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
-		TableForm^ tableForm = gcnew TableForm(tabControl->SelectedIndex, *(table[tabControl->SelectedIndex]));
+		const char* str = (tabControl->SelectedIndex == TestTask) ? "./test.txt" : "./main.txt";
+		TableForm^ tableForm = gcnew TableForm(tabControl->SelectedIndex, str);
 		tableForm->Show();
 	}
 
@@ -957,22 +948,22 @@ namespace CHM9 {
 			MessageBox::Show("Не реализована функция");
 			return;
 		}*/
+		flag = true;
 
-		delete table[MainTask];
-		table[MainTask] = new Table();
-		Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table[MainTask], test_comboBoxMethod->SelectedIndex + 1, a1,a2,m);
+		table = new Table();
+		Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table, test_comboBoxMethod->SelectedIndex + 1, a1,a2,m);
 
 		minX[MainTask] = 0;
 
-		for (auto it = table[MainTask]->begin(); it != table[MainTask]->end(); it++) {
+		for (auto it = table->begin(); it != table->end(); it++) {
 			if (it->xi > maxX[MainTask]) maxX[MainTask] = it->xi;
 		}
 
-		const int n = (--table[MainTask]->end())->i + 1;
+		const int n = (--table->end())->i + 1;
 		array<double^>^ x = gcnew array<double^>(n);
 		array<double^>^ y = gcnew array<double^>(n);
 		int i = 0;
-		for (auto it = table[MainTask]->begin(); it != table[MainTask]->end(); it++, i++) {
+		for (auto it = table->begin(); it != table->end(); it++, i++) {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = it->xi;
@@ -980,6 +971,14 @@ namespace CHM9 {
 		}
 
 		Show(MainTask, x, y, minX[MainTask], maxX[MainTask]);
+
+		std::ofstream f; 
+		f.open("./main.txt");
+		f << (*table);
+		f.close();
+
+		delete table;
+		table = 0;
 	}
 	private: System::Void test_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
@@ -988,21 +987,21 @@ namespace CHM9 {
 			MessageBox::Show("Не реализована функция");
 			return;
 		}*/
+		flag = true;
 
-		delete table[TestTask];
-		table[TestTask] = new Table();
-		Integrate(arrMethod[test_comboBoxMethod->SelectedIndex],Testf, 0, test_X, test_U0, test_maxSteps, test_h, test_L, test_eps, table[TestTask], test_comboBoxMethod->SelectedIndex+1);
+		table = new Table();
+		Integrate(arrMethod[test_comboBoxMethod->SelectedIndex],Testf, 0, test_X, test_U0, test_maxSteps, test_h, test_L, test_eps, table, test_comboBoxMethod->SelectedIndex+1);
 
 		minX[TestTask] = 0;
-		for (auto it = table[TestTask]->begin(); it != table[TestTask]->end(); it++) {
+		for (auto it = table->begin(); it != table->end(); it++) {
 			if (it->xi > maxX[TestTask]) maxX[TestTask] = it->xi;
 		}
 
-		const int n = (--table[TestTask]->end())->i + 1;
+		const int n = (--table->end())->i + 1;
 		array<double^>^ x = gcnew array<double^>(n);
 		array<double^>^ y = gcnew array<double^>(n);
 		int i = 0;
-		for (auto it = table[TestTask]->begin(); it != table[TestTask]->end(); it++, i++) {
+		for (auto it = table->begin(); it != table->end(); it++, i++) {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = it->xi;
@@ -1010,7 +1009,14 @@ namespace CHM9 {
 		}
 
 		Show(TestTask, x,y, minX[TestTask], maxX[TestTask]);
+
+		std::ofstream f;
+		f.open("./test.txt");
+		f << (*table);
+		f.close();
 		
+		delete table;
+		table = 0;
 	}
 
 	private: System::Void Show(int task, array<double^>^ x, array<double^>^ y, double _minX, double _maxX) {
@@ -1031,33 +1037,35 @@ namespace CHM9 {
 		const int H = 20;//шаг разметки
 		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX-_minX) / chart->Width;
 
-		chart->Series[NSeries]->Points->DataBindXY(x,y);
-		NSeries++;
+		interior_ptr<int> NSeries = (tabControl->SelectedIndex == TestTask) ? (&test_NSeries) : (&main_NSeries);
+		chart->Series[*NSeries]->Points->DataBindXY(x,y);
+		(*NSeries)++;
 	}
 
 
 
 	private: System::Void buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		if (flag == false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
+		const char* str = (tabControl->SelectedIndex == TestTask) ? "./test.txt" : "./main.txt";
 		double _X = tabControl->SelectedIndex == MainTask ? main_X : test_X;
-		ErrorForm^ errorForm = gcnew ErrorForm(_X,*(table[tabControl->SelectedIndex]));
+		ErrorForm^ errorForm = gcnew ErrorForm(_X,str);
 		errorForm->Show();
 	}
 
 	private: System::Void test_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
-		for (int i = 0; i < NSeries; i++) test_chart->Series[i]->Points->Clear();
+		for (int i = 0; i < test_NSeries; i++) test_chart->Series[i]->Points->Clear();
 		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 		minV[MainTask] = minV[TestTask] = 10000000;
-		NSeries = 0;
+		test_NSeries = 0;
 	}
 	private: System::Void main_buttonClear_Click(System::Object^  sender, System::EventArgs^  e) {
-		for (int i = 0; i < NSeries; i++) main_chart->Series[i]->Points->Clear();
+		for (int i = 0; i < main_NSeries; i++) main_chart->Series[i]->Points->Clear();
 		maxX[MainTask] = maxX[TestTask] = maxV[MainTask] = maxV[TestTask] = -10000000;
 		minV[MainTask] = minV[TestTask] = 10000000;
-		NSeries = 0;
+		main_NSeries = 0;
 	}
 
 	private: System::Void test_buttonTrueSolution_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1084,10 +1092,11 @@ namespace CHM9 {
 	}
 
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		if (flag==false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
+		const char* str = (tabControl->SelectedIndex == TestTask) ? "./test.txt" : "./main.txt";
 		int t = tabControl->SelectedIndex;
 		double _X = (t == MainTask) ? main_X : test_X;
 		double maxL= (t == MainTask) ? main_L : test_L;
@@ -1095,7 +1104,7 @@ namespace CHM9 {
 		double eps = (t == MainTask) ? main_eps : test_eps;
 		double h0 = (t == MainTask) ? main_h : test_h;
 		int p = (t == MainTask) ? main_comboBoxMethod->SelectedIndex+1: test_comboBoxMethod->SelectedIndex + 1;
-		RefForm^ refForm = gcnew RefForm(*(table[t]), t, _X, maxL, eps,N,p,h0);
+		RefForm^ refForm = gcnew RefForm(str, t, _X, maxL, eps,N,p,h0);
 		refForm->Show();
 	}	
 	

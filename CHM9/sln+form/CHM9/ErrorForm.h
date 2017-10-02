@@ -16,17 +16,23 @@ namespace CHM9 {
 	public ref class ErrorForm : public System::Windows::Forms::Form
 	{
 	public:
-		Table* table;
+
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart;
 	public:
 		double X;
-		ErrorForm(double _X, Table& _table)
+		ErrorForm(double _X, const char* str)
 		{
 			X = _X;
-			table = new Table(_table);
+			
+			std::ifstream f;
+			f.open(str);
+			Table table;
+			f >> table;
+			f.close();
+
 			InitializeComponent();
 
-			Show();
+			Show(table);
 		}
 
 	protected:
@@ -85,7 +91,7 @@ namespace CHM9 {
 		}
 #pragma endregion
 
-	private: System::Void Show() {
+	private: System::Void Show(Table& table) {
 		DataVisualization::Charting::Series^ s = gcnew DataVisualization::Charting::Series;
 		chart->Series->Add(s);
 
@@ -94,7 +100,7 @@ namespace CHM9 {
 
 		s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
 
-		const int n = (--table->end())->i + 1;
+		const int n = (--table.end())->i + 1;
 
 		chart->ChartAreas[0]->AxisX->Minimum = 0;
 		chart->ChartAreas[0]->AxisX->Maximum = X;
@@ -102,7 +108,7 @@ namespace CHM9 {
 		array<double^>^ x = gcnew array<double^>(n);
 		array<double^>^ y = gcnew array<double^>(n);
 		int i = 0;
-		for (auto it = table->begin(); it != table->end(); it++, i++) {
+		for (auto it = table.begin(); it != table.end(); it++, i++) {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = it->xi;

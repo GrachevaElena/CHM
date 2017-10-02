@@ -17,9 +17,16 @@ namespace CHM9 {
 	public ref class RefForm : public System::Windows::Forms::Form
 	{
 	public:
-		RefForm(Table & table, int task, double X, double maxL, double eps, int N, int p, double h0)
+		RefForm(const char * str, int task, double X, double maxL, double eps, int N, int p, double h0)
 		{
 			InitializeComponent();
+
+			std::ifstream f;
+			f.open(str);
+			Table table;
+			f >> table;
+			f.close();
+
 
 			this->labelTask->Text = L"Тип задачи: " + ((task == MainTask) ? L"основная" : L"тестовая");
 			this->labelP->Text = L"Порядок метода: p=" + p.ToString();

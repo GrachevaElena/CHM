@@ -18,10 +18,17 @@ namespace CHM9 {
 
 		int Task;
 	public:
-		TableForm(int task, Table& table)
+		TableForm(int task, const char* str)
 		{
 			Task = task;
 			InitializeComponent();
+
+			std::ifstream f;
+			f.open(str);
+			Table table;
+			f >> table;
+			f.close();
+
 			ShowTable(table);
 		}
 
