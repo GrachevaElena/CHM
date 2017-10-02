@@ -4,6 +4,7 @@
 #include "TableForm.h"
 #include "RefForm.h"
 #include "ErrorForm.h"
+#include "schet.h"
 
 namespace CHM9 {
 
@@ -25,8 +26,7 @@ namespace CHM9 {
 		double test_X, main_X, test_U0, main_U0, test_h, main_h, test_eps, main_eps, test_L, main_L,  a1, a2, m;
 		int test_maxSteps, main_maxSteps;
 		double* maxV, *minV, *maxX, *minX;
-	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::Label^  label4;
+
 
 	private: int NSeries;
 
@@ -38,7 +38,7 @@ namespace CHM9 {
 			test_h = main_h = 0.001;
 			test_U0 = main_U0 = 1;
 			test_L = main_L = 0.00001;
-			test_maxSteps = main_maxSteps = 1000;
+			test_maxSteps = main_maxSteps = 10000;
 			test_eps = main_eps = 0.01;
 			a1 = a2 = m = 1;
 
@@ -66,14 +66,14 @@ namespace CHM9 {
 
 			table = gcnew array<Table*>(2);
 			//убрать
-			table[0] = new Table();
-			table[1] = new Table();
-			SetTable(*(table[TestTask]));
-			SetTable(*(table[MainTask]));
+			//table[0] = new Table();
+			//table[1] = new Table();
+			//SetTable(*(table[TestTask]));
+			//SetTable(*(table[MainTask]));
 
 			//добавить null
-			//table[MainTask] = NULL;
-			//table[TestTask] = NULL;
+			table[MainTask] = NULL;
+			table[TestTask] = NULL;
 
 
 			maxV = new double[2];
@@ -145,6 +145,8 @@ namespace CHM9 {
 			}
 		}
 
+	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::ComboBox^  test_comboBoxMethod;
 	private: System::Windows::Forms::ComboBox^  main_comboBoxMethod;
 	private: System::Windows::Forms::Label^  label2;
@@ -246,6 +248,7 @@ namespace CHM9 {
 			this->test_labelAccurBoard = (gcnew System::Windows::Forms::Label());
 			this->test_labelParameters = (gcnew System::Windows::Forms::Label());
 			this->test_labelLenght = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->test_labelX = (gcnew System::Windows::Forms::Label());
 			this->test_labelU0 = (gcnew System::Windows::Forms::Label());
 			this->test_textBoxU0 = (gcnew System::Windows::Forms::TextBox());
@@ -268,6 +271,7 @@ namespace CHM9 {
 			this->main_labelStep = (gcnew System::Windows::Forms::Label());
 			this->main_labelMaxNumSteps = (gcnew System::Windows::Forms::Label());
 			this->main_labelLocError = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->main_labelH = (gcnew System::Windows::Forms::Label());
 			this->main_labelAccurBoard = (gcnew System::Windows::Forms::Label());
 			this->main_labelParameters = (gcnew System::Windows::Forms::Label());
@@ -287,8 +291,6 @@ namespace CHM9 {
 			this->main_textBoxLenght = (gcnew System::Windows::Forms::TextBox());
 			this->main_textBoxA1 = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_chart))->BeginInit();
@@ -511,6 +513,15 @@ namespace CHM9 {
 			this->test_labelLenght->TabIndex = 8;
 			this->test_labelLenght->Text = L"Длина интервала";
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(201, 106);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(22, 13);
+			this->label3->TabIndex = 5;
+			this->label3->Text = L" e=";
+			// 
 			// test_labelX
 			// 
 			this->test_labelX->AutoSize = true;
@@ -604,6 +615,8 @@ namespace CHM9 {
 			// 
 			this->main_chart->BorderlineColor = System::Drawing::Color::Black;
 			this->main_chart->BorderlineDashStyle = System::Windows::Forms::DataVisualization::Charting::ChartDashStyle::Solid;
+			chartArea2->AxisX->MajorGrid->LineColor = System::Drawing::Color::LightGray;
+			chartArea2->AxisY->MajorGrid->LineColor = System::Drawing::Color::LightGray;
 			chartArea2->Name = L"ChartArea1";
 			this->main_chart->ChartAreas->Add(chartArea2);
 			this->main_chart->Location = System::Drawing::Point(285, 180);
@@ -739,6 +752,15 @@ namespace CHM9 {
 			this->main_labelLocError->Size = System::Drawing::Size(148, 13);
 			this->main_labelLocError->TabIndex = 8;
 			this->main_labelLocError->Text = L"Контроль лок. погрешности";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(207, 124);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(22, 13);
+			this->label4->TabIndex = 5;
+			this->label4->Text = L" e=";
 			// 
 			// main_labelH
 			// 
@@ -895,24 +917,6 @@ namespace CHM9 {
 			this->main_pictureBoxTask->TabIndex = 2;
 			this->main_pictureBoxTask->TabStop = false;
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(201, 106);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(22, 13);
-			this->label3->TabIndex = 5;
-			this->label3->Text = L" e=";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(207, 124);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(22, 13);
-			this->label4->TabIndex = 5;
-			this->label4->Text = L" e=";
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -949,14 +953,14 @@ namespace CHM9 {
 	private: System::Void main_buttonSolve_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
 		//пока
-		if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
+		/*if (table[tabControl->SelectedIndex] == NULL) {//ссылка на NULL
 			MessageBox::Show("Не реализована функция");
 			return;
-		}
+		}*/
 
-		//delete table[MainTask];
-		//table[MainTask] = new Table();
-		//call function
+		delete table[MainTask];
+		table[MainTask] = new Table();
+		Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table[MainTask], test_comboBoxMethod->SelectedIndex + 1, a1,a2,m);
 
 		minX[MainTask] = 0;
 
@@ -985,9 +989,9 @@ namespace CHM9 {
 			return;
 		}*/
 
-		//delete table[TestTask];
-		//table[TestTask] = new Table();
-		//call function
+		delete table[TestTask];
+		table[TestTask] = new Table();
+		Integrate(arrMethod[test_comboBoxMethod->SelectedIndex],Testf, 0, test_X, test_U0, test_maxSteps, test_h, test_L, test_eps, table[TestTask], test_comboBoxMethod->SelectedIndex+1);
 
 		minX[TestTask] = 0;
 		for (auto it = table[TestTask]->begin(); it != table[TestTask]->end(); it++) {
@@ -1022,7 +1026,7 @@ namespace CHM9 {
 		chart->ChartAreas[0]->AxisY->LineWidth = 2;
 
 		chart->ChartAreas[0]->AxisX->Minimum = _minX;
-		chart->ChartAreas[0]->AxisX->Maximum = _maxX;
+		chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX+0.9999999999999);
 
 		const int H = 20;//шаг разметки
 		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX-_minX) / chart->Width;

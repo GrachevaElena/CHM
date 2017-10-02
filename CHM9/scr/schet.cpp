@@ -1,5 +1,6 @@
 #include <cmath>
 #include "Table.h"
+#include "schet.h"
 
 //-параметтры системы--------
 static double eps = 1e-5;
@@ -24,37 +25,39 @@ double Testf(double x, double y)
 	return y;
 }
 
-double Euler(double(*f)(double, double), double h, double x, double y)
+double Euler(Function f, double h, double x, double y)
 {
 	return y + h * f(x, y);
 }
 
-double RK2(double(*f)(double, double), double h, double x, double y)
+double RK2(Function f, double h, double x, double y)
 {
 	return y + h * f(x + h*0.5, Euler(f, h*0.5, x, y));
 }
 
-Row DoubleCount(double(*f)(double, double), Row* R)
+Row DoubleCount(Method method, Function f, int p, Row* R)
 {
 	int x2 = 0, x05 = 0;
 	double h_ = R->hi_1;
-	double y1 = RK2(f, h_, R->xi, R->viPr);
-	double y2 = RK2(f, h_*0.5, R->xi + h_*0.5, RK2(f, h_*0.5, R->xi, R->viPr));
-	double e_ = (y2 - y1) * 4 / 3;
-	if (fabs(e_)<eps*0.5)
+	double y1 = method(f, h_, R->xi, R->viPr);
+	double y2 = method(f, h_*0.5, R->xi + h_*0.5, method(f, h_*0.5, R->xi, R->viPr));
+	double e_ = (y2 - y1) * (pow(2,p)-1);
+	Row Res; Res.stepDec = Res.stepInc = 0;
+	if (fabs(e_)<eps/(pow(2,p+1)))
 	{
+		Res.stepInc = 1;
 		h_ = h_ * 2;
 		x2++;
 	}
 	while (fabs(e_)>eps)
 	{
+		Res.stepDec += 1;
 		h_ = h_ * 0.5;
 		x05--;
-		y1 = RK2(f, h_, R->xi, R->viPr);
-		y2 = RK2(f, h_*0.5, R->xi + h_*0.5, RK2(f, h_*0.5, R->xi, R->viPr));
-		e_ = (y2 - y1) * 4 / 3;
+		y1 = method(f, h_, R->xi, R->viPr);
+		y2 = method(f, h_*0.5, R->xi + h_*0.5, method(f, h_*0.5, R->xi, R->viPr));
+		e_ = (y2 - y1) * (pow(2,p)-1);
 	}
-	Row Res;
 	Res.hi_1 = h_;
 	Res.xi = R->xi + h_;
 	Res.viPr = y1;
@@ -63,7 +66,6 @@ Row DoubleCount(double(*f)(double, double), Row* R)
 	Res.s = (y2 - y1) / 3;
 	Res.viUtoch = y1 + e_;
 	Res.viItog = y1;
-	Res.stepInc = R->stepInc + x05;
 	Res.stepDec = R->stepDec + x2;
 	Res.total = 0;
 	Res.ui = exp(Res.xi);
@@ -71,7 +73,7 @@ Row DoubleCount(double(*f)(double, double), Row* R)
 	return Res;
 }
 
-void Integrate(double(*f)(double, double), double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, double a1, double a2, double m, double u0)
+void Integrate(Method method, Function f, double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, int p, double a1, double a2, double m )
 {
 	eps = eps_;
 	SetParam(a1,a2,m,u0);
@@ -94,8 +96,9 @@ void Integrate(double(*f)(double, double), double x0, double maxX, double y0, in
 	T->AddRow(tmp);
 	while (tmp.xi<maxX - epsX && i<maxI)
 	{
-		tmp = DoubleCount(f, &tmp);
-		T->AddRow(tmp);
 		i++;
+		tmp = DoubleCount(method, f, p, &tmp);
+		tmp.i = i;
+		T->AddRow(tmp);
 	}
 }

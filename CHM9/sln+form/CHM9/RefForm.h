@@ -227,7 +227,7 @@ namespace CHM9 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(432, 339);
+			this->ClientSize = System::Drawing::Size(566, 339);
 			this->Controls->Add(this->labelGlobErr);
 			this->Controls->Add(this->labelTask);
 			this->Controls->Add(this->labelH0);
