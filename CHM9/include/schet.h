@@ -4,7 +4,10 @@
 const int MainTask = 1;
 const int TestTask = 0;
 
-double f(double x, double y);
+double Testf(double x, double y);
+double Mainf(double x, double y);
+
 double Euler(double(*f)(double, double), double h, double x, double y);
 double RK2(double(*f)(double, double), double h, double x, double y);
-double DoubleCount(double(*f)(double, double), double &h, double x, double y, double &e);
+
+void Integrate(double(*f)(double, double), double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T);
