@@ -4,35 +4,36 @@
 
 //-параметтры системы--------
 static double eps = 1e-5;
-static double a1 = 0, a2 = 0, m = 0, u0 = 0;
+//static double a1 = 0, a2 = 0, m = 0, 
+static double u0 = 0;
 //---------------------------
 
 void SetParam(double a1_ = 1, double a2_ = 1, double m_ = 1, double u0_ = 1)
 {
-	a1 = a1_;
-	a2 = a2_;
-	m = m_;
+	//a1 = a1_;
+	//a2 = a2_;
+	//m = m_;
 	u0 = u0_;
 }
 
 double Mainf(double x, double y)
 {
-	return (-(a1*y+a2*y*y))/m;
+	return (-cos(20*x)*pow(y,3)+(1/(1+pow(sin(x),3)))*y*y+y);
 }
 
 double Testf(double x, double y)
 {
-	return y;
+	return -3*y;
 }
 
-double Euler(Function f, double h, double x, double y)
+double RK4(Function f, double h, double x, double y)
 {
-	return y + h * f(x, y);
-}
-
-double RK2(Function f, double h, double x, double y)
-{
-	return y + h * f(x + h*0.5, Euler(f, h*0.5, x, y));
+	double k1, k2, k3, k4;
+	k1 = f(x, y);
+	k2 = f(x + h / 2, y + k1*h / 2);
+	k3 = f(x + h / 2, y + k2*h / 2);
+	k4 = f(x + h, y + k3*h);
+	return y + (h/6) * (k1+2*k2+2*k3+k4);
 }
 
 Row DoubleCount(Method method, Function f, int p,double h_, Row* R)
@@ -84,7 +85,7 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 	tmp.viPr_viKor = 0;
 	tmp.s = 0;
 	tmp.viUtoch = y0;
-	tmp.viItog = 0;
+	tmp.viItog = y0;
 	tmp.stepInc = 0;
 	tmp.stepDec = 0;
 	tmp.total = 0;
@@ -99,7 +100,7 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 		tmp.hi_1 = tmph1;
 		tmph1 = tmph2;
 		tmp.i = i;
-		tmp.ui = y0*exp(tmp.xi);
+		tmp.ui = y0*exp(-3*tmp.xi);
 		tmp.abs_ui_vi = abs(tmp.ui - tmp.viPr);
 		T->AddRow(tmp);
 	}
