@@ -267,7 +267,7 @@ namespace CHM9 {
 	private: double findMaxS(Table&t) {
 		double s = (++t.begin())->s;
 		for (auto it = ++t.begin(); it != t.end(); it++)
-			if (it->s > s) {
+			if (abs(it->s) > abs(s)) {
 				s = it->s;
 			}
 		return s;
@@ -276,7 +276,7 @@ namespace CHM9 {
 		double s = (++t.begin())->s;
 		double x = (++t.begin())->xi;
 		for (auto it = ++t.begin(); it != t.end(); it++)
-			if (it->s > s) {
+			if (abs(it->s) > abs(s)) {
 				s = it->s;
 				x = it->xi;
 			}
@@ -286,7 +286,7 @@ namespace CHM9 {
 	private: double findMinS(Table&t) {
 		double s = (++t.begin())->s;
 		for (auto it = ++t.begin(); it != t.end(); it++)
-			if (it->s < s) {
+			if (abs(it->s) < abs(s)) {
 				s = it->s;
 			}
 		return s;
@@ -295,7 +295,7 @@ namespace CHM9 {
 		double s = (++t.begin())->s;
 		double x = (++t.begin())->xi;
 		for (auto it = ++t.begin(); it != t.end(); it++)
-			if (it->s < s) {
+			if (abs(it->s) < abs(s)) {
 				s = it->s;
 				x = it->xi;
 			}
