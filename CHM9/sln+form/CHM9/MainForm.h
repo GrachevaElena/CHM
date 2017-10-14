@@ -1034,8 +1034,8 @@ namespace CHM9 {
 		chart->ChartAreas[0]->AxisX->Minimum = _minX;
 		chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX+0.9999999999999);
 
-		const int H = 20;//шаг разметки
-		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX-_minX) / chart->Width;
+		//const int H = 20;//шаг разметки
+		//chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX-_minX) / chart->Width;
 
 		interior_ptr<int> NSeries = (tabControl->SelectedIndex == TestTask) ? (&test_NSeries) : (&main_NSeries);
 		chart->Series[*NSeries]->Points->DataBindXY(x,y);

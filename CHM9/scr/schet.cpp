@@ -35,30 +35,26 @@ double RK2(Function f, double h, double x, double y)
 	return y + h * f(x + h*0.5, Euler(f, h*0.5, x, y));
 }
 
-Row DoubleCount(Method method, Function f, int p,double h_, Row* R)
+Row DoubleCount(Method method, Function f, int p, double &h_, Row* R)
 {
 	int x2 = 0, x05 = 0;
 	double y1 = method(f, h_, R->xi, R->viPr);
 	double y2 = method(f, h_*0.5, R->xi + h_*0.5, method(f, h_*0.5, R->xi, R->viPr));
-	double e_ = (y2 - y1) * (pow(2,p)-1);
-	Row Res; Res.stepDec = Res.stepInc=Res.ui=Res.abs_ui_vi = 0;
-	if (fabs(e_)<eps/(pow(2,p+1)))
+	double e_ = (y2 - y1) * (pow(2, p) - 1);
+	if (fabs(e_)>eps)
 	{
-		Res.stepInc = 1;
-		h_ = h_ * 2;
-		x2++;
+		h_ *= 0.5;
+		return DoubleCount(method, f, p, h_, R);
 	}
-	while (fabs(e_)>eps)
-	{
-		Res.stepDec += 1;
-		h_ = h_ * 0.5;
-		x05--;
-		y1 = method(f, h_, R->xi, R->viPr);
-		y2 = method(f, h_*0.5, R->xi + h_*0.5, method(f, h_*0.5, R->xi, R->viPr));
-		e_ = (y2 - y1) * (pow(2,p)-1);
-	}
+	Row Res; Res.stepDec = Res.stepInc = Res.ui = Res.abs_ui_vi = 0;
 	Res.hi_1 = h_;
 	Res.xi = R->xi + h_;
+	if (fabs(e_)<eps / (pow(2, p + 1)))
+	{
+		Res.stepInc = 1;
+		h_ *= 2;
+		x2++;
+	}
 	Res.viPr = y1;
 	Res.viKor = y2;
 	Res.viPr_viKor = y1 - y2;
@@ -69,12 +65,11 @@ Row DoubleCount(Method method, Function f, int p,double h_, Row* R)
 	return Res;
 }
 
-void Integrate(Method method, Function f, double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, int p, double a1, double a2, double m )
+void Integrate(Method method, Function f, double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, int p, double a1, double a2, double m)
 {
 	eps = eps_;
-	SetParam(a1,a2,m,u0);
+	SetParam(a1, a2, m, u0);
 	int i = 0;
-	double tmph1 = h0, tmph2=h0;
 	Row tmp;
 	tmp.i = 0;
 	tmp.hi_1 = 0;
@@ -84,23 +79,34 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 	tmp.viPr_viKor = 0;
 	tmp.s = 0;
 	tmp.viUtoch = y0;
-	tmp.viItog = 0;
+	tmp.viItog = y0;
 	tmp.stepInc = 0;
 	tmp.stepDec = 0;
 	tmp.total = 0;
 	tmp.ui = y0*exp(x0);
 	tmp.abs_ui_vi = 0;
-	T->AddRow(tmp);
-	while (tmp.xi<maxX - epsX && i<maxI)
+	double hi = h0;
+	while (tmp.xi + hi<maxX && i<maxI)
 	{
+		T->AddRow(tmp);
 		i++;
-		tmp = DoubleCount(method, f, p, tmph1, &tmp);
-		tmph2 = tmp.hi_1;
-		tmp.hi_1 = tmph1;
-		tmph1 = tmph2;
+		tmp = DoubleCount(method, f, p, hi, &tmp);
 		tmp.i = i;
 		tmp.ui = y0*exp(tmp.xi);
 		tmp.abs_ui_vi = abs(tmp.ui - tmp.viPr);
-		T->AddRow(tmp);
 	}
+	T->AddRow(tmp);
+	//еще шаг
+	if (i < maxI) {
+		hi = maxX - tmp.xi;
+		do {
+			i++;
+			tmp = DoubleCount(method, f, p, hi, &tmp);
+			tmp.i = i;
+			tmp.ui = y0*exp(tmp.xi);
+			tmp.abs_ui_vi = abs(tmp.ui - tmp.viPr);
+			T->AddRow(tmp);
+		} while (maxX - tmp.xi > eps);
+	}
+
 }
