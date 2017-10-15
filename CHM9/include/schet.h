@@ -1,15 +1,13 @@
 #pragma once
+#include <vector>
 #include "Table.h"
 
-typedef double(*Function)(double, double);
-typedef double(*Method) (Function, double, double, double);
+typedef std::vector<double>(*Function)(double, std::vector<double>);
+typedef std::vector<double>(*Method)(Function, double, double, std::vector<double>);
 
-double Testf(double x, double y);
-double Mainf(double x, double y);
+std::vector<double> testf(double x, std::vector<double> u);
+std::vector<double> mainf(double x, std::vector<double> u);
 
-double Euler(Function, double h, double x, double y);
-double RK2(Function, double h, double x, double y);
+std::vector<double> RK4(Function f, double h, double x, std::vector<double> v);
 
-const Method arrMethod[] = { Euler, RK2 };
-
-void Integrate(Method, Function, double x0, double maxX, double y0, int maxI, double h0, double eps_, double epsX, Table* T, int p, double a1=0, double a2=0, double m=0);
+void Integrate(Method method, Function f, double x0, double maxX, double _y0, double _ypr0, int maxI, double h0, double eps_, double epsX, Table* T, int p, double c=1, double k=1, double kst=1, double m=1);

@@ -27,8 +27,7 @@ namespace CHM9 {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public: Table* table;
-			bool flag;
+		bool flag;
 
 	private:
 		double test_X, main_X, test_U0, main_U0, test_Upr0, main_Upr0, test_h, main_h, test_eps, main_eps, test_L, main_L;
@@ -54,7 +53,7 @@ namespace CHM9 {
 			test_h = main_h = 0.001;
 			test_U0 = main_U0 = 1;
 			test_Upr0 = main_Upr0 = 0;
-			test_L = main_L = 0.00001;
+			test_L = main_L = 0.0000001;
 			test_maxSteps = main_maxSteps = 10000;
 			test_eps = main_eps = 0.01;
 			par->k = par->kst = par->c = par->m = 1;
@@ -82,10 +81,9 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 			this->main_textBoxAccurBoard->Text = main_eps.ToString();
 
-			main_NSeries =test_NSeries= 0;
-
 			flag = false;
-			table = 0;
+
+			main_NSeries =test_NSeries= 0;
 
 			maxV = new double[2];
 			minV = new double[2];
@@ -456,7 +454,7 @@ private: System::Windows::Forms::TextBox^  main_textBoxC;
 			// test_comboBoxMethod
 			// 
 			this->test_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
-			this->test_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"Рунге-Кутта 3 порядка" });
+			this->test_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"Рунге-Кутта 4 порядка" });
 			this->test_comboBoxMethod->Location = System::Drawing::Point(376, 124);
 			this->test_comboBoxMethod->Name = L"test_comboBoxMethod";
 			this->test_comboBoxMethod->Size = System::Drawing::Size(162, 21);
@@ -753,7 +751,7 @@ private: System::Windows::Forms::TextBox^  main_textBoxC;
 			// main_comboBoxMethod
 			// 
 			this->main_comboBoxMethod->AccessibleRole = System::Windows::Forms::AccessibleRole::None;
-			this->main_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"Рунге-Кутта 3 порядка" });
+			this->main_comboBoxMethod->Items->AddRange(gcnew cli::array< System::Object^  >(1) { L"Рунге-Кутта 4 порядка" });
 			this->main_comboBoxMethod->Location = System::Drawing::Point(376, 121);
 			this->main_comboBoxMethod->Name = L"main_comboBoxMethod";
 			this->main_comboBoxMethod->Size = System::Drawing::Size(162, 21);
@@ -1041,10 +1039,10 @@ private: System::Windows::Forms::TextBox^  main_textBoxC;
 			MessageBox::Show("Не реализована функция");
 			return;
 		}*/
-		//flag = true;
+		flag = true;
 
-		table = new Table();
-		/////#########Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table, test_comboBoxMethod->SelectedIndex + 1, a1,a2,m);
+		Table* table = new Table();
+		Integrate(RK4, mainf, 0, main_X, main_U0, main_Upr0, main_maxSteps, main_h, main_L, main_eps, table, 4, par->c, par->k, par->kst, par->m);
 
 		minX[MainTask] = 0;
 
@@ -1080,10 +1078,10 @@ private: System::Windows::Forms::TextBox^  main_textBoxC;
 			MessageBox::Show("Не реализована функция");
 			return;
 		}*/
-		//flag = true;
+		flag = true;
 
-		table = new Table();
-		//##########Integrate(arrMethod[test_comboBoxMethod->SelectedIndex],Testf, 0, test_X, test_U0, test_maxSteps, test_h, test_L, test_eps, table, test_comboBoxMethod->SelectedIndex+1);
+		Table* table = new Table();
+		Integrate(RK4, testf, 0, test_X, test_U0, test_Upr0, test_maxSteps, test_h, test_L, test_eps, table, 4);
 
 		minX[TestTask] = 0;
 		for (auto it = table->begin(); it != table->end(); it++) {
