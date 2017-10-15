@@ -120,7 +120,7 @@ void Integrate(Method method, Function f, double x0, double maxX, double _y0, do
 	int i = 0;
 	VectorRow tmp;
 	tmp.i = 0;
-	tmp.hi_1 = h0;
+	tmp.hi_1 = 0;
 	tmp.xi = x0;
 	tmp.viPr = y0;
 	tmp.viKor = y0;
