@@ -1195,7 +1195,7 @@ private: System::Windows::Forms::TextBox^  main_textBoxC;
 		int N = (t == MainTask) ? main_maxSteps : test_maxSteps;
 		double eps = (t == MainTask) ? main_eps : test_eps;
 		double h0 = (t == MainTask) ? main_h : test_h;
-		int p = (t == MainTask) ? main_comboBoxMethod->SelectedIndex+1: test_comboBoxMethod->SelectedIndex + 1;
+		int p = 4;
 		RefForm^ refForm = gcnew RefForm(str, t, _X, maxL, eps,N,p,h0);
 		refForm->Show();
 	}	
