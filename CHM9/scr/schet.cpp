@@ -7,7 +7,7 @@ static double eps = 1e-5;
 //static double a1 = 0, a2 = 0, m = 0, 
 static double u0 = 0;
 //---------------------------
-
+/*
 void SetParam(double a1_ = 1, double a2_ = 1, double m_ = 1, double u0_ = 1)
 {
 	//a1 = a1_;
@@ -104,4 +104,4 @@ void Integrate(Method method, Function f, double x0, double maxX, double y0, int
 		tmp.abs_ui_vi = abs(tmp.ui - tmp.viPr);
 		T->AddRow(tmp);
 	}
-}
+}*/

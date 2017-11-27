@@ -10,26 +10,18 @@ const int N = 100000;
 //Don't laugh, please, I know that names are stupid
 struct Row {
 	unsigned i;
-	double hi_1;
 	double xi;
-	double viPr;
-	double viKor;
-	double viPr_viKor;
-	double s;
-	double viUtoch;
-	double viItog;
-	double stepInc;
-	double stepDec;
-	double total;
 	double ui;
-	double abs_ui_vi;
+	double vi;
+	double v2i;
+	double diff_abs;
 
 	friend std::ifstream& operator>> (std::ifstream & ins, Row& t) {
-		ins >> t.i >> t.hi_1 >> t.xi >> t.viPr >> t.viKor >> t.viPr_viKor >> t.s >> t.viUtoch >> t.viItog >> t.stepDec >> t.stepInc >> t.total >> t.ui >> t.abs_ui_vi;
+		ins >> t.i >>  t.xi >> t.ui >> t.vi >> t.v2i >> t.diff_abs;
 		return ins;
 	}
 	friend std::ofstream& operator<< (std::ofstream & outs, Row& t) {
-		outs << t.i <<' '<< t.hi_1 <<' '<< t.xi <<' '<< t.viPr <<' '<< t.viKor <<' '<< t.viPr_viKor <<' '<< t.s <<' '<< t.viUtoch <<' '<< t.viItog <<' '<< t.stepDec <<' '<< t.stepInc <<' '<< t.total <<' '<< t.ui <<' '<< t.abs_ui_vi<<std::endl;
+		outs << t.i <<' '<< t.xi <<' '<< t.ui <<' '<< t.vi <<' '<< t.v2i <<' '<< t.diff_abs << std::endl;
 		return outs;
 	}
 };

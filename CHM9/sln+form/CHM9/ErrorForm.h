@@ -112,7 +112,7 @@ namespace CHM9 {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = it->xi;
-			y[i] = it->s;
+			y[i] = it->diff_abs;
 		}
 
 		const int H = 20;//шаг разметки

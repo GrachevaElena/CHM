@@ -47,18 +47,11 @@ namespace CHM9 {
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	protected:
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  i;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  hi_1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  xi;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viPr;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viKor;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viPr_viKor;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  s;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viUtoch;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  viItog;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  stepDec;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  stepInc;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  ui;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  abs_ui_vi;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  xi;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  vi;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  v2i;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  diff_abs;
 
 	private:
 		/// <summary>
@@ -75,18 +68,11 @@ namespace CHM9 {
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->i = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->hi_1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->xi = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->viPr = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->viKor = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->viPr_viKor = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->s = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->viUtoch = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->viItog = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->stepDec = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->stepInc = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->vi = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->v2i = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->diff_abs = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ui = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->abs_ui_vi = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -97,14 +83,11 @@ namespace CHM9 {
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			if (Task == TestTask) {
 				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(13) {
-					this->i, this->hi_1,
-						this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
-						this->ui, this->abs_ui_vi
+					this->i, this->xi, this->ui, this->vi, this->diff_abs
 				});
 			} else if (Task == MainTask){
 				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
-				this->i, this->hi_1,
-					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
+				this->i,this->xi, this->vi, this->v2i, this->diff_abs
 				});
 			}
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
@@ -119,79 +102,40 @@ namespace CHM9 {
 			this->i->Name = L"i";
 			this->i->ReadOnly = true;
 			// 
-			// hi_1
-			// 
-			this->hi_1->HeaderText = L"h[i-1]";
-			this->hi_1->Name = L"hi_1";
-			this->hi_1->ReadOnly = true;
-			// 
 			// xi
 			// 
 			this->xi->HeaderText = L"x[i]";
 			this->xi->Name = L"xi";
 			this->xi->ReadOnly = true;
 			// 
-			// viPr
+			// vi
 			// 
-			this->viPr->HeaderText = L"V[i]";
-			this->viPr->Name = L"viPr";
-			this->viPr->ReadOnly = true;
+			this->vi->HeaderText = L"v[i]";
+			this->vi->Name = L"vi";
+			this->vi->ReadOnly = true;
 			// 
-			// viKor
+			// diff_abs
 			// 
-			this->viKor->HeaderText = L"Vудв[i]";
-			this->viKor->Name = L"viKor";
-			this->viKor->ReadOnly = true;
-			// 
-			// viPr_viKor
-			// 
-			this->viPr_viKor->HeaderText = L"V[i]-Vудв[i]";
-			this->viPr_viKor->Name = L"viPr_viKor";
-			this->viPr_viKor->ReadOnly = true;
-			// 
-			// s
-			// 
-			this->s->HeaderText = L"S";
-			this->s->Name = L"s";
-			this->s->ReadOnly = true;
-			// 
-			// viUtoch
-			// 
-			this->viUtoch->HeaderText = L"Vуточ[i]";
-			this->viUtoch->Name = L"viUtoch";
-			this->viUtoch->ReadOnly = true;
-			// 
-			// viItog
-			// 
-			this->viItog->HeaderText = L"Vитог[i]";
-			this->viItog->Name = L"viItog";
-			this->viItog->ReadOnly = true;
-			// 
-			// stepDec
-			// 
-			this->stepDec->HeaderText = L"”м. шага";
-			this->stepDec->Name = L"stepDec";
-			this->stepDec->ReadOnly = true;
-			// 
-			// stepInc
-			// 
-			this->stepInc->HeaderText = L"”в. шага";
-			this->stepInc->Name = L"stepInc";
-			this->stepInc->ReadOnly = true;
+			if (Task==MainTask) this->diff_abs->HeaderText = L"|V[i]-V2[2i]|";
+			else this->diff_abs->HeaderText = L"|u[i]-v[i]|";
+			this->diff_abs->Name = L"diff_abs";
+			this->diff_abs->ReadOnly = true;
 
 			if (Task == TestTask) {
 				// 
 				// ui
 				// 
-				this->ui->HeaderText = L"U[i]";
+				this->ui->HeaderText = L"u[i]";
 				this->ui->Name = L"ui";
 				this->ui->ReadOnly = true;
+			}
+			else {
 				// 
-				// abs_ui_vi
+				// v2i
 				// 
-				this->abs_ui_vi->HeaderText = L"|U[i]-V[i]|";
-				this->abs_ui_vi->Name = L"abs_ui_vi";
-				this->abs_ui_vi->ReadOnly = true;
+				this->v2i->HeaderText = L"v2[2i]";
+				this->v2i->Name = L"v2i";
+				this->v2i->ReadOnly = true;
 			}
 			// 
 			// TableForm
@@ -215,19 +159,14 @@ namespace CHM9 {
 		{
 			this->dataGridView1->Rows->Add();
 			this->dataGridView1->Rows[i]->Cells[0]->Value = it->i;
-			this->dataGridView1->Rows[i]->Cells[1]->Value = it->hi_1;
-			this->dataGridView1->Rows[i]->Cells[2]->Value = it->xi;
-			this->dataGridView1->Rows[i]->Cells[3]->Value = it->viPr;
-			this->dataGridView1->Rows[i]->Cells[4]->Value = it->viKor;
-			this->dataGridView1->Rows[i]->Cells[5]->Value = it->viPr_viKor;
-			this->dataGridView1->Rows[i]->Cells[6]->Value = it->s;
-			this->dataGridView1->Rows[i]->Cells[7]->Value = it->viUtoch;
-			this->dataGridView1->Rows[i]->Cells[8]->Value = it->viItog;
-			this->dataGridView1->Rows[i]->Cells[9]->Value = it->stepDec;
-			this->dataGridView1->Rows[i]->Cells[10]->Value = it->stepInc;
+			this->dataGridView1->Rows[i]->Cells[1]->Value = it->xi;
+			this->dataGridView1->Rows[i]->Cells[2]->Value = it->vi;
+			this->dataGridView1->Rows[i]->Cells[4]->Value = it->diff_abs;
 			if (Task == TestTask) {
-				this->dataGridView1->Rows[i]->Cells[11]->Value = it->ui;
-				this->dataGridView1->Rows[i]->Cells[12]->Value = it->abs_ui_vi;
+				this->dataGridView1->Rows[i]->Cells[3]->Value = it->ui;
+			}
+			else {
+				this->dataGridView1->Rows[i]->Cells[3]->Value = it->v2i;
 			}
 		}
 	}
