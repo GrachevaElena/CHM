@@ -34,13 +34,14 @@ namespace CHM9 {
 	private: int test_NSeries, main_NSeries;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::ComboBox^  test_comboBoxU0;
+	private: System::Windows::Forms::TextBox^  main_textBoxX;
 	private: System::Windows::Forms::ComboBox^  main_comboBoxU0;
 
 	public:
 		MainForm(void)
 		{
 			test_X = 1;
-			main_X = PI;
+			main_X = 1.11;
 			test_h = main_h = 0.0001;
 			test_U0 = main_U0 = 1;
 			test_L = main_L = 0.00001;
@@ -58,6 +59,7 @@ namespace CHM9 {
 			this->main_textBoxStep->Text = main_h.ToString();
 			this->main_textBoxLocError->Text = main_L.ToString();
 			this->main_textBoxMaxNumSteps->Text = main_maxSteps.ToString();
+			this->main_textBoxX->Text = main_X.ToString();
 			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 			this->main_textBoxAccurBoard->Text = main_eps.ToString();
 			this->test_comboBoxU0->SelectedIndex = 0;
@@ -70,7 +72,7 @@ namespace CHM9 {
 
 			maxX = new double[2];
 			minX = new double[2];
-			maxX[MainTask] = PI;
+			maxX[MainTask] = main_X;
 			maxX[TestTask] = 1;
 			minX[MainTask] = minX[TestTask] = 0;
 		}
@@ -271,6 +273,7 @@ namespace CHM9 {
 			this->main_textBoxLocError = (gcnew System::Windows::Forms::TextBox());
 			this->main_textBoxAccurBoard = (gcnew System::Windows::Forms::TextBox());
 			this->main_pictureBoxTask = (gcnew System::Windows::Forms::PictureBox());
+			this->main_textBoxX = (gcnew System::Windows::Forms::TextBox());
 			this->tabControl->SuspendLayout();
 			this->testPage->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->test_chart))->BeginInit();
@@ -660,6 +663,7 @@ namespace CHM9 {
 			// 
 			// main_groupBoxParametrs
 			// 
+			this->main_groupBoxParametrs->Controls->Add(this->main_textBoxX);
 			this->main_groupBoxParametrs->Controls->Add(this->main_comboBoxU0);
 			this->main_groupBoxParametrs->Controls->Add(this->main_comboBoxMethod);
 			this->main_groupBoxParametrs->Controls->Add(this->label2);
@@ -788,9 +792,9 @@ namespace CHM9 {
 			this->main_labelX->AutoSize = true;
 			this->main_labelX->Location = System::Drawing::Point(203, 58);
 			this->main_labelX->Name = L"main_labelX";
-			this->main_labelX->Size = System::Drawing::Size(33, 13);
+			this->main_labelX->Size = System::Drawing::Size(23, 13);
 			this->main_labelX->TabIndex = 5;
-			this->main_labelX->Text = L" X=PI";
+			this->main_labelX->Text = L" X=";
 			// 
 			// main_labelU0
 			// 
@@ -841,6 +845,13 @@ namespace CHM9 {
 			this->main_pictureBoxTask->TabIndex = 2;
 			this->main_pictureBoxTask->TabStop = false;
 			// 
+			// main_textBoxX
+			// 
+			this->main_textBoxX->Location = System::Drawing::Point(226, 56);
+			this->main_textBoxX->Name = L"main_textBoxX";
+			this->main_textBoxX->Size = System::Drawing::Size(106, 20);
+			this->main_textBoxX->TabIndex = 21;
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -886,7 +897,7 @@ namespace CHM9 {
 
 		table = new Table();
 		Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table, 4);
-
+		maxX[MainTask] = main_X;
 		//minX[MainTask] = 0;
 
 		//for (auto it = table->begin(); it != table->end(); it++) {
@@ -1089,6 +1100,12 @@ namespace CHM9 {
 				return false;
 			}
 			main_h = d;
+			f = Double::TryParse(main_textBoxX->Text, d);
+			if (!f) {
+				MessageBox::Show("Неверное значение: значение отрезка интегрирования Ч должно быть числом");
+				return false;
+			}
+			main_X = d;
 			f = Int32::TryParse(main_textBoxMaxNumSteps->Text, i);
 			if (!f) {
 				MessageBox::Show("Неверное значение: значение максимального количества шагов должно быть числом");
