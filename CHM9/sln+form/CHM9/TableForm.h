@@ -82,12 +82,13 @@ namespace CHM9 {
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			if (Task == TestTask) {
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(13) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
 					this->i, this->xi, this->ui, this->vi, this->diff_abs
 				});
-			} else if (Task == MainTask){
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
-				this->i,this->xi, this->vi, this->v2i, this->diff_abs
+			}
+			else if (Task == MainTask) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+					this->i, this->xi, this->vi, this->v2i, this->diff_abs
 				});
 			}
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
@@ -116,7 +117,7 @@ namespace CHM9 {
 			// 
 			// diff_abs
 			// 
-			if (Task==MainTask) this->diff_abs->HeaderText = L"|V[i]-V2[2i]|";
+			if (Task == MainTask) this->diff_abs->HeaderText = L"|V[i]-V2[2i]|";
 			else this->diff_abs->HeaderText = L"|u[i]-v[i]|";
 			this->diff_abs->Name = L"diff_abs";
 			this->diff_abs->ReadOnly = true;

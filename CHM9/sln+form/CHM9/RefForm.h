@@ -17,10 +17,10 @@ namespace CHM9 {
 	public ref class RefForm : public System::Windows::Forms::Form
 	{
 	public:
-		RefForm(const char * str, int task, double NGrid, double maxL, double eps, double x)
+		RefForm(int task, double NGrid, double maxL, double eps, double x)
 		{
 			InitializeComponent();
-			this->labelTask->Text = L"Тип задачи: " + ((task==0)?"основная":"тестовая");
+			this->labelTask->Text = L"Тип задачи: " + ((task==MainTask)?"основная":"тестовая");
 			this->labelNGrid->Text = L"Число разбиений =" + NGrid;
 			this->labelMaxL->Text = L"Максимальная допустимая погрешность =" + maxL;
 			this->labelEps->Text = L"Максимальная погрешность =" + eps + L" при x=" + x.ToString();

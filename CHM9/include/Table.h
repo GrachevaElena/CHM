@@ -5,8 +5,6 @@
 const int MainTask = 1;
 const int TestTask = 0;
 
-const int N = 100000;
-
 //Don't laugh, please, I know that names are stupid
 struct Row {
 	unsigned i;
@@ -16,6 +14,14 @@ struct Row {
 	double v2i;
 	double diff_abs;
 
+	Row() {
+		i = 0;
+		xi = 0;
+		ui = 0;
+		vi = 0;
+		v2i = 0;
+		diff_abs = 0;
+	}
 	friend std::ifstream& operator>> (std::ifstream & ins, Row& t) {
 		ins >> t.i >>  t.xi >> t.ui >> t.vi >> t.v2i >> t.diff_abs;
 		return ins;

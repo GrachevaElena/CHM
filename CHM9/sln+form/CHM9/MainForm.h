@@ -17,6 +17,16 @@ namespace CHM9 {
 
 	const double PI = 3.14159265358979323846264;
 
+	double test_ksi = 0.5, test_nu1=0, test_nu2=1;
+	auto test_k = [](double x) { return (double) 1; };
+	auto test_q = [](double x) { return (double) 1; };
+	auto test_f = [](double x) { return (double)(x*x-2); };
+
+	double main_ksi = 0.5, main_nu1 = 0, main_nu2 = 1;
+	auto main_k = [](double x) { return (double)(x<main_ksi?(x*x+2):(x*x)); };
+	auto main_q = [](double x) { return (double)(x<main_ksi ? (x) : (x*x)); };
+	auto main_f = [](double x) { return (double)(x<main_ksi ? (x) : (sin(PI*x))); };
+
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
@@ -28,23 +38,15 @@ namespace CHM9 {
 	private:
 		double test_L, main_L;
 		int test_NGrid, main_NGrid;
-		double test_a = 0, test_b = 2, main_a = 0, main_b = 1;
-
+		double test_a = 0, test_b = /*2*/1, main_a = 0, main_b = 1;
 
 	private: int test_NSeries, main_NSeries;
 	private: System::Windows::Forms::GroupBox^  test_groupBoxParameters;
 	private: System::Windows::Forms::Label^  test_labelNGrid;
 	private: System::Windows::Forms::Label^  test_labelLocError;
-
 	private: System::Windows::Forms::TextBox^  test_textBoxNGrid;
 	private: System::Windows::Forms::TextBox^  test_textBoxLocError;
 	private: System::Windows::Forms::PictureBox^  test_pictureBoxTask;
-
-
-
-
-
-
 	public:
 		MainForm(void)
 		{
@@ -497,7 +499,7 @@ namespace CHM9 {
 		flag = true;
 
 		table = new Table();
-		//Integrate(arrMethod[main_comboBoxMethod->SelectedIndex], Mainf, 0, main_X, main_U0, main_maxSteps, main_h, main_L, main_eps, table, 4);
+		Calculate(*table, main_k, main_q, main_f, main_nu1, main_nu2, main_ksi, main_a, main_NGrid, (main_b - main_a) / main_NGrid, main_L, MainTask);
 
 		//minX[MainTask] = 0;
 
@@ -536,7 +538,7 @@ namespace CHM9 {
 		flag = true;
 
 		table = new Table();
-		//Integrate(arrMethod[test_comboBoxMethod->SelectedIndex],Testf, 0, test_X, test_U0, test_maxSteps, test_h, test_L, test_eps, table, 4);
+		Calculate(*table, test_k, test_q, test_f, test_nu1, test_nu2, test_ksi, test_a, test_NGrid, (test_b-test_a)/test_NGrid, test_L, TestTask);
 
 		//minX[TestTask] = 0;
 		//for (auto it = table->begin(); it != table->end(); it++) {
@@ -614,10 +616,6 @@ namespace CHM9 {
 		for (int i = 0; i < main_NSeries; i++) main_chart->Series[i]->Points->Clear();
 		main_NSeries = 0;
 	}
-	/////////////
-	private: Double TrueSolution(Double^ x) {
-		return 0;
-	}
 
 	private: System::Void test_buttonTrueSolution_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (!CheckValues()) return;
@@ -636,27 +634,44 @@ namespace CHM9 {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = dx*i;
-			y[i] = TrueSolution(x[i]);
+			y[i] = RetU((double)x[i]);
 		}
 
 		Show(TestTask, x,y);
 	}
-	////////////////
-	private: double CalcEps(int task, double&x) {
-		return 0;
+
+	private: double CalcEps(double&x, int _N) {
+
+		double max = 0;
+		Table::iterator it = table->begin();
+		for (int i = 0; i <= _N; i++, it++) {
+			if (it->diff_abs > max) {
+				max = it->diff_abs;
+				x = it->xi;
+			}
+		}
+		return max;
 	}
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (flag==false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
-		const char* str = (tabControl->SelectedIndex == TestTask) ? "./test.txt" : "./main.txt";
+		table = new Table();
+		std::ifstream f;
+		if (tabControl->SelectedIndex == TestTask) f.open("./test.txt");
+		else if (tabControl->SelectedIndex == MainTask) f.open("./main.txt");
+		f >> (*table);
+		f.close();
+
 		int t = tabControl->SelectedIndex;
-		double _N = (t == MainTask) ? main_NGrid : test_NGrid;
+		double _N = (--table->end())->i;
 		double maxL= (t == MainTask) ? main_L : test_L;
 		double x=0;
-		double eps = CalcEps(t, x);
-		RefForm^ refForm = gcnew RefForm(str, t, _N, maxL, eps, x);
+		double eps = CalcEps(x, _N);
+
+		delete table;
+		RefForm^ refForm = gcnew RefForm(t, _N, maxL, eps, x);
 		refForm->Show();
 	}	
 	
