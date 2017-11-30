@@ -22,7 +22,7 @@ namespace CHM9 {
 	auto test_q = [](double x) { return (double) 1; };
 	auto test_f = [](double x) { return (double)(x*x-2); };
 
-	double main_ksi = 0.5, main_nu1 = 0, main_nu2 = 1;
+	double main_ksi = 0.3, main_nu1 = 0, main_nu2 = 1;
 	auto main_k = [](double x) { return (double)(x<main_ksi?(x*x+2):(x*x)); };
 	auto main_q = [](double x) { return (double)(x<main_ksi ? (x) : (x*x)); };
 	auto main_f = [](double x) { return (double)(x<main_ksi ? (x) : (sin(PI*x))); };
