@@ -41,9 +41,10 @@ namespace CHM9 {
 		MainForm(void)
 		{
 			test_X = 1;
-			main_X = 1.11;
+			main_X = 1.105;
 			test_h = main_h = 0.0001;
-			test_U0 = main_U0 = 1;
+			test_U0 = 1; 
+			main_U0 = 0.5;
 			test_L = main_L = 0.00001;
 			test_maxSteps = main_maxSteps = 1000;
 			test_eps = main_eps = 0.01;
@@ -63,7 +64,7 @@ namespace CHM9 {
 			this->test_textBoxMaxNumSteps->Text = test_maxSteps.ToString();
 			this->main_textBoxAccurBoard->Text = main_eps.ToString();
 			this->test_comboBoxU0->SelectedIndex = 0;
-			this->main_comboBoxU0->SelectedIndex = 0;
+			this->main_comboBoxU0->SelectedIndex = 1;
 
 			main_NSeries =test_NSeries= 0;
 
@@ -977,9 +978,7 @@ namespace CHM9 {
 		chart->ChartAreas[0]->AxisY->LineWidth = 1;
 
 		chart->ChartAreas[0]->AxisX->Minimum = _minX;
-		if ((double)(int)_maxX != _maxX)
-			chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX)+1;
-		else chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX);
+		chart->ChartAreas[0]->AxisX->Maximum = _maxX;
 
 		const int H = 20;//шаг разметки
 		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX - _minX) / chart->Width;
@@ -1046,7 +1045,7 @@ namespace CHM9 {
 		int N = (t == MainTask) ? main_maxSteps : test_maxSteps;
 		double eps = (t == MainTask) ? main_eps : test_eps;
 		double h0 = (t == MainTask) ? main_h : test_h;
-		int p = (t == MainTask) ? main_comboBoxMethod->SelectedIndex+1: test_comboBoxMethod->SelectedIndex + 1;
+		int p = 4;
 		RefForm^ refForm = gcnew RefForm(str, t, _X, maxL, eps,N,p,h0);
 		refForm->Show();
 	}	
@@ -1102,7 +1101,7 @@ namespace CHM9 {
 			main_h = d;
 			f = Double::TryParse(main_textBoxX->Text, d);
 			if (!f) {
-				MessageBox::Show("Неверное значение: значение отрезка интегрирования Ч должно быть числом");
+				MessageBox::Show("Неверное значение: значение отрезка интегрирования X должно быть числом");
 				return false;
 			}
 			main_X = d;

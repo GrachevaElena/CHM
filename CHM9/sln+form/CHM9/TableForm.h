@@ -59,6 +59,7 @@ namespace CHM9 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  stepInc;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  ui;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  abs_ui_vi;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  s1_s2;
 
 	private:
 		/// <summary>
@@ -87,6 +88,7 @@ namespace CHM9 {
 			this->stepInc = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ui = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->abs_ui_vi = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->s1_s2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,15 +98,15 @@ namespace CHM9 {
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			if (Task == TestTask) {
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(13) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(14) {
 					this->i, this->hi_1,
 						this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
-						this->ui, this->abs_ui_vi
+						this->ui, this->abs_ui_vi, this->s1_s2
 				});
 			} else if (Task == MainTask){
-				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(11) {
+				this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(12) {
 				this->i, this->hi_1,
-					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc,
+					this->xi, this->viPr, this->viKor, this->viPr_viKor, this->s, this->viUtoch, this->viItog, this->stepDec, this->stepInc, this->s1_s2
 				});
 			}
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
@@ -130,6 +132,12 @@ namespace CHM9 {
 			this->xi->HeaderText = L"x[i]";
 			this->xi->Name = L"xi";
 			this->xi->ReadOnly = true;
+			// 
+			// s1_s2
+			// 
+			this->s1_s2->HeaderText = L"s[i+1]/s[i]";
+			this->s1_s2->Name = L"s1_s2";
+			this->s1_s2->ReadOnly = true;
 			// 
 			// viPr
 			// 
@@ -225,6 +233,10 @@ namespace CHM9 {
 			this->dataGridView1->Rows[i]->Cells[8]->Value = it->viItog;
 			this->dataGridView1->Rows[i]->Cells[9]->Value = it->stepDec;
 			this->dataGridView1->Rows[i]->Cells[10]->Value = it->stepInc;
+			if (it != table.begin() && ((--it)->hi_1 != (++it)->hi_1)) {
+				double tmp = abs(it->s / ((--it)++)->s);
+				this->dataGridView1->Rows[i]->Cells[Task == TestTask ? 13 : 11]->Value =tmp;
+			}
 			if (Task == TestTask) {
 				this->dataGridView1->Rows[i]->Cells[11]->Value = it->ui;
 				this->dataGridView1->Rows[i]->Cells[12]->Value = it->abs_ui_vi;

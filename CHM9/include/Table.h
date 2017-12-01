@@ -24,6 +24,11 @@ struct Row {
 	double ui;
 	double abs_ui_vi;
 
+	Row(): i(0), hi_1(0),xi(0), viPr(0), viKor(0), viPr_viKor(0), s(0), viUtoch(0), viItog(0), 
+		stepInc(0), stepDec(0), total(0), ui(0), abs_ui_vi(0){
+
+	}
+
 	friend std::ifstream& operator>> (std::ifstream & ins, Row& t) {
 		ins >> t.i >> t.hi_1 >> t.xi >> t.viPr >> t.viKor >> t.viPr_viKor >> t.s >> t.viUtoch >> t.viItog >> t.stepDec >> t.stepInc >> t.total >> t.ui >> t.abs_ui_vi;
 		return ins;
