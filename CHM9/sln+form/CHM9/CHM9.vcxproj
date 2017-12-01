@@ -148,6 +148,7 @@
     <ClCompile Include="MainForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DivForm.h" />
     <ClInclude Include="ErrorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

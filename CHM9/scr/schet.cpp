@@ -5,7 +5,7 @@
 
 static Function k, f, q;
 int task;
-
+const double PI = 3.14159265358979323846264;
 
 double RetX(int i, double h, double x0) {
 	return x0 + i*h;
@@ -76,18 +76,18 @@ void CalculateForOneGrid(double nu1, double nu2, double ksi, double x0, const in
 	Progonka(nu1, nu2, a, d, fi, N, h, v);
 }
 
-double RetU(double x) {
-	return x*x;
+double RetU(double x, double ksi) {
+	return x<ksi? (x*x+0.5): (-x*x+2*x);
 }
 
-void WriteTable(Table & table, double x0, double h, std::vector<double>& v, std::vector<double>& v2, std::vector<double>& s, int nGrid) {
+void WriteTable(Table & table, double x0, double h, std::vector<double>& v, std::vector<double>& v2, std::vector<double>& s, int nGrid, double ksi) {
 	for (int i = 0; i <=nGrid; i++) {
 		Row r;
 		r.i = i;
 		r.xi = RetX(i,h,x0);
 		r.vi = v[i];
 		r.v2i = v2[i];
-		if (task==TestTask) r.ui = RetU(RetX(i,h,x0));
+		if (task==TestTask) r.ui = RetU(RetX(i,h,x0), ksi);
 		r.diff_abs = s[i];
 		table.AddRow(r);
 	}
@@ -109,7 +109,7 @@ void Calculate(Table & table, Function _k, Function _q, Function _f, double nu1,
 	for (int i = 0; i < N + 1; i++) {
 		if (task==MainTask)
 			s[i] = abs(v[i] - v2[2 * i]);
-		else s[i] = abs(v[i] - RetU(RetX(i,h,x0)));
+		else s[i] = abs(v[i] - RetU(RetX(i,h,x0), ksi));
 		if (s[i] > max) max = s[i];
 	}
 
@@ -117,7 +117,7 @@ void Calculate(Table & table, Function _k, Function _q, Function _f, double nu1,
 		Calculate(table, _k, _q, _f, nu1, nu2, ksi, x0, N * 2, h / 2, locErr, task);
 	}
 	else {
-		WriteTable(table, x0, h, v, v2, s, N);
+		WriteTable(table, x0, h, v, v2, s, N, ksi);
 	}
 
 

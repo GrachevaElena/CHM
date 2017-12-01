@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "DivForm.h"
 #include "Table.h"
 #include "TableForm.h"
 #include "RefForm.h"
@@ -17,28 +18,28 @@ namespace CHM9 {
 
 	const double PI = 3.14159265358979323846264;
 
-	double test_ksi = 0.5, test_nu1=0, test_nu2=1;
-	auto test_k = [](double x) { return (double) 1; };
-	auto test_q = [](double x) { return (double) 1; };
-	auto test_f = [](double x) { return (double)(x*x-2); };
+	const double test_ksi = 0.5, test_nu1 = 0.5, test_nu2 = 1;
+	const auto test_k = [](double x) { return (double)1; };
+	const auto test_q = [](double x) { return (double)1; };
+	const auto test_f = [](double x) { return (double)(x < test_ksi ? (x*x-1.5) : (2*x+2-x*x)); };
 
-	double main_ksi = 0.3, main_nu1 = 0, main_nu2 = 1;
-	auto main_k = [](double x) { return (double)(x<main_ksi?(x*x+2):(x*x)); };
-	auto main_q = [](double x) { return (double)(x<main_ksi ? (x) : (x*x)); };
-	auto main_f = [](double x) { return (double)(x<main_ksi ? (x) : (sin(PI*x))); };
+	const double main_ksi = 0.3, main_nu1 = 0, main_nu2 = 1;
+	const auto main_k = [](double x) { return (double)(x < main_ksi ? (x*x + 2) : (x*x)); };
+	const auto main_q = [](double x) { return (double)(x < main_ksi ? (x) : (x*x)); };
+	const auto main_f = [](double x) { return (double)(x < main_ksi ? (x) : (sin(PI*x))); };
 
 	/// <summary>
 	/// Сводка для MainForm
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form
 	{
-	public: Table* table;
+	public: static Table* table;
 			bool flag;
 
-	private:
-		double test_L, main_L;
-		int test_NGrid, main_NGrid;
-		double test_a = 0, test_b = /*2*/1, main_a = 0, main_b = 1;
+	public:
+		static double test_L, main_L;
+		static int test_NGrid, main_NGrid;
+		static double test_a = 0, test_b = /*2*/1, main_a = 0, main_b = 1;
 
 	private: int test_NSeries, main_NSeries;
 	private: System::Windows::Forms::GroupBox^  test_groupBoxParameters;
@@ -46,6 +47,8 @@ namespace CHM9 {
 	private: System::Windows::Forms::Label^  test_labelLocError;
 	private: System::Windows::Forms::TextBox^  test_textBoxNGrid;
 	private: System::Windows::Forms::TextBox^  test_textBoxLocError;
+	private: System::Windows::Forms::Button^  main_buttonDiv;
+	private: System::Windows::Forms::Button^  test_buttonDiv;
 	private: System::Windows::Forms::PictureBox^  test_pictureBoxTask;
 	public:
 		MainForm(void)
@@ -61,7 +64,7 @@ namespace CHM9 {
 			this->main_textBoxNGrid->Text = main_NGrid.ToString();
 			this->test_textBoxNGrid->Text = test_NGrid.ToString();
 
-			main_NSeries =test_NSeries= 0;
+			main_NSeries = test_NSeries = 0;
 
 			flag = false;
 			table = 0;
@@ -119,6 +122,7 @@ namespace CHM9 {
 			System::Windows::Forms::DataVisualization::Charting::ChartArea^  chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->testPage = (gcnew System::Windows::Forms::TabPage());
+			this->test_buttonDiv = (gcnew System::Windows::Forms::Button());
 			this->test_groupBoxParameters = (gcnew System::Windows::Forms::GroupBox());
 			this->test_labelNGrid = (gcnew System::Windows::Forms::Label());
 			this->test_labelLocError = (gcnew System::Windows::Forms::Label());
@@ -137,6 +141,7 @@ namespace CHM9 {
 			this->main_buttonSolve = (gcnew System::Windows::Forms::Button());
 			this->main_buttonClear = (gcnew System::Windows::Forms::Button());
 			this->main_buttonTable = (gcnew System::Windows::Forms::Button());
+			this->main_buttonDiv = (gcnew System::Windows::Forms::Button());
 			this->main_buttonError = (gcnew System::Windows::Forms::Button());
 			this->main_buttonRef = (gcnew System::Windows::Forms::Button());
 			this->main_groupBoxParametrs = (gcnew System::Windows::Forms::GroupBox());
@@ -168,6 +173,7 @@ namespace CHM9 {
 			// 
 			// testPage
 			// 
+			this->testPage->Controls->Add(this->test_buttonDiv);
 			this->testPage->Controls->Add(this->test_groupBoxParameters);
 			this->testPage->Controls->Add(this->test_pictureBoxTask);
 			this->testPage->Controls->Add(this->test_chart);
@@ -184,6 +190,16 @@ namespace CHM9 {
 			this->testPage->TabIndex = 0;
 			this->testPage->Text = L"Тестовая задача";
 			this->testPage->UseVisualStyleBackColor = true;
+			// 
+			// test_buttonDiv
+			// 
+			this->test_buttonDiv->Location = System::Drawing::Point(25, 553);
+			this->test_buttonDiv->Name = L"test_buttonDiv";
+			this->test_buttonDiv->Size = System::Drawing::Size(228, 47);
+			this->test_buttonDiv->TabIndex = 20;
+			this->test_buttonDiv->Text = L"Порядок погрешности";
+			this->test_buttonDiv->UseVisualStyleBackColor = true;
+			this->test_buttonDiv->Click += gcnew System::EventHandler(this, &MainForm::buttonDiv_Click);
 			// 
 			// test_groupBoxParameters
 			// 
@@ -258,7 +274,7 @@ namespace CHM9 {
 			// 
 			// test_buttonSolve
 			// 
-			this->test_buttonSolve->Location = System::Drawing::Point(25, 223);
+			this->test_buttonSolve->Location = System::Drawing::Point(25, 199);
 			this->test_buttonSolve->Name = L"test_buttonSolve";
 			this->test_buttonSolve->Size = System::Drawing::Size(228, 47);
 			this->test_buttonSolve->TabIndex = 12;
@@ -268,7 +284,7 @@ namespace CHM9 {
 			// 
 			// test_buttonClear
 			// 
-			this->test_buttonClear->Location = System::Drawing::Point(25, 329);
+			this->test_buttonClear->Location = System::Drawing::Point(25, 306);
 			this->test_buttonClear->Name = L"test_buttonClear";
 			this->test_buttonClear->Size = System::Drawing::Size(228, 47);
 			this->test_buttonClear->TabIndex = 13;
@@ -278,7 +294,7 @@ namespace CHM9 {
 			// 
 			// test_buttonTable
 			// 
-			this->test_buttonTable->Location = System::Drawing::Point(25, 451);
+			this->test_buttonTable->Location = System::Drawing::Point(25, 428);
 			this->test_buttonTable->Name = L"test_buttonTable";
 			this->test_buttonTable->Size = System::Drawing::Size(228, 47);
 			this->test_buttonTable->TabIndex = 14;
@@ -288,7 +304,7 @@ namespace CHM9 {
 			// 
 			// test_buttonError
 			// 
-			this->test_buttonError->Location = System::Drawing::Point(25, 504);
+			this->test_buttonError->Location = System::Drawing::Point(25, 481);
 			this->test_buttonError->Name = L"test_buttonError";
 			this->test_buttonError->Size = System::Drawing::Size(228, 47);
 			this->test_buttonError->TabIndex = 15;
@@ -298,7 +314,7 @@ namespace CHM9 {
 			// 
 			// test_buttonTrueSolution
 			// 
-			this->test_buttonTrueSolution->Location = System::Drawing::Point(25, 276);
+			this->test_buttonTrueSolution->Location = System::Drawing::Point(25, 253);
 			this->test_buttonTrueSolution->Name = L"test_buttonTrueSolution";
 			this->test_buttonTrueSolution->Size = System::Drawing::Size(228, 47);
 			this->test_buttonTrueSolution->TabIndex = 16;
@@ -308,7 +324,7 @@ namespace CHM9 {
 			// 
 			// test_buttonRef
 			// 
-			this->test_buttonRef->Location = System::Drawing::Point(25, 398);
+			this->test_buttonRef->Location = System::Drawing::Point(25, 375);
 			this->test_buttonRef->Name = L"test_buttonRef";
 			this->test_buttonRef->Size = System::Drawing::Size(228, 47);
 			this->test_buttonRef->TabIndex = 16;
@@ -322,6 +338,7 @@ namespace CHM9 {
 			this->mainPage->Controls->Add(this->main_buttonSolve);
 			this->mainPage->Controls->Add(this->main_buttonClear);
 			this->mainPage->Controls->Add(this->main_buttonTable);
+			this->mainPage->Controls->Add(this->main_buttonDiv);
 			this->mainPage->Controls->Add(this->main_buttonError);
 			this->mainPage->Controls->Add(this->main_buttonRef);
 			this->mainPage->Controls->Add(this->main_groupBoxParametrs);
@@ -370,7 +387,7 @@ namespace CHM9 {
 			// 
 			// main_buttonTable
 			// 
-			this->main_buttonTable->Location = System::Drawing::Point(25, 407);
+			this->main_buttonTable->Location = System::Drawing::Point(25, 389);
 			this->main_buttonTable->Name = L"main_buttonTable";
 			this->main_buttonTable->Size = System::Drawing::Size(228, 47);
 			this->main_buttonTable->TabIndex = 10;
@@ -378,9 +395,19 @@ namespace CHM9 {
 			this->main_buttonTable->UseVisualStyleBackColor = true;
 			this->main_buttonTable->Click += gcnew System::EventHandler(this, &MainForm::buttonTable_Click);
 			// 
+			// main_buttonDiv
+			// 
+			this->main_buttonDiv->Location = System::Drawing::Point(25, 516);
+			this->main_buttonDiv->Name = L"main_buttonDiv";
+			this->main_buttonDiv->Size = System::Drawing::Size(228, 47);
+			this->main_buttonDiv->TabIndex = 10;
+			this->main_buttonDiv->Text = L"Порядок погрешности";
+			this->main_buttonDiv->UseVisualStyleBackColor = true;
+			this->main_buttonDiv->Click += gcnew System::EventHandler(this, &MainForm::buttonDiv_Click);
+			// 
 			// main_buttonError
 			// 
-			this->main_buttonError->Location = System::Drawing::Point(25, 460);
+			this->main_buttonError->Location = System::Drawing::Point(25, 442);
 			this->main_buttonError->Name = L"main_buttonError";
 			this->main_buttonError->Size = System::Drawing::Size(228, 47);
 			this->main_buttonError->TabIndex = 10;
@@ -390,7 +417,7 @@ namespace CHM9 {
 			// 
 			// main_buttonRef
 			// 
-			this->main_buttonRef->Location = System::Drawing::Point(25, 354);
+			this->main_buttonRef->Location = System::Drawing::Point(25, 336);
 			this->main_buttonRef->Name = L"main_buttonRef";
 			this->main_buttonRef->Size = System::Drawing::Size(228, 47);
 			this->main_buttonRef->TabIndex = 10;
@@ -462,7 +489,7 @@ namespace CHM9 {
 			this->ClientSize = System::Drawing::Size(863, 636);
 			this->Controls->Add(this->tabControl);
 			this->Name = L"MainForm";
-			this->Text = L"Лабораторная работа 1, вариант 3";
+			this->Text = L"Лабораторная работа 2, вариант 3";
 			this->tabControl->ResumeLayout(false);
 			this->testPage->ResumeLayout(false);
 			this->test_groupBoxParameters->ResumeLayout(false);
@@ -480,7 +507,7 @@ namespace CHM9 {
 #pragma endregion
 
 	private: System::Void buttonTable_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (flag==false) {//ссылка на NULL
+		if (flag == false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
@@ -518,9 +545,9 @@ namespace CHM9 {
 			y[i] = it->vi;
 		}
 
-		Show(MainTask, x, y);
+		Show(MainTask, x, y, 0);
 
-		std::ofstream f; 
+		std::ofstream f;
 		f.open("./main.txt");
 		f << (*table);
 		f.close();
@@ -538,7 +565,7 @@ namespace CHM9 {
 		flag = true;
 
 		table = new Table();
-		Calculate(*table, test_k, test_q, test_f, test_nu1, test_nu2, test_ksi, test_a, test_NGrid, (test_b-test_a)/test_NGrid, test_L, TestTask);
+		Calculate(*table, test_k, test_q, test_f, test_nu1, test_nu2, test_ksi, test_a, test_NGrid, (test_b - test_a) / test_NGrid, test_L, TestTask);
 
 		//minX[TestTask] = 0;
 		//for (auto it = table->begin(); it != table->end(); it++) {
@@ -556,18 +583,18 @@ namespace CHM9 {
 			y[i] = it->vi;
 		}
 
-		Show(TestTask, x,y);
+		Show(TestTask, x, y, 0);
 
 		std::ofstream f;
 		f.open("./test.txt");
 		f << (*table);
 		f.close();
-		
+
 		delete table;
 		table = 0;
 	}
 
-	private: System::Void Show(int task, array<double^>^ x, array<double^>^ y) {
+	private: System::Void Show(int task, array<double^>^ x, array<double^>^ y, int f) {
 		DataVisualization::Charting::Chart^ chart = (task == MainTask) ? main_chart : test_chart;
 		DataVisualization::Charting::Series^ s = gcnew DataVisualization::Charting::Series;
 		chart->Series->Add(s);
@@ -577,15 +604,16 @@ namespace CHM9 {
 
 		s->BorderWidth = 2;
 
-		s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+		if (f == 0)
+			s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Spline;
+		else if (f == 1)
+			s->ChartType = System::Windows::Forms::DataVisualization::Charting::SeriesChartType::Point;
 
 		chart->ChartAreas[0]->AxisX->LineWidth = 1;
 		chart->ChartAreas[0]->AxisY->LineWidth = 1;
 
 		chart->ChartAreas[0]->AxisX->Minimum = _minX;
-		if ((double)(int)_maxX != _maxX)
-			chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX)+1;
-		else chart->ChartAreas[0]->AxisX->Maximum = (int)(_maxX);
+		chart->ChartAreas[0]->AxisX->Maximum = _maxX;
 
 		const int H = 20;//шаг разметки
 		chart->ChartAreas[0]->AxisX->MajorGrid->Interval = H*(_maxX - _minX) / chart->Width;
@@ -595,8 +623,6 @@ namespace CHM9 {
 		(*NSeries)++;
 	}
 
-
-
 	private: System::Void buttonError_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (flag == false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
@@ -604,7 +630,7 @@ namespace CHM9 {
 		}
 		const char* str = (tabControl->SelectedIndex == TestTask) ? "./test.txt" : "./main.txt";
 		double _X = tabControl->SelectedIndex == MainTask ? main_b : test_b;
-		ErrorForm^ errorForm = gcnew ErrorForm(_X,str);
+		ErrorForm^ errorForm = gcnew ErrorForm(_X, str);
 		errorForm->Show();
 	}
 
@@ -622,25 +648,25 @@ namespace CHM9 {
 
 		//minX[TestTask] = 0;
 		//if (test_X > maxX[TestTask]) maxX[TestTask] = test_X;
-		
+
 		const int d = 2;
 		const int n = test_chart->Width / d;
 		const double dx = test_b / n;
-	
+
 		array<double^>^ x = gcnew array<double^>(n);
 		array<double^>^ y = gcnew array<double^>(n);
 
-		for (int i=0; i<n; i++) {
+		for (int i = 0; i < n; i += n/10) {
 			x[i] = gcnew double;
 			y[i] = gcnew double;
 			x[i] = dx*i;
-			y[i] = RetU((double)x[i]);
+			y[i] = RetU((double)x[i], (double)test_ksi);
 		}
 
-		Show(TestTask, x,y);
+		Show(TestTask, x, y, 1);
 	}
 
-	private: double CalcEps(double&x, int _N) {
+	public: double CalcEps(double&x, int _N) {
 
 		double max = 0;
 		Table::iterator it = table->begin();
@@ -653,7 +679,7 @@ namespace CHM9 {
 		return max;
 	}
 	private: System::Void buttonRef_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (flag==false) {//ссылка на NULL
+		if (flag == false) {//ссылка на NULL
 			MessageBox::Show("Пока нет ни одного решения");
 			return;
 		}
@@ -666,22 +692,22 @@ namespace CHM9 {
 
 		int t = tabControl->SelectedIndex;
 		double _N = (--table->end())->i;
-		double maxL= (t == MainTask) ? main_L : test_L;
-		double x=0;
+		double maxL = (t == MainTask) ? main_L : test_L;
+		double x = 0;
 		double eps = CalcEps(x, _N);
 
 		delete table;
 		RefForm^ refForm = gcnew RefForm(t, _N, maxL, eps, x);
 		refForm->Show();
-	}	
-	
+	}
+
 	public: bool CheckValues() {
 		bool f;
 		double d;
 		int i;
 		if (tabControl->SelectedIndex == TestTask) {
 
-			
+
 			f = Int32::TryParse(test_textBoxNGrid->Text, i);
 			if (!f) {
 				MessageBox::Show("Неверное значение: разрешение сетки должно быть числом");
@@ -715,5 +741,17 @@ namespace CHM9 {
 		return false;
 
 	}
-};
+
+	private: System::Void buttonDiv_Click(System::Object^  sender, System::EventArgs^  e) {
+		Function k, q, f;
+		if (tabControl->SelectedIndex == MainTask) k = main_k; else k = test_k;
+		if (tabControl->SelectedIndex == MainTask) q = main_q; else q = test_q;
+		if (tabControl->SelectedIndex == MainTask) f = main_f; else f = test_f;
+		double ksi = (tabControl->SelectedIndex == MainTask) ? main_ksi : test_ksi;
+		double nu1 = (tabControl->SelectedIndex == MainTask) ? main_nu1 : test_nu1;
+		double nu2 = (tabControl->SelectedIndex == MainTask) ? main_nu2 : test_nu2;
+		CHM::DivForm^ div = gcnew CHM::DivForm(tabControl->SelectedIndex, k, q, f, ksi, nu1, nu2);
+		div->Show();
+	}
+	};
 }
