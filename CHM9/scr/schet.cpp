@@ -12,8 +12,8 @@ double RetX(int i, double h, double x0) {
 }
 
 double Integral(double a, double b, double f(double)) {
-	const int n = 1000;
-	double h = (b - a) / n;
+	const int n = 10000;
+	const double h = (b - a) / n;
 	double s = 0;
 	for (int i = 0; i < n; i++)
 		s += h*f(a + (i + 1 / 2)*h);//central rectangles
@@ -51,13 +51,13 @@ void Progonka(double nu1, double nu2, std::vector<double>& a, std::vector<double
 	std::vector<double> alpha(N+1), beta(N+1);
 	//прямой ход
 	alpha[1] = 0; beta[1] = nu1;
-	for (int i = 2; i <= N; i++) {
+	for (int i = 1; i <= N-1; i++) {
 		double A, B, C;
-		B = a[i] / (h*h);
-		A = a[i-1] / (h*h);
-		C = (a[i] + a[i-1]) / (h*h) + d[i-1];
-		alpha[i] = B / (C - alpha[i - 1] * A);
-		beta[i] = (fi[i - 1] + beta[i - 1] * A) / (C - alpha[i - 1] * A);
+		B = a[i+1] / (h*h);
+		A = a[i] / (h*h);
+		C = (a[i+1] + a[i]) / (h*h) + d[i];
+		alpha[i+1] = B / (C - alpha[i] * A);
+		beta[i+1] = (fi[i] + beta[i] * A) / (C - alpha[i] * A);
 	}
 	//обратный ход
 	v[N] = nu2;
