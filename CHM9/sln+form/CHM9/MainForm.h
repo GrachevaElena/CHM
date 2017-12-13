@@ -53,11 +53,11 @@ namespace CHM9 {
 	public:
 		MainForm(void)
 		{
+			InitializeComponent();
+
 			main_NGrid = 10;
 			test_NGrid = 10;
-			test_L = main_L = 0.5*10e-6;
-
-			InitializeComponent();
+			test_L = main_L = 0.0000005;
 
 			this->test_textBoxLocError->Text = test_L.ToString();
 			this->main_textBoxLocError->Text = main_L.ToString();

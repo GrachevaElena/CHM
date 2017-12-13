@@ -11,6 +11,7 @@ double RetX(int i, double h, double x0) {
 	return x0 + i*h;
 }
 
+//вычисление интеграла
 double Integral(double a, double b, double f(double)) {
 	const int n = 10000;
 	const double h = (b - a) / n;
@@ -20,6 +21,7 @@ double Integral(double a, double b, double f(double)) {
 	return s;
 }
 
+//вычисление коеффициентов схемы
 void CalcCoef(Function func, double ksi, double x0, const int N, double h, std::vector<double>& d) {
 	for (int i = 1; i < N; i++) {
 		double x1 = RetX(i,h,x0) - h / 2, x2 = RetX(i,h,x0) + h / 2;
@@ -47,6 +49,7 @@ void CalcFi(double ksi, double x0, const int N, double h, std::vector<double>& f
 	CalcCoef(f, ksi, x0, N, h, fi);
 }
 
+//прогонка
 void Progonka(double nu1, double nu2, std::vector<double>& a, std::vector<double>& d, std::vector<double>&fi, int N, double h, std::vector<double>& v) {
 	std::vector<double> alpha(N+1), beta(N+1);
 	//прямой ход
@@ -66,7 +69,7 @@ void Progonka(double nu1, double nu2, std::vector<double>& a, std::vector<double
 	}
 }
 
-
+//численный метод
 void CalculateForOneGrid(double nu1, double nu2, double ksi, double x0, const int N, double h, std::vector<double>& v) {
 	std::vector<double> d(N+1), a(N+1), fi(N+1);
 	CalcD(ksi, x0, N, h, d);
@@ -76,6 +79,7 @@ void CalculateForOneGrid(double nu1, double nu2, double ksi, double x0, const in
 	Progonka(nu1, nu2, a, d, fi, N, h, v);
 }
 
+//истинное решение тестовой задачи
 double RetU(double x, double ksi) {
 	return x<ksi? (x*x+0.5): (-x*x+2*x);
 }
@@ -93,6 +97,7 @@ void WriteTable(Table & table, double x0, double h, std::vector<double>& v, std:
 	}
 }
 
+//алгоритм контроля погрешности, основная функция
 void Calculate(Table & table, Function _k, Function _q, Function _f, double nu1, double nu2, double ksi, double x0, const int N, double h, double locErr, int _task)
 {
 	f = _f, k = _k, q = _q, task=_task;
