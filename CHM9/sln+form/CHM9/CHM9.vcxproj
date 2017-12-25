@@ -137,18 +137,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainForm.cpp" />
+    <ClInclude Include="MyForm.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\Computing.h" />
-    <ClInclude Include="MainForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
+    <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.h</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Computing\Computing.vcxproj">
+      <Project>{b41fb76b-3f43-485b-80d5-c283a8593d70}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
