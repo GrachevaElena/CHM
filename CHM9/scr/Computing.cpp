@@ -41,6 +41,9 @@ void Reference::ZaidelMethod(std::vector<double>& b)
 
 		eps = FindEps(numericSolution, xs_1);
 
+		std::cout << std::endl << "s=" <<s<< std::endl;
+		std::cout << numericSolution << std::endl;
+
 	}
 }
 
