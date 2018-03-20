@@ -26,33 +26,33 @@ void Reference::ZaidelMethod(std::vector<double>& b)
 		MyMatrix xs_1 = numericSolution;
 		s++;
 
-		for (int k = 0; k < (n - 1)*(m - 1); k++) {
+		for (int k = 0; k < Size; k++) {
 			int i = GetIndexX(k);
 			int j = GetIndexY(k);
 
 			numericSolution(i, j) = b[k];
 			for (int l = 0; l < k; l++)
-				numericSolution(i, j) -= GetA(k, l)*numericSolution(GetIndexX(l), GetIndexY(l));
-			for (int l = k + 1; l < (n - 1)*(m - 1); l++)
-				numericSolution(i, j) -= GetA(k, l)*numericSolution(GetIndexX(l), GetIndexY(l));
+				numericSolution(i, j).value -= GetA(k, l)*numericSolution(GetIndexX(l), GetIndexY(l)).value;
+			for (int l = k + 1; l < Size; l++)
+				numericSolution(i, j).value -= GetA(k, l)*numericSolution(GetIndexX(l), GetIndexY(l)).value;
 
-			numericSolution(i, j) /= GetA(k, k);
+			numericSolution(i, j).value /= GetA(k, k);
 		}
 
 		eps = FindEps(numericSolution, xs_1);
 
-		std::cout << std::endl << "s=" <<s<< std::endl;
-		std::cout << numericSolution << std::endl;
+		//std::cout << std::endl << "s=" <<s<< std::endl;
+		//std::cout << numericSolution << std::endl;
 
 	}
 }
 
 void Reference::FindRs(std::vector<double> b)
 {
-	std::vector<double>s((n-1)*(m-1));
+    std::vector<double>s(Size);
 
-	for (int i = 0; i < (n - 1)*(m - 1); i++) {
-		for (int j = 0; j < (m - 1)*(n - 1); j++)
+	for (int i = 0; i < Size; i++) {
+		for (int j = 0; j < Size; j++)
 			s[i] += GetA(i, j)*numericSolution(GetIndexX(j), GetIndexY(j));
 		s[i] -= b[i];
 	}
@@ -74,21 +74,30 @@ void Reference::Compute(){
 
 std::vector<double> Reference::CreateB()
 {
-	std::vector<double>b((n - 1)*(m - 1));
+	std::vector<double>b(Size);
 
-	for (int j = 1; j < m; j++)
-		for (int i = 1; i < (n - 1); i++)
-			b[GetIndex(i, j)] += -f(GetX(i), GetY(j));
+    for (int i = 0; i < Size; i++)
+        b[i] = -f(GetX(GetIndexX(i)), GetY(GetIndexY(i)));
 
-	for (int j = 1; j < m; j++)
-		b[GetIndex(1, j)] += -1 / (h*h)*numericSolution(0, j);
-	for (int j = 1; j < m; j++)
-		b[GetIndex(n - 1, j)] += -1 / (h*h)*numericSolution(n, j);
+    for (int j = 1; j <= 5; j++) {
+        b[GetIndex(1, j)] += -1 / (h*h)*numericSolution(0, j);
+        b[GetIndex(5, j)] += -1 / (h*h)*numericSolution(6, j);
+    }
 
-	for (int i = 1; i < n; i++)
-		b[GetIndex(i, 1)] += -1 / (k*k)*numericSolution(i, 0);
-	for (int i = 1; i < n; i++)
-		b[GetIndex(i, m - 1)] += -1 / (k*k)*numericSolution(i, m);
+    for (int i = 1; i <= 5; i++) {
+        b[GetIndex(i, 1)] += -1 / (k*k)*numericSolution(i, 0);
+        b[GetIndex(i, 5)] += -1 / (k*k)*numericSolution(i, 6);
+    }
+
+    for (int i = 2; i <= 4; i++) {
+        b[GetIndex(i, 1)] += -1 / (k*k)*numericSolution(i, 2);
+        b[GetIndex(i, 5)] += -1 / (k*k)*numericSolution(i, 4);
+    }
+
+    for (int j = 2; j <= 4; j++) {
+        b[GetIndex(1, j)] += -1 / (h*h)*numericSolution(2, j);
+        b[GetIndex(5, j)] += -1 / (h*h)*numericSolution(4, j);
+    }
 
 	return b;
 
